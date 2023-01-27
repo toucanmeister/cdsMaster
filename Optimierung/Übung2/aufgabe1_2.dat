@@ -1,0 +1,23 @@
+set K := Kabel1 Kabel2 Kabel3;
+# Kabel
+
+set R := Kunststoff Kupfer Gold;
+# Rohstoffe
+
+param g :=  Kabel1 150
+            Kabel2 100
+            Kabel3 250;
+# Gewinn für Kabel k
+
+param s :=  Kunststoff  252
+            Kupfer      168
+            Gold	40;
+# Vorrat an Rohstoff r
+
+param p :           Kunststoff  Kupfer	Gold :=
+            Kabel1  12          6	0
+            Kabel2  4           12 	2
+            Kabel3  8		10	4;
+# Verbrauch an Rohstoff r für Kabel k
+
+end;

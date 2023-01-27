@@ -1,0 +1,39 @@
+Cache Info:
+
+LEVEL1_ICACHE_SIZE                 32768
+LEVEL1_ICACHE_ASSOC                
+LEVEL1_ICACHE_LINESIZE             64
+LEVEL1_DCACHE_SIZE                 32768
+LEVEL1_DCACHE_ASSOC                8
+LEVEL1_DCACHE_LINESIZE             64
+LEVEL2_CACHE_SIZE                  262144
+LEVEL2_CACHE_ASSOC                 4
+LEVEL2_CACHE_LINESIZE              64
+LEVEL3_CACHE_SIZE                  6291456
+LEVEL3_CACHE_ASSOC                 12
+LEVEL3_CACHE_LINESIZE              64
+LEVEL4_CACHE_SIZE                  0
+LEVEL4_CACHE_ASSOC                 
+LEVEL4_CACHE_LINESIZE
+
+
+For a square matrix m with 10000 rows and columns, our Array contains 100000000 Bytes.
+Here are the number of cache misses we would expect from this problem:
+
+L1-Cache:
+Row-Wise:       Q = (m*n)/B = 1562500
+Column-Wise:    Q = m*n - B = 99999936
+
+L2-Cache:
+Row-Wise:       Q = (m*n)/B = 1562500
+Column-Wise:    Q = m*n - B = 99999936
+
+L3-Cache:
+Row-Wise:       Q = (m*n)/B = 1562500
+Column-Wise:    Q = m*n - B = 99999936
+
+
+What we actually get:
+
+Row-Wise: 355.675ms
+Column-Wise: 778.113ms

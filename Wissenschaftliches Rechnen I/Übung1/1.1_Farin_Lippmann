@@ -1,0 +1,123 @@
+# Aufgabe 1
+
+Diese Abgabe war ursprünglich mal ein Jupyter Notebook. Da Sie auf meine Anfrage im Moodle-Forum nicht rechtzeitig geantwortet haben, habe ich sie Ihnen sicherheitshalber in eine Text-Datei umgewandelt. So können Sie aber leider die schönen Grafiken, die erstellt werden, nicht ohne weiteres sehen :D
+
+
+## a)
+```
+import math
+import matplotlib.pyplot as plt
+
+t = 0
+y = 0
+t_end = 2
+h = 1/10
+def f(t,y):
+    return -50*y + math.cos(t)
+ts = [0]
+ys = [0]
+while t < t_end:
+    y = y + h*f(t,y)
+    ts.append(t)
+    ys.append(y)
+    t += h
+plt.plot(ts, ys)
+print(f'Solution: {y}')
+```
+
+Ich zweifle stark an der Richtigkeit dieser Lösung (-22003436812.821262). Vemutlich ist die Schrittweite zu groß gewählt, wodurch der Fehler sehr groß wird. Bereits h=1/100 schafft Abhilfe.
+
+
+## b)
+```
+import math
+import matplotlib.pyplot as plt
+
+t = 0
+y = 0
+t_end = 2
+h = 1/10
+def f(t,y):
+    return -50*y + math.cos(t)
+ts = [0]
+ys = [0]
+
+def picard(t,y):
+    u = y + h*f(t,y) # Ein Schritt vom expliziten Euler als Startwert für die Picard-Iteration
+    for i in range(20): # 20 ist hier aus dem Bauch heraus gewählt, um kein Konvergenzkriterium implementieren zu müssen
+        u = y + h*f(t,u)
+    return u
+
+while t < t_end:
+    y = picard(t,y)
+    ts.append(t)
+    ys.append(y)
+    t += h
+plt.plot(ts, ys)
+print(f'Lösung: {y}')
+```
+
+Das Ergebnis (-1.9266680514116443e+290) ist ebenso schlecht wie das von a). Verringern von h auf 1/100 bringt aber auch hier eine sinnvollere Lösung hervor.
+
+
+## c)
+Das nichtlineare Gleichungssystem für $u_{n+1}$:
+$$
+u_{n+1} = u_n + h(-50u_{n+1} + \text{cos}(t_{n+1}))
+$$
+Umgeformt:
+$$
+0 = u_n + h(-50u_{n+1} + \text{cos}(t_{n+1})) - u_{n+1}
+$$
+Wir nennen im folgenden das gesuchte $u_{n+1}$ $z$ und die rechte Seite der oberen Gleichung $F(z)$.
+
+Die Newton-Iteration hat das folgende Schema:
+$$
+x_{k+1} = x_k - \frac{F(x_k)}{F'(x_k)}
+$$
+
+In unserem Fall:
+$$
+z_{n+1} = z_n - \frac{F(z_n)}{F'(z_n)}
+$$
+wobei gilt:
+$$
+F(z) = u_n + h(-50z + \text{cos}(t_{n+1})) - z \\
+F'(z) = -50h - 1
+$$
+
+```
+import math
+import matplotlib.pyplot as plt
+
+t = 0
+y = 0
+t_end = 2
+h = 1/10
+def f(t,y):
+    return -50*y + math.cos(t)
+ts = [0]
+ys = [0]
+
+def F(u, t, z):
+    return u + h*(-50*z + math.cos(t)) - z
+dF = -50*h - 1
+
+def Newton(t, y):
+    z = y + h*f(t,y) # Ein Schritt vom expliziten Euler als Startwert für das Newton-Verfahren
+    for i in range(20): # Wieder willkürlich gewählt
+        z = z - (F(y, t, z) / dF)
+    return z
+        
+while t < t_end:
+    y = Newton(t, y)
+    ts.append(t)
+    ys.append(y)
+    t += h
+plt.plot(ts, ys)
+print(f'Lösung: {y}')
+```
+
+Ja! Ein Ergebnis (-0.006079782935004921) ohne astronomischen Fehler, bereits bei h=1/10.
+
+

@@ -1,0 +1,12 @@
+set S := Gwendolyn Yavanna Finwe Melkor;
+
+set T := 20 21 22;
+
+# Idee: Formen Daten um, sodass alle Termine in der Liste auftauchen. 
+# Eintrag ist Platz auf Präferenzliste - 1. Wir markieren fehlende Termine mit dem Strafterm.
+param prefs default 51
+	:	Gwendolyn	Yavanna	Finwe	Melkor:=
+	20	0			.		.		.
+	21	.			0		.		0
+	22	.			.		0		.;
+end;

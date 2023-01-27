@@ -1,0 +1,15 @@
+set S := Bodo Wolfgang Dirk Thomas Bernd;
+
+set T := 8 9 10 11 12;
+
+# Idee: Formen Daten um, sodass alle Termine in der Liste auftauchen. 
+# Eintrag ist Platz auf Präferenzliste - 1. Wir markieren fehlende Termine mit dem Strafterm.
+param prefs default 53
+	:	Bodo	Wolfgang	Dirk	Thomas	Bernd :=
+	8	.		1			1		2		.
+	9	.		0			0		1		.
+	10	0		2			.		0		0
+	11	1		.			.		.		2
+	12	2		.			2		.		1;
+	
+end;

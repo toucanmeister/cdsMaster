@@ -1,0 +1,49 @@
+GLPSOL--GLPK LP/MIP Solver 5.0
+Parameter(s) specified in the command line:
+ --model übung3.mod --data übung3.dat
+Reading model section from übung3.mod...
+34 lines were read
+Reading data section from übung3.dat...
+207 lines were read
+Generating err...
+Generating abs1...
+Generating abs2...
+Model has been successfully generated
+GLPK Simplex Optimizer 5.0
+8001 rows, 4020 columns, 20000 non-zeros
+Preprocessing...
+8000 rows, 4020 columns, 16000 non-zeros
+Scaling...
+ A: min|aij| =  1.000e+00  max|aij| =  1.000e+00  ratio =  1.000e+00
+Problem data seem to be well scaled
+Constructing initial basis...
+Size of triangular part is 8000
+      0: obj =   0.000000000e+00 inf =   1.328e+07 (4000)
+   4000: obj =   2.415881303e+07 inf =   0.000e+00 (0) 38
+*  5880: obj =   1.002600096e+07 inf =   0.000e+00 (0) 18
+OPTIMAL LP SOLUTION FOUND
+Time used:   1.4 secs
+Memory used: 13.1 Mb (13726731 bytes)
+###############
+Fehler: 10026001
+Wert für x_1: 3264.584895
+Wert für x_2: 3089.071400
+Wert für x_3: 2535.667227
+Wert für x_4: 2530.728013
+Wert für x_5: 2130.992565
+Wert für x_6: 2540.918873
+Wert für x_7: 2457.089158
+Wert für x_8: 2751.670766
+Wert für x_9: 2535.339018
+Wert für x_10: 2271.640681
+Wert für x_11: 2212.392691
+Wert für x_12: 2416.058035
+Wert für x_13: 2378.803598
+Wert für x_14: 2252.442090
+Wert für x_15: 2677.759677
+Wert für x_16: 2354.470084
+Wert für x_17: 2532.248994
+Wert für x_18: 2554.543832
+Wert für x_19: 2437.010124
+Wert für x_20: 3018.411080
+Model has been successfully processed
