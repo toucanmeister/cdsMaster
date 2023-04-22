@@ -1,0 +1,32 @@
+--- Speedup ---
+
+S = t(1) / t(P)
+
+t(1) = 2*N*tau_A
+
+t(P)_lin = 2*(N/P)*tau_A + P*tau_S
+S_lin = (2*N*tau_A) / (2*(N/P)*tau_A + P*tau_S)
+
+t(P)_tree = 2*(N/P)*tau_A + log2(P)*tau_S
+S_tree = (2*N*tau_A) / (2*(N/P)*tau_A + log2(P)*tau_S)
+
+t(P)_fat_tree = 2*(N/P)*tau_A + 2*log2(P)*tau_S
+S_fat_tree = (2*N*tau_A) / (2*(N/P)*tau_A + 2*log2(P)*tau_S)
+
+
+--- Effizienz ---
+
+E = S / p
+
+E_lin = (2*N*tau_A) / (2*N*tau_A + P^2*tau_S)
+E_tree = (2*N*tau_A) / (2*N*tau_A + P*log2(P)*tau_S)
+E_fat_tree = (2*N*tau_A) / (2*N*tau_A + 2*P*log2(P)*tau_S)
+
+
+--- Scaleup ---
+
+SC = t(P,N) / t(2P,2N)
+
+SC_lin = (2*(N/P)*tau_A + P*tau_S) / (2*(N/P)*tau_A + 2*P*tau_S)
+SC_tree = (2*(N/P)*tau_A + log2(P)*tau_S) / (2*(N/P)*tau_A + 1 + log2(P)*tau_S)
+SC_tree = (2*(N/P)*tau_A + log2(P)*tau_S) / (2*(N/P)*tau_A + 2 + 2*log2(P)*tau_S)

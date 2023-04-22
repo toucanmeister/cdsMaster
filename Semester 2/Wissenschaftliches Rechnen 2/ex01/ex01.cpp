@@ -3,7 +3,7 @@
 #include <mpi.h>
 #include <chrono>
 
-#define N 16384
+#define N 8
 #define MASTER 0
 #define MEASUREMENTS 1000000
 
