@@ -1,0 +1,59 @@
+Full List of Questions after Task 2
+
+1. Data description
+ a. How does your project generate new data?
+ b. Is existing data reused? 
+ c. Which data types (in terms of data formats like image data, text data or measurement data) arise in your project and in what way are they further processed?
+ d. What is the anticipated data volume and how many datasets do you estimate will you generate?
+ e. Which data is reproducible, and how much effort is associated with the reproduction of this data?
+
+2. Documentation and data quality
+ a. What approaches are being taken to describe the data in a comprehensible manner (such as the use of available metadata, documentation standards or ontologies)? 
+ b. What measures are being adopted to ensure high data quality? 
+ c. Are quality controls in place and if so, how do they operate?
+ d. Which digital methods and tools (e.g. software) are required to use the data?
+ e. Does your project use data that is only readable using special software? If so, document how the software is used.
+ 
+3. Storage and technical archiving the project
+ a. How is the data to be stored and archived throughout the project duration?
+ b. What is in place to secure sensitive data throughout the project duration (access and usage rights)?
+
+4. Legal obligations and conditions
+ a. What are the legal specifics associated with the handling of research data in your project?
+ b. Do you anticipate any implications or restrictions regarding subsequent publication or accessibility?
+ c. What is in place to consider aspects of use and copyright law as well as ownership issues?
+ d. If applicable, what license will you use for your data?
+ e. Are there any significant research codes or professional standards to be taken into account?
+
+5. Data exchange and long-term data accessibility
+ a. Which data sets are especially suitable for use in other contexts?
+ b. Which criteria are used to select research data to make it available for subsequent use by others?
+ c. Are you planning to archive your data in a suitable infrastructure? If so, how and where?
+ d. Are there any retention periods? If so, why?
+ e. When and under which conditions is the research data available for use by third parties?
+
+6. Responsibilities and resources
+ a. Who is responsible for adequate handling of the research data (description of roles and responsibilities within the project)?
+ b. Which resources (costs; time or other) are required to implement adequate handling of research data within the project?
+ c. How will these resources be raised?
+ d. Who is responsible for curating the data once the project has ended?
+
+7. Sub-Project Section
+ a. What is the official name of your research project?
+ b. Who are the principle investigators?
+ c. In which of the following categories does your project fit? [Algen und Protisten, Bakteriologie und Virologie, Botanik, Ökologie und Umwelt, Geowissenschaften, Mikrobiologie, Mykologie, Paläontologie, Zoologie, Andere]
+ d. Which of the following types fits your project? [Feldarbeit, Beobachtend Experimentell, Labor, Simulation, Assimilation, Modellierung, Andere] 
+ e. Who is the person to contact when it comes to questions about your research data during the projects run time? [e-mail and (optionally) phone number]
+ f. Do you hand in physical objects along with your data?
+  fa. Are your objects alive or dead?
+  fb. Does your object taxon based on a taxon?
+ g. Are you primarily generating sequence data?
+ h. Do you need a persistent identifier (i.e. ePIC PID / DOI) for your data?
+
+
+
+Changes in task 2:
+ - added all questions in section 7 from GFBio
+ - added 4d. from GFBio
+ - edited 1d., added question about number of datasets from GFBio
+ - edited 5d., added question about reason for retention period from GFBio

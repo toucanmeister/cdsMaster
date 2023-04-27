@@ -1,0 +1,51 @@
+GFBio DMP Catalog 
+// Fragen, die bereits Task 1 aufgekommen sind, wurden entfernt.
+
+Wie lautet der offizielle Name Ihres Forschungsprojekts?
+
+In welche Kategorie fällt ihr Projekt? (siehe RDMO für Liste von Antwortmöglichkeiten)
+
+Welcher Typ entspricht ihrem Projekt: 
+ - Feldarbeit 
+ - Beobachtend Experimentell
+ - Labor
+ - Simulation
+ - Assimilation
+ - Modellierung
+ - Andere
+ 
+Wer ist die Ansprechpartner:in für Fragen zu den Projektdaten während der Projektlaufzeit?
+ - Telefonnummer
+ - E-Mail-Adresse
+
+Wer sind die Hauptforschenden?
+
+Für welche Finanzierung bewerben Sie sich?
+ - DFG-Individualförderprogramme
+ - DFG Koordinierte Programme
+ - Exzellenz-Strategie
+ - Forschungsinfrastruktur
+ - DFG Internationale Programme
+ - Andere
+ 
+Falls Sie Teil eines koordinierten Programms (Koordinierte Programme, Verbundprojekte) sind: Gibt es eine spezifische Koordination, Richtlinien oder Bestimmungen für das Datenmanagement?
+
+Sind Sie Mitglied einer Forschungseinheit (Forschungsgruppe)?
+
+Wie hoch ist das Gesamtbudget Ihres Forschungsvorhabens?
+
+Möchten Sie physische Objekte zusammen mit Ihren Daten einreichen?
+ -> Sind ihre Objekte tot oder lebendig?
+ -> Beruht Ihr Objekttaxon auf einem Taxon?
+
+Haben Sie hauptsächlich Sequenzdaten?
+
+Bitte schätzen Sie die Anzahl der Datensätze (Dateien), die Sie erstellen werden.
+
+Wie werden Ihre Daten zur Wiederverwendung lizenziert?
+
+Warum benötigen Sie eine exklusive Nutzung der Daten?
+
+Wann werden Ihre Daten an GFBio übermittelt?
+
+Benötigen Sie einen Persistent Identifier (z.B. ePIC PID / DOI) für Ihre Daten?
