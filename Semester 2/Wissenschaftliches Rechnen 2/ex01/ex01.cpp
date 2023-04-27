@@ -8,7 +8,7 @@
 #define MEASUREMENTS 1000000
 
 // This program assumes that N is divisible by the number of processes
-// And for the tree version it assumes that p = 2^d
+// And for the tree versions it assumes that p = 2^d
 
 void compute_data(double* x, double* y, int block_size, int block_start) {
     for (int i=0; i < block_size; i++) {
@@ -16,7 +16,6 @@ void compute_data(double* x, double* y, int block_size, int block_start) {
         x[idx] = idx+1;
         y[idx] = N - idx;
     }
-    
 }
 
 double subsum(double* x, double* y, int block_size, int block_start) {
@@ -43,7 +42,7 @@ void gather(double* t, int rank, int size) {
 
 void tree_gather(double* t, int rank, int log2_size) {
     for (int i=0; i < log2_size; i++) {
-        int m = 1 << i;  // m = 2^i
+        int m = 1 << i;
         if (rank & m) {
             MPI_Send(t, 1, MPI_DOUBLE, (rank & ~m), 0, MPI_COMM_WORLD);
         } else {
