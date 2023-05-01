@@ -1,0 +1,762 @@
+submit host:
+login1.cluster
+submit dir:
+/home/yo42wet/eml/ex04
+nodelist:
+node010
+/home/yo42wet/.conda/envs/pytorch_src/lib/python3.10/site-packages/torchvision/io/image.py:13: UserWarning: Failed to load image Python extension: /home/yo42wet/.conda/envs/pytorch_src/lib/python3.10/site-packages/torchvision/image.so: undefined symbol: _ZN2at4_ops19empty_memory_format4callEN3c108ArrayRefIlEENS2_8optionalINS2_10ScalarTypeEEENS5_INS2_6LayoutEEENS5_INS2_6DeviceEEENS5_IbEENS5_INS2_12MemoryFormatEEE
+  warn(f"Failed to load image Python extension: {e}")
+training... loss in epoch 0: 13.597234725952148
+Test loss: 2.2153520584106445
+Correctly classified 3542.0 out of 10000 test samples
+
+--- Epoch 0 ---
+training loss 0: 13.64841079711914
+correctly classified 2395.0 out of 10000 test samples
+--- Epoch 1 ---
+training loss 1: 13.148818969726562
+correctly classified 4158.0 out of 10000 test samples
+--- Epoch 2 ---
+training loss 2: 12.433008193969727
+correctly classified 4973.0 out of 10000 test samples
+--- Epoch 3 ---
+training loss 3: 11.349531173706055
+correctly classified 5417.0 out of 10000 test samples
+--- Epoch 4 ---
+training loss 4: 9.959389686584473
+correctly classified 5759.0 out of 10000 test samples
+--- Epoch 5 ---
+training loss 5: 8.660528182983398
+correctly classified 6080.0 out of 10000 test samples
+--- Epoch 6 ---
+training loss 6: 7.672321319580078
+correctly classified 6269.0 out of 10000 test samples
+--- Epoch 7 ---
+training loss 7: 6.951513290405273
+correctly classified 6332.0 out of 10000 test samples
+--- Epoch 8 ---
+training loss 8: 6.4286041259765625
+correctly classified 6190.0 out of 10000 test samples
+--- Epoch 9 ---
+training loss 9: 6.214086055755615
+correctly classified 6086.0 out of 10000 test samples
+--- Epoch 10 ---
+training loss 10: 6.138662338256836
+correctly classified 6198.0 out of 10000 test samples
+--- Epoch 11 ---
+training loss 11: 5.834975719451904
+correctly classified 6298.0 out of 10000 test samples
+--- Epoch 12 ---
+training loss 12: 5.617007732391357
+correctly classified 6387.0 out of 10000 test samples
+--- Epoch 13 ---
+training loss 13: 5.437844276428223
+correctly classified 6477.0 out of 10000 test samples
+--- Epoch 14 ---
+training loss 14: 5.281626224517822
+correctly classified 6549.0 out of 10000 test samples
+--- Epoch 15 ---
+training loss 15: 5.14424467086792
+correctly classified 6637.0 out of 10000 test samples
+--- Epoch 16 ---
+training loss 16: 5.021903991699219
+correctly classified 6700.0 out of 10000 test samples
+--- Epoch 17 ---
+training loss 17: 4.911521911621094
+correctly classified 6775.0 out of 10000 test samples
+--- Epoch 18 ---
+training loss 18: 4.810743808746338
+correctly classified 6837.0 out of 10000 test samples
+--- Epoch 19 ---
+training loss 19: 4.717379570007324
+correctly classified 6898.0 out of 10000 test samples
+--- Epoch 20 ---
+training loss 20: 4.6305413246154785
+correctly classified 6980.0 out of 10000 test samples
+--- Epoch 21 ---
+training loss 21: 4.549057483673096
+correctly classified 7057.0 out of 10000 test samples
+--- Epoch 22 ---
+training loss 22: 4.47222375869751
+correctly classified 7113.0 out of 10000 test samples
+--- Epoch 23 ---
+training loss 23: 4.3991923332214355
+correctly classified 7183.0 out of 10000 test samples
+--- Epoch 24 ---
+training loss 24: 4.330160617828369
+correctly classified 7229.0 out of 10000 test samples
+--- Epoch 25 ---
+training loss 25: 4.264875411987305
+correctly classified 7279.0 out of 10000 test samples
+--- Epoch 26 ---
+training loss 26: 4.203098773956299
+correctly classified 7318.0 out of 10000 test samples
+--- Epoch 27 ---
+training loss 27: 4.144885540008545
+correctly classified 7371.0 out of 10000 test samples
+--- Epoch 28 ---
+training loss 28: 4.089229106903076
+correctly classified 7411.0 out of 10000 test samples
+--- Epoch 29 ---
+training loss 29: 4.0360894203186035
+correctly classified 7454.0 out of 10000 test samples
+--- Epoch 30 ---
+training loss 30: 3.985258102416992
+correctly classified 7496.0 out of 10000 test samples
+--- Epoch 31 ---
+training loss 31: 3.936372756958008
+correctly classified 7530.0 out of 10000 test samples
+--- Epoch 32 ---
+training loss 32: 3.889751434326172
+correctly classified 7558.0 out of 10000 test samples
+--- Epoch 33 ---
+training loss 33: 3.845376968383789
+correctly classified 7588.0 out of 10000 test samples
+--- Epoch 34 ---
+training loss 34: 3.80380916595459
+correctly classified 7621.0 out of 10000 test samples
+--- Epoch 35 ---
+training loss 35: 3.7694334983825684
+correctly classified 7645.0 out of 10000 test samples
+--- Epoch 36 ---
+training loss 36: 3.7801074981689453
+correctly classified 7630.0 out of 10000 test samples
+--- Epoch 37 ---
+training loss 37: 3.7902064323425293
+correctly classified 7608.0 out of 10000 test samples
+--- Epoch 38 ---
+training loss 38: 3.7198171615600586
+correctly classified 7596.0 out of 10000 test samples
+--- Epoch 39 ---
+training loss 39: 3.6666111946105957
+correctly classified 7642.0 out of 10000 test samples
+--- Epoch 40 ---
+training loss 40: 3.624574661254883
+correctly classified 7684.0 out of 10000 test samples
+--- Epoch 41 ---
+training loss 41: 3.5894274711608887
+correctly classified 7719.0 out of 10000 test samples
+--- Epoch 42 ---
+training loss 42: 3.5633397102355957
+correctly classified 7714.0 out of 10000 test samples
+--- Epoch 43 ---
+training loss 43: 3.573779344558716
+correctly classified 7644.0 out of 10000 test samples
+--- Epoch 44 ---
+training loss 44: 3.594541549682617
+correctly classified 7766.0 out of 10000 test samples
+--- Epoch 45 ---
+training loss 45: 3.506162643432617
+correctly classified 7835.0 out of 10000 test samples
+--- Epoch 46 ---
+training loss 46: 3.4572203159332275
+correctly classified 7879.0 out of 10000 test samples
+--- Epoch 47 ---
+training loss 47: 3.4358139038085938
+correctly classified 7867.0 out of 10000 test samples
+--- Epoch 48 ---
+training loss 48: 3.4311940670013428
+correctly classified 7833.0 out of 10000 test samples
+--- Epoch 49 ---
+training loss 49: 3.4343581199645996
+correctly classified 7809.0 out of 10000 test samples
+--- Epoch 50 ---
+training loss 50: 3.408076286315918
+correctly classified 7837.0 out of 10000 test samples
+--- Epoch 51 ---
+training loss 51: 3.374635696411133
+correctly classified 7839.0 out of 10000 test samples
+--- Epoch 52 ---
+training loss 52: 3.3481698036193848
+correctly classified 7881.0 out of 10000 test samples
+--- Epoch 53 ---
+training loss 53: 3.303393602371216
+correctly classified 7917.0 out of 10000 test samples
+--- Epoch 54 ---
+training loss 54: 3.272104263305664
+correctly classified 7924.0 out of 10000 test samples
+--- Epoch 55 ---
+training loss 55: 3.2606520652770996
+correctly classified 7928.0 out of 10000 test samples
+--- Epoch 56 ---
+training loss 56: 3.2797226905822754
+correctly classified 7918.0 out of 10000 test samples
+--- Epoch 57 ---
+training loss 57: 3.3273983001708984
+correctly classified 7886.0 out of 10000 test samples
+--- Epoch 58 ---
+training loss 58: 3.277559757232666
+correctly classified 7965.0 out of 10000 test samples
+--- Epoch 59 ---
+training loss 59: 3.195026397705078
+correctly classified 7972.0 out of 10000 test samples
+--- Epoch 60 ---
+training loss 60: 3.1941685676574707
+correctly classified 7905.0 out of 10000 test samples
+--- Epoch 61 ---
+training loss 61: 3.2431390285491943
+correctly classified 7950.0 out of 10000 test samples
+--- Epoch 62 ---
+training loss 62: 3.187361240386963
+correctly classified 8032.0 out of 10000 test samples
+--- Epoch 63 ---
+training loss 63: 3.1548171043395996
+correctly classified 8030.0 out of 10000 test samples
+--- Epoch 64 ---
+training loss 64: 3.160404920578003
+correctly classified 8002.0 out of 10000 test samples
+--- Epoch 65 ---
+training loss 65: 3.160571575164795
+correctly classified 7994.0 out of 10000 test samples
+--- Epoch 66 ---
+training loss 66: 3.131472110748291
+correctly classified 8010.0 out of 10000 test samples
+--- Epoch 67 ---
+training loss 67: 3.0984387397766113
+correctly classified 8012.0 out of 10000 test samples
+--- Epoch 68 ---
+training loss 68: 3.112156391143799
+correctly classified 7986.0 out of 10000 test samples
+--- Epoch 69 ---
+training loss 69: 3.136462688446045
+correctly classified 8021.0 out of 10000 test samples
+--- Epoch 70 ---
+training loss 70: 3.067516803741455
+correctly classified 8055.0 out of 10000 test samples
+--- Epoch 71 ---
+training loss 71: 3.0349342823028564
+correctly classified 8079.0 out of 10000 test samples
+--- Epoch 72 ---
+training loss 72: 3.0312697887420654
+correctly classified 8088.0 out of 10000 test samples
+--- Epoch 73 ---
+training loss 73: 3.0329954624176025
+correctly classified 8085.0 out of 10000 test samples
+--- Epoch 74 ---
+training loss 74: 3.0319507122039795
+correctly classified 8099.0 out of 10000 test samples
+--- Epoch 75 ---
+training loss 75: 3.013728380203247
+correctly classified 8120.0 out of 10000 test samples
+--- Epoch 76 ---
+training loss 76: 2.9815590381622314
+correctly classified 8138.0 out of 10000 test samples
+--- Epoch 77 ---
+training loss 77: 2.954808473587036
+correctly classified 8144.0 out of 10000 test samples
+--- Epoch 78 ---
+training loss 78: 2.943000555038452
+correctly classified 8127.0 out of 10000 test samples
+--- Epoch 79 ---
+training loss 79: 2.976649761199951
+correctly classified 8000.0 out of 10000 test samples
+--- Epoch 80 ---
+training loss 80: 3.1098713874816895
+correctly classified 8064.0 out of 10000 test samples
+--- Epoch 81 ---
+training loss 81: 2.9863998889923096
+correctly classified 8137.0 out of 10000 test samples
+--- Epoch 82 ---
+training loss 82: 2.937600612640381
+correctly classified 8155.0 out of 10000 test samples
+--- Epoch 83 ---
+training loss 83: 2.9297757148742676
+correctly classified 8163.0 out of 10000 test samples
+--- Epoch 84 ---
+training loss 84: 2.9174628257751465
+correctly classified 8174.0 out of 10000 test samples
+--- Epoch 85 ---
+training loss 85: 2.9007036685943604
+correctly classified 8164.0 out of 10000 test samples
+--- Epoch 86 ---
+training loss 86: 2.8841822147369385
+correctly classified 8168.0 out of 10000 test samples
+--- Epoch 87 ---
+training loss 87: 2.8704702854156494
+correctly classified 8177.0 out of 10000 test samples
+--- Epoch 88 ---
+training loss 88: 2.858433723449707
+correctly classified 8176.0 out of 10000 test samples
+--- Epoch 89 ---
+training loss 89: 2.8476247787475586
+correctly classified 8179.0 out of 10000 test samples
+--- Epoch 90 ---
+training loss 90: 2.8434057235717773
+correctly classified 8133.0 out of 10000 test samples
+--- Epoch 91 ---
+training loss 91: 2.9223647117614746
+correctly classified 8017.0 out of 10000 test samples
+--- Epoch 92 ---
+training loss 92: 3.040346384048462
+correctly classified 8128.0 out of 10000 test samples
+--- Epoch 93 ---
+training loss 93: 2.8572638034820557
+correctly classified 8200.0 out of 10000 test samples
+--- Epoch 94 ---
+training loss 94: 2.820636510848999
+correctly classified 8206.0 out of 10000 test samples
+--- Epoch 95 ---
+training loss 95: 2.8185253143310547
+correctly classified 8209.0 out of 10000 test samples
+--- Epoch 96 ---
+training loss 96: 2.811833381652832
+correctly classified 8218.0 out of 10000 test samples
+--- Epoch 97 ---
+training loss 97: 2.8000268936157227
+correctly classified 8222.0 out of 10000 test samples
+--- Epoch 98 ---
+training loss 98: 2.7893269062042236
+correctly classified 8224.0 out of 10000 test samples
+--- Epoch 99 ---
+training loss 99: 2.779860258102417
+correctly classified 8234.0 out of 10000 test samples
+--- Epoch 100 ---
+training loss 100: 2.7717902660369873
+correctly classified 8232.0 out of 10000 test samples
+--- Epoch 101 ---
+training loss 101: 2.7647483348846436
+correctly classified 8243.0 out of 10000 test samples
+--- Epoch 102 ---
+training loss 102: 2.761854887008667
+correctly classified 8219.0 out of 10000 test samples
+--- Epoch 103 ---
+training loss 103: 2.7718217372894287
+correctly classified 8202.0 out of 10000 test samples
+--- Epoch 104 ---
+training loss 104: 2.8047714233398438
+correctly classified 8163.0 out of 10000 test samples
+--- Epoch 105 ---
+training loss 105: 2.8116493225097656
+correctly classified 8181.0 out of 10000 test samples
+--- Epoch 106 ---
+training loss 106: 2.763040781021118
+correctly classified 8213.0 out of 10000 test samples
+--- Epoch 107 ---
+training loss 107: 2.7610533237457275
+correctly classified 8184.0 out of 10000 test samples
+--- Epoch 108 ---
+training loss 108: 2.8114819526672363
+correctly classified 8210.0 out of 10000 test samples
+--- Epoch 109 ---
+training loss 109: 2.7510976791381836
+correctly classified 8252.0 out of 10000 test samples
+--- Epoch 110 ---
+training loss 110: 2.70656418800354
+correctly classified 8265.0 out of 10000 test samples
+--- Epoch 111 ---
+training loss 111: 2.7004857063293457
+correctly classified 8259.0 out of 10000 test samples
+--- Epoch 112 ---
+training loss 112: 2.704291582107544
+correctly classified 8270.0 out of 10000 test samples
+--- Epoch 113 ---
+training loss 113: 2.700603485107422
+correctly classified 8275.0 out of 10000 test samples
+--- Epoch 114 ---
+training loss 114: 2.6902341842651367
+correctly classified 8281.0 out of 10000 test samples
+--- Epoch 115 ---
+training loss 115: 2.6798648834228516
+correctly classified 8286.0 out of 10000 test samples
+--- Epoch 116 ---
+training loss 116: 2.6716079711914062
+correctly classified 8292.0 out of 10000 test samples
+--- Epoch 117 ---
+training loss 117: 2.6665239334106445
+correctly classified 8294.0 out of 10000 test samples
+--- Epoch 118 ---
+training loss 118: 2.6656382083892822
+correctly classified 8283.0 out of 10000 test samples
+--- Epoch 119 ---
+training loss 119: 2.6738202571868896
+correctly classified 8272.0 out of 10000 test samples
+--- Epoch 120 ---
+training loss 120: 2.692432403564453
+correctly classified 8248.0 out of 10000 test samples
+--- Epoch 121 ---
+training loss 121: 2.689741611480713
+correctly classified 8254.0 out of 10000 test samples
+--- Epoch 122 ---
+training loss 122: 2.6552934646606445
+correctly classified 8275.0 out of 10000 test samples
+--- Epoch 123 ---
+training loss 123: 2.640573501586914
+correctly classified 8261.0 out of 10000 test samples
+--- Epoch 124 ---
+training loss 124: 2.68808650970459
+correctly classified 8247.0 out of 10000 test samples
+--- Epoch 125 ---
+training loss 125: 2.6863853931427
+correctly classified 8294.0 out of 10000 test samples
+--- Epoch 126 ---
+training loss 126: 2.6332778930664062
+correctly classified 8313.0 out of 10000 test samples
+--- Epoch 127 ---
+training loss 127: 2.6216607093811035
+correctly classified 8319.0 out of 10000 test samples
+--- Epoch 128 ---
+training loss 128: 2.6222357749938965
+correctly classified 8317.0 out of 10000 test samples
+--- Epoch 129 ---
+training loss 129: 2.615220785140991
+correctly classified 8334.0 out of 10000 test samples
+--- Epoch 130 ---
+training loss 130: 2.602285385131836
+correctly classified 8339.0 out of 10000 test samples
+--- Epoch 131 ---
+training loss 131: 2.5905494689941406
+correctly classified 8342.0 out of 10000 test samples
+--- Epoch 132 ---
+training loss 132: 2.58357572555542
+correctly classified 8336.0 out of 10000 test samples
+--- Epoch 133 ---
+training loss 133: 2.5809688568115234
+correctly classified 8336.0 out of 10000 test samples
+--- Epoch 134 ---
+training loss 134: 2.580660581588745
+correctly classified 8338.0 out of 10000 test samples
+--- Epoch 135 ---
+training loss 135: 2.582148313522339
+correctly classified 8322.0 out of 10000 test samples
+--- Epoch 136 ---
+training loss 136: 2.5841097831726074
+correctly classified 8325.0 out of 10000 test samples
+--- Epoch 137 ---
+training loss 137: 2.5824360847473145
+correctly classified 8316.0 out of 10000 test samples
+--- Epoch 138 ---
+training loss 138: 2.57240629196167
+correctly classified 8334.0 out of 10000 test samples
+--- Epoch 139 ---
+training loss 139: 2.554988145828247
+correctly classified 8348.0 out of 10000 test samples
+--- Epoch 140 ---
+training loss 140: 2.5362954139709473
+correctly classified 8357.0 out of 10000 test samples
+--- Epoch 141 ---
+training loss 141: 2.5225303173065186
+correctly classified 8360.0 out of 10000 test samples
+--- Epoch 142 ---
+training loss 142: 2.5238051414489746
+correctly classified 8350.0 out of 10000 test samples
+--- Epoch 143 ---
+training loss 143: 2.5833311080932617
+correctly classified 8296.0 out of 10000 test samples
+--- Epoch 144 ---
+training loss 144: 2.6548004150390625
+correctly classified 8302.0 out of 10000 test samples
+--- Epoch 145 ---
+training loss 145: 2.586061716079712
+correctly classified 8367.0 out of 10000 test samples
+--- Epoch 146 ---
+training loss 146: 2.519317626953125
+correctly classified 8397.0 out of 10000 test samples
+--- Epoch 147 ---
+training loss 147: 2.498718023300171
+correctly classified 8390.0 out of 10000 test samples
+--- Epoch 148 ---
+training loss 148: 2.5036818981170654
+correctly classified 8364.0 out of 10000 test samples
+--- Epoch 149 ---
+training loss 149: 2.5160584449768066
+correctly classified 8356.0 out of 10000 test samples
+--- Epoch 150 ---
+training loss 150: 2.5162851810455322
+correctly classified 8369.0 out of 10000 test samples
+--- Epoch 151 ---
+training loss 151: 2.5074431896209717
+correctly classified 8374.0 out of 10000 test samples
+--- Epoch 152 ---
+training loss 152: 2.5010995864868164
+correctly classified 8373.0 out of 10000 test samples
+--- Epoch 153 ---
+training loss 153: 2.4972574710845947
+correctly classified 8368.0 out of 10000 test samples
+--- Epoch 154 ---
+training loss 154: 2.4929895401000977
+correctly classified 8370.0 out of 10000 test samples
+--- Epoch 155 ---
+training loss 155: 2.4866437911987305
+correctly classified 8378.0 out of 10000 test samples
+--- Epoch 156 ---
+training loss 156: 2.478135585784912
+correctly classified 8386.0 out of 10000 test samples
+--- Epoch 157 ---
+training loss 157: 2.4692530632019043
+correctly classified 8393.0 out of 10000 test samples
+--- Epoch 158 ---
+training loss 158: 2.465003252029419
+correctly classified 8396.0 out of 10000 test samples
+--- Epoch 159 ---
+training loss 159: 2.4832446575164795
+correctly classified 8384.0 out of 10000 test samples
+--- Epoch 160 ---
+training loss 160: 2.5423543453216553
+correctly classified 8337.0 out of 10000 test samples
+--- Epoch 161 ---
+training loss 161: 2.540926694869995
+correctly classified 8391.0 out of 10000 test samples
+--- Epoch 162 ---
+training loss 162: 2.4709548950195312
+correctly classified 8439.0 out of 10000 test samples
+--- Epoch 163 ---
+training loss 163: 2.432966709136963
+correctly classified 8437.0 out of 10000 test samples
+--- Epoch 164 ---
+training loss 164: 2.4244143962860107
+correctly classified 8425.0 out of 10000 test samples
+--- Epoch 165 ---
+training loss 165: 2.4378976821899414
+correctly classified 8407.0 out of 10000 test samples
+--- Epoch 166 ---
+training loss 166: 2.4581844806671143
+correctly classified 8407.0 out of 10000 test samples
+--- Epoch 167 ---
+training loss 167: 2.458310842514038
+correctly classified 8406.0 out of 10000 test samples
+--- Epoch 168 ---
+training loss 168: 2.451937675476074
+correctly classified 8379.0 out of 10000 test samples
+--- Epoch 169 ---
+training loss 169: 2.4541406631469727
+correctly classified 8386.0 out of 10000 test samples
+--- Epoch 170 ---
+training loss 170: 2.454000234603882
+correctly classified 8397.0 out of 10000 test samples
+--- Epoch 171 ---
+training loss 171: 2.4393768310546875
+correctly classified 8423.0 out of 10000 test samples
+--- Epoch 172 ---
+training loss 172: 2.418905019760132
+correctly classified 8428.0 out of 10000 test samples
+--- Epoch 173 ---
+training loss 173: 2.411043405532837
+correctly classified 8396.0 out of 10000 test samples
+--- Epoch 174 ---
+training loss 174: 2.452080249786377
+correctly classified 8330.0 out of 10000 test samples
+--- Epoch 175 ---
+training loss 175: 2.5277297496795654
+correctly classified 8372.0 out of 10000 test samples
+--- Epoch 176 ---
+training loss 176: 2.450615406036377
+correctly classified 8420.0 out of 10000 test samples
+--- Epoch 177 ---
+training loss 177: 2.4016475677490234
+correctly classified 8432.0 out of 10000 test samples
+--- Epoch 178 ---
+training loss 178: 2.392249345779419
+correctly classified 8431.0 out of 10000 test samples
+--- Epoch 179 ---
+training loss 179: 2.397371768951416
+correctly classified 8426.0 out of 10000 test samples
+--- Epoch 180 ---
+training loss 180: 2.4017083644866943
+correctly classified 8429.0 out of 10000 test samples
+--- Epoch 181 ---
+training loss 181: 2.3969531059265137
+correctly classified 8439.0 out of 10000 test samples
+--- Epoch 182 ---
+training loss 182: 2.3880183696746826
+correctly classified 8439.0 out of 10000 test samples
+--- Epoch 183 ---
+training loss 183: 2.3801686763763428
+correctly classified 8443.0 out of 10000 test samples
+--- Epoch 184 ---
+training loss 184: 2.3759350776672363
+correctly classified 8439.0 out of 10000 test samples
+--- Epoch 185 ---
+training loss 185: 2.374103546142578
+correctly classified 8437.0 out of 10000 test samples
+--- Epoch 186 ---
+training loss 186: 2.373072862625122
+correctly classified 8444.0 out of 10000 test samples
+--- Epoch 187 ---
+training loss 187: 2.3715591430664062
+correctly classified 8437.0 out of 10000 test samples
+--- Epoch 188 ---
+training loss 188: 2.369872570037842
+correctly classified 8425.0 out of 10000 test samples
+--- Epoch 189 ---
+training loss 189: 2.3676986694335938
+correctly classified 8436.0 out of 10000 test samples
+--- Epoch 190 ---
+training loss 190: 2.3649234771728516
+correctly classified 8441.0 out of 10000 test samples
+--- Epoch 191 ---
+training loss 191: 2.3639614582061768
+correctly classified 8427.0 out of 10000 test samples
+--- Epoch 192 ---
+training loss 192: 2.3769938945770264
+correctly classified 8427.0 out of 10000 test samples
+--- Epoch 193 ---
+training loss 193: 2.4200077056884766
+correctly classified 8384.0 out of 10000 test samples
+--- Epoch 194 ---
+training loss 194: 2.4226083755493164
+correctly classified 8423.0 out of 10000 test samples
+--- Epoch 195 ---
+training loss 195: 2.3614072799682617
+correctly classified 8457.0 out of 10000 test samples
+--- Epoch 196 ---
+training loss 196: 2.338620185852051
+correctly classified 8467.0 out of 10000 test samples
+--- Epoch 197 ---
+training loss 197: 2.338346481323242
+correctly classified 8464.0 out of 10000 test samples
+--- Epoch 198 ---
+training loss 198: 2.3387789726257324
+correctly classified 8463.0 out of 10000 test samples
+--- Epoch 199 ---
+training loss 199: 2.332711696624756
+correctly classified 8471.0 out of 10000 test samples
+--- Epoch 200 ---
+training loss 200: 2.3237907886505127
+correctly classified 8473.0 out of 10000 test samples
+--- Epoch 201 ---
+training loss 201: 2.3163669109344482
+correctly classified 8478.0 out of 10000 test samples
+--- Epoch 202 ---
+training loss 202: 2.312699317932129
+correctly classified 8477.0 out of 10000 test samples
+--- Epoch 203 ---
+training loss 203: 2.312091827392578
+correctly classified 8479.0 out of 10000 test samples
+--- Epoch 204 ---
+training loss 204: 2.312638759613037
+correctly classified 8474.0 out of 10000 test samples
+--- Epoch 205 ---
+training loss 205: 2.3134257793426514
+correctly classified 8473.0 out of 10000 test samples
+--- Epoch 206 ---
+training loss 206: 2.31449556350708
+correctly classified 8465.0 out of 10000 test samples
+--- Epoch 207 ---
+training loss 207: 2.315751075744629
+correctly classified 8465.0 out of 10000 test samples
+--- Epoch 208 ---
+training loss 208: 2.3148632049560547
+correctly classified 8462.0 out of 10000 test samples
+--- Epoch 209 ---
+training loss 209: 2.3093740940093994
+correctly classified 8476.0 out of 10000 test samples
+--- Epoch 210 ---
+training loss 210: 2.3013248443603516
+correctly classified 8454.0 out of 10000 test samples
+--- Epoch 211 ---
+training loss 211: 2.2996366024017334
+correctly classified 8464.0 out of 10000 test samples
+--- Epoch 212 ---
+training loss 212: 2.3292505741119385
+correctly classified 8408.0 out of 10000 test samples
+--- Epoch 213 ---
+training loss 213: 2.3818554878234863
+correctly classified 8425.0 out of 10000 test samples
+--- Epoch 214 ---
+training loss 214: 2.331871747970581
+correctly classified 8486.0 out of 10000 test samples
+--- Epoch 215 ---
+training loss 215: 2.2851483821868896
+correctly classified 8503.0 out of 10000 test samples
+--- Epoch 216 ---
+training loss 216: 2.273797035217285
+correctly classified 8497.0 out of 10000 test samples
+--- Epoch 217 ---
+training loss 217: 2.2763078212738037
+correctly classified 8496.0 out of 10000 test samples
+--- Epoch 218 ---
+training loss 218: 2.281341075897217
+correctly classified 8493.0 out of 10000 test samples
+--- Epoch 219 ---
+training loss 219: 2.27968692779541
+correctly classified 8499.0 out of 10000 test samples
+--- Epoch 220 ---
+training loss 220: 2.27211856842041
+correctly classified 8503.0 out of 10000 test samples
+--- Epoch 221 ---
+training loss 221: 2.2644524574279785
+correctly classified 8508.0 out of 10000 test samples
+--- Epoch 222 ---
+training loss 222: 2.2589685916900635
+correctly classified 8511.0 out of 10000 test samples
+--- Epoch 223 ---
+training loss 223: 2.2561967372894287
+correctly classified 8507.0 out of 10000 test samples
+--- Epoch 224 ---
+training loss 224: 2.2563164234161377
+correctly classified 8494.0 out of 10000 test samples
+--- Epoch 225 ---
+training loss 225: 2.257702350616455
+correctly classified 8498.0 out of 10000 test samples
+--- Epoch 226 ---
+training loss 226: 2.2592124938964844
+correctly classified 8489.0 out of 10000 test samples
+--- Epoch 227 ---
+training loss 227: 2.259355306625366
+correctly classified 8485.0 out of 10000 test samples
+--- Epoch 228 ---
+training loss 228: 2.2583563327789307
+correctly classified 8482.0 out of 10000 test samples
+--- Epoch 229 ---
+training loss 229: 2.259483575820923
+correctly classified 8482.0 out of 10000 test samples
+--- Epoch 230 ---
+training loss 230: 2.2700040340423584
+correctly classified 8470.0 out of 10000 test samples
+--- Epoch 231 ---
+training loss 231: 2.2971842288970947
+correctly classified 8444.0 out of 10000 test samples
+--- Epoch 232 ---
+training loss 232: 2.2981667518615723
+correctly classified 8476.0 out of 10000 test samples
+--- Epoch 233 ---
+training loss 233: 2.2535836696624756
+correctly classified 8501.0 out of 10000 test samples
+--- Epoch 234 ---
+training loss 234: 2.2309439182281494
+correctly classified 8516.0 out of 10000 test samples
+--- Epoch 235 ---
+training loss 235: 2.2302191257476807
+correctly classified 8512.0 out of 10000 test samples
+--- Epoch 236 ---
+training loss 236: 2.231167793273926
+correctly classified 8523.0 out of 10000 test samples
+--- Epoch 237 ---
+training loss 237: 2.2252676486968994
+correctly classified 8532.0 out of 10000 test samples
+--- Epoch 238 ---
+training loss 238: 2.216099262237549
+correctly classified 8539.0 out of 10000 test samples
+--- Epoch 239 ---
+training loss 239: 2.208876132965088
+correctly classified 8537.0 out of 10000 test samples
+--- Epoch 240 ---
+training loss 240: 2.2049643993377686
+correctly classified 8535.0 out of 10000 test samples
+--- Epoch 241 ---
+training loss 241: 2.204110860824585
+correctly classified 8521.0 out of 10000 test samples
+--- Epoch 242 ---
+training loss 242: 2.2054591178894043
+correctly classified 8523.0 out of 10000 test samples
+--- Epoch 243 ---
+training loss 243: 2.2078261375427246
+correctly classified 8513.0 out of 10000 test samples
+--- Epoch 244 ---
+training loss 244: 2.2117538452148438
+correctly classified 8510.0 out of 10000 test samples
+--- Epoch 245 ---
+training loss 245: 2.220238208770752
+correctly classified 8500.0 out of 10000 test samples
+--- Epoch 246 ---
+training loss 246: 2.2281641960144043
+correctly classified 8501.0 out of 10000 test samples
+--- Epoch 247 ---
+training loss 247: 2.224607467651367
+correctly classified 8514.0 out of 10000 test samples
+--- Epoch 248 ---
+training loss 248: 2.210794448852539
+correctly classified 8512.0 out of 10000 test samples
+--- Epoch 249 ---
+training loss 249: 2.20501971244812
+correctly classified 8522.0 out of 10000 test samples
