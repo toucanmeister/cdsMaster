@@ -1,0 +1,6 @@
+hello.cpp
+setup.py
+hello_cpp.egg-info/PKG-INFO
+hello_cpp.egg-info/SOURCES.txt
+hello_cpp.egg-info/dependency_links.txt
+hello_cpp.egg-info/top_level.txt
