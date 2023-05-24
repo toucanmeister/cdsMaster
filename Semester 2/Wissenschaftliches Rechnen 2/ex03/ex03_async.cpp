@@ -134,7 +134,7 @@ void distribute_data_master(float* local_u, float* local_b) {
 
     float* tmp_u = (float*) std::malloc(sizeof(float)*(BLOCK_SIDE+2)*(BLOCK_SIDE+2));
     float* tmp_b = (float*) std::malloc(sizeof(float)*(BLOCK_SIDE+2)*(BLOCK_SIDE+2));
-
+    MPI_Request send_requests[2*NUM_BLOCKS];
     for (int p=0; p < NUM_BLOCKS; p++) {
         if (p == MASTER) {
             read_block(local_u, u, p); // Master gets their own data
@@ -142,14 +142,21 @@ void distribute_data_master(float* local_u, float* local_b) {
         } else {
             read_block(tmp_u, u, p);
             read_block(tmp_b, b, p);
-            MPI_Send(tmp_u, (BLOCK_SIDE+2)*(BLOCK_SIDE+2), MPI_FLOAT, p, 0, MPI_COMM_WORLD); // Master sends block data to other processes
-            MPI_Send(tmp_b, (BLOCK_SIDE+2)*(BLOCK_SIDE+2), MPI_FLOAT, p, 0, MPI_COMM_WORLD);
+            MPI_Request req_u, req_b;
+            MPI_Isend(tmp_u, (BLOCK_SIDE+2)*(BLOCK_SIDE+2), MPI_FLOAT, p, 0, MPI_COMM_WORLD, &req_u); // Master sends block data to other processes
+            MPI_Isend(tmp_b, (BLOCK_SIDE+2)*(BLOCK_SIDE+2), MPI_FLOAT, p, 0, MPI_COMM_WORLD, &req_b);
+            send_requests[p] = req_u;
+            send_requests[NUM_BLOCKS+p] = req_b;
         }
     }
     free(u);
     free(b);
     free(tmp_u);
     free(tmp_b);
+    for (int p=0; p < NUM_BLOCKS; p++) {
+        if (p == MASTER) continue;
+        MPI_Wait(&send_requests[p], MPI_STATUS_IGNORE); // Wait for all communication to complete
+    }
 }
 
 void distribute_data(float* local_u, float* local_b, int rank) {
@@ -157,7 +164,7 @@ void distribute_data(float* local_u, float* local_b, int rank) {
         distribute_data_master(local_u, local_b);
     } else {
         MPI_Recv(local_u, (BLOCK_SIDE+2)*(BLOCK_SIDE+2), MPI_FLOAT, MASTER, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE); // Processes receive block data from master
-        MPI_Recv(local_b, (BLOCK_SIDE+2)*(BLOCK_SIDE+2), MPI_FLOAT, MASTER, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
+        MPI_Recv(local_b, (BLOCK_SIDE+2)*(BLOCK_SIDE+2), MPI_FLOAT, MASTER, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE); // No reason to use Irecv, the processes have to wait anyways
     }
 }
 
@@ -211,44 +218,58 @@ void write_right_border(float* arr, float* vec) { // write the contents of vec i
 
 
 void exchange_borders_vertical(float* local_u, int rank) {
+    MPI_Request send_bot_req, send_top_req; // Every process sends at most twice
     for (int lower_row=0; lower_row < NUM_BLOCKS_SQRT-1; lower_row++) {
         if (block_row(rank) == lower_row) {
             float* tmp = (float*) std::malloc(sizeof(float)*(BLOCK_SIDE+2));
-            read_bottom_border(local_u, tmp);
             int partner = (block_row(rank)+1)*NUM_BLOCKS_SQRT + block_col(rank); // exchanging values with process in next row
-            MPI_Send(tmp, (BLOCK_SIDE+2), MPI_FLOAT, partner, 0, MPI_COMM_WORLD);
+            read_bottom_border(local_u, tmp);
+            MPI_Isend(tmp, (BLOCK_SIDE+2), MPI_FLOAT, partner, 0, MPI_COMM_WORLD, &send_bot_req);
             MPI_Recv(tmp, (BLOCK_SIDE+2), MPI_FLOAT, partner, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
             write_bottom_border(local_u, tmp);
         }
         if (block_row(rank) == lower_row+1) {
             float* tmp = (float*) std::malloc(sizeof(float)*(BLOCK_SIDE+2));
             int partner = (block_row(rank)-1)*NUM_BLOCKS_SQRT + block_col(rank); // exchanging values with process in previous row
+            read_top_border(local_u, tmp);
+            MPI_Isend(tmp, (BLOCK_SIDE+2), MPI_FLOAT, partner, 0, MPI_COMM_WORLD, &send_top_req);
             MPI_Recv(tmp, (BLOCK_SIDE+2), MPI_FLOAT, partner, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
             write_top_border(local_u, tmp);
-            read_top_border(local_u, tmp);
-            MPI_Send(tmp, (BLOCK_SIDE+2), MPI_FLOAT, partner, 0, MPI_COMM_WORLD);
         }
+    }
+    if (block_row(rank) != 0) { // All but the topmost processes send up
+        MPI_Wait(&send_top_req, MPI_STATUS_IGNORE);
+    }
+    if (block_row(rank) != NUM_BLOCKS_SQRT-1) { // All but the bottommost processes send down
+        MPI_Wait(&send_bot_req, MPI_STATUS_IGNORE);
     }
 }
 
 void exchange_borders_horizontal(float* local_u, int rank) {
+    MPI_Request send_right_req, send_left_req; // Every process sends at most twice
     for (int lower_col=0; lower_col < NUM_BLOCKS_SQRT-1; lower_col++) {
         if (block_col(rank) == lower_col) {
             float* tmp = (float*) std::malloc(sizeof(float)*(BLOCK_SIDE+2));
-            read_right_border(local_u, tmp);
             int partner = block_row(rank)*NUM_BLOCKS_SQRT + block_col(rank)+1; // exchanging values with process in next column
-            MPI_Send(tmp, (BLOCK_SIDE+2), MPI_FLOAT, partner, 0, MPI_COMM_WORLD);
+            read_right_border(local_u, tmp);
+            MPI_Isend(tmp, (BLOCK_SIDE+2), MPI_FLOAT, partner, 0, MPI_COMM_WORLD, &send_right_req);
             MPI_Recv(tmp, (BLOCK_SIDE+2), MPI_FLOAT, partner, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
             write_right_border(local_u, tmp);
         }
         if (block_col(rank) == lower_col+1) {
             float* tmp = (float*) std::malloc(sizeof(float)*(BLOCK_SIDE+2));
             int partner = block_row(rank)*NUM_BLOCKS_SQRT + block_col(rank)-1; // exchanging values with process in previous column
+            read_left_border(local_u, tmp);
+            MPI_Isend(tmp, (BLOCK_SIDE+2), MPI_FLOAT, partner, 0, MPI_COMM_WORLD, &send_left_req);
             MPI_Recv(tmp, (BLOCK_SIDE+2), MPI_FLOAT, partner, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
             write_left_border(local_u, tmp);
-            read_left_border(local_u, tmp);
-            MPI_Send(tmp, (BLOCK_SIDE+2), MPI_FLOAT, partner, 0, MPI_COMM_WORLD);
         }
+    }
+    if (block_row(rank) != 0) { // All but the leftmost processes send left
+        MPI_Wait(&send_left_req, MPI_STATUS_IGNORE);
+    }
+    if (block_row(rank) != NUM_BLOCKS_SQRT-1) { // All but the rightmost processes send right
+        MPI_Wait(&send_right_req, MPI_STATUS_IGNORE);
     }
 }
 
@@ -313,6 +334,7 @@ int main(int argc, char** argv) {
         fill_in_exact_solution(u_exact);
         //std::cout << mean_error(u, u_exact) << std::endl;
         print_array(u_exact);
+        //print_array(u);
         free(u);
         free(u_exact);
     }

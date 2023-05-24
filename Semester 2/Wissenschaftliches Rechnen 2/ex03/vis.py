@@ -2,10 +2,10 @@ import matplotlib.pyplot as plt
 import numpy as np 
 
 
-img = np.genfromtxt('u_exact.csv', delimiter=' ')
+img = np.genfromtxt('vis/u_exact.csv', delimiter=' ')
 plt.imshow(img, cmap='magma')
-plt.savefig('u_exact.png')
+plt.savefig('vis/u_exact.png')
 
-img = np.genfromtxt('u.csv', delimiter=' ')
+img = np.genfromtxt('vis/u.csv', delimiter=' ')
 plt.imshow(img, cmap='magma')
-plt.savefig('u.png')
+plt.savefig('vis/u.png')
