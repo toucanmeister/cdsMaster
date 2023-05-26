@@ -1,14 +1,17 @@
 #include <iostream>
 #include <cstdlib>
 #include <mpi.h>
+#include <chrono>
 #include <cmath>
 
-#define N 100 // N+2 should be divisible by NUM_BLOCKS_SQRT
-#define NUM_BLOCKS_SQRT 2
-#define NUM_BLOCKS NUM_BLOCKS_SQRT*NUM_BLOCKS_SQRT // Number of processes has to be NUM_BLOCKS
-#define BLOCK_SIDE (N+2) / NUM_BLOCKS_SQRT
-#define NUM_ITER 10000
-#define MASTER 0
+#define N  100 // N+2 should be divisible by NUM_BLOCKS_SQRT
+#define NUM_BLOCKS_SQRT  2
+#define NUM_BLOCKS  NUM_BLOCKS_SQRT*NUM_BLOCKS_SQRT // Number of processes has to be NUM_BLOCKS
+#define BLOCK_SIDE  (N+2) / NUM_BLOCKS_SQRT
+#define FULL_BLOCK_SIZE  (BLOCK_SIDE+2)*(BLOCK_SIDE+2)
+#define MASTER  0
+#define EPS  1E-9
+#define NUM_MEASUREMENTS  10
 
 float g(float x, float y) {
     return 0.0;
@@ -132,8 +135,8 @@ void distribute_data_master(float* local_u, float* local_b) {
     float* b = (float*) std::malloc(sizeof(float)*(N+2)*(N+2));
     initialize_right_side(b);
 
-    float* tmp_u = (float*) std::malloc(sizeof(float)*(BLOCK_SIDE+2)*(BLOCK_SIDE+2));
-    float* tmp_b = (float*) std::malloc(sizeof(float)*(BLOCK_SIDE+2)*(BLOCK_SIDE+2));
+    float* tmp_u = (float*) std::malloc(sizeof(float)*FULL_BLOCK_SIZE);
+    float* tmp_b = (float*) std::malloc(sizeof(float)*FULL_BLOCK_SIZE);
 
     for (int p=0; p < NUM_BLOCKS; p++) {
         if (p == MASTER) {
@@ -142,8 +145,8 @@ void distribute_data_master(float* local_u, float* local_b) {
         } else {
             read_block(tmp_u, u, p);
             read_block(tmp_b, b, p);
-            MPI_Send(tmp_u, (BLOCK_SIDE+2)*(BLOCK_SIDE+2), MPI_FLOAT, p, 0, MPI_COMM_WORLD); // Master sends block data to other processes
-            MPI_Send(tmp_b, (BLOCK_SIDE+2)*(BLOCK_SIDE+2), MPI_FLOAT, p, 0, MPI_COMM_WORLD);
+            MPI_Send(tmp_u, FULL_BLOCK_SIZE, MPI_FLOAT, p, 0, MPI_COMM_WORLD); // Master sends block data to other processes
+            MPI_Send(tmp_b, FULL_BLOCK_SIZE, MPI_FLOAT, p, 0, MPI_COMM_WORLD);
         }
     }
     free(u);
@@ -156,8 +159,8 @@ void distribute_data(float* local_u, float* local_b, int rank) {
     if (rank == MASTER) {
         distribute_data_master(local_u, local_b);
     } else {
-        MPI_Recv(local_u, (BLOCK_SIDE+2)*(BLOCK_SIDE+2), MPI_FLOAT, MASTER, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE); // Processes receive block data from master
-        MPI_Recv(local_b, (BLOCK_SIDE+2)*(BLOCK_SIDE+2), MPI_FLOAT, MASTER, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
+        MPI_Recv(local_u, FULL_BLOCK_SIZE, MPI_FLOAT, MASTER, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE); // Processes receive block data from master
+        MPI_Recv(local_b, FULL_BLOCK_SIZE, MPI_FLOAT, MASTER, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
     }
 }
 
@@ -269,34 +272,45 @@ void gather_data_master(float* local_u, float* u, int size) {
         if (p == MASTER) {
             tmp = local_u;
         } else {
-            tmp = (float*) std::malloc(sizeof(float)*(BLOCK_SIDE+2)*(BLOCK_SIDE+2));
-            MPI_Recv(tmp, (BLOCK_SIDE+2)*(BLOCK_SIDE+2), MPI_FLOAT, p, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
+            tmp = (float*) std::malloc(sizeof(float)*FULL_BLOCK_SIZE);
+            MPI_Recv(tmp, FULL_BLOCK_SIZE, MPI_FLOAT, p, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
         }
         write_block(tmp, u, p);
     }
 }
 
 void gather_data(float* local_u) {
-    MPI_Send(local_u, (BLOCK_SIDE+2)*(BLOCK_SIDE+2), MPI_FLOAT, MASTER, 0, MPI_COMM_WORLD);
+    MPI_Send(local_u, FULL_BLOCK_SIZE, MPI_FLOAT, MASTER, 0, MPI_COMM_WORLD);
 }
 
-int main(int argc, char** argv) {
-    int rank, size;
-    MPI_Init(&argc,&argv);
-    MPI_Comm_size(MPI_COMM_WORLD,&size);
-    MPI_Comm_rank(MPI_COMM_WORLD,&rank);
+bool is_max_change_below_eps(float* local_u_new, float* local_u_old) {
+    float local_max_change = 0;
+    for (int i=0; i < FULL_BLOCK_SIZE; i++) {
+        float change = fabs(local_u_new[i] - local_u_old[i]);
+        if (change > local_max_change) {
+            local_max_change = change;
+        }
+    }
+    float max_change;
+    MPI_Allreduce(&local_max_change, &max_change, 1, MPI_FLOAT, MPI_MAX, MPI_COMM_WORLD);
+    return max_change < EPS;
+}
 
-    float* local_u_old = (float*) std::malloc(sizeof(float) * (BLOCK_SIDE+2)*(BLOCK_SIDE+2)); // Border for values
-    float* local_u_new = (float*) std::malloc(sizeof(float) * (BLOCK_SIDE+2)*(BLOCK_SIDE+2)); // that are to be received
-    float* local_b     = (float*) std::malloc(sizeof(float) * (BLOCK_SIDE+2)*(BLOCK_SIDE+2)); // from other processesS
+float* solve_problem(int size, int rank) {
+    float* local_u_old = (float*) std::malloc(sizeof(float) * FULL_BLOCK_SIZE); // Border for values
+    float* local_u_new = (float*) std::malloc(sizeof(float) * FULL_BLOCK_SIZE); // that are to be received
+    float* local_b     = (float*) std::malloc(sizeof(float) * FULL_BLOCK_SIZE); // from other processesS
 
     distribute_data(local_u_old, local_b, rank); // each process receives its own block in local_u_old and local_b
-    memcpy(local_u_new, local_u_old, sizeof(float)*(BLOCK_SIDE+2)*(BLOCK_SIDE+2)); 
+    memcpy(local_u_new, local_u_old, sizeof(float)*FULL_BLOCK_SIZE); 
 
-    for (int iteration=0; iteration < NUM_ITER; iteration++) {
+    int iterations = 0;
+    while(true) {
+        iterations++;
         exchange_borders(local_u_old, rank);
         jacobi_step(local_u_old, local_u_new, local_b);
         swap(&local_u_old, &local_u_new); // this iterations u_new becomes next iteration's u_old
+        if (is_max_change_below_eps(local_u_old, local_u_new)) break;
     }
     
     float* u; // only used by master
@@ -307,19 +321,53 @@ int main(int argc, char** argv) {
         gather_data(local_u_old);
     }
     MPI_Barrier(MPI_COMM_WORLD);
-
     if (rank == MASTER) {
-        float* u_exact = (float*) std::malloc(sizeof(float)*(N+2)*(N+2));
-        fill_in_exact_solution(u_exact);
-        //std::cout << mean_error(u, u_exact) << std::endl;
-        print_array(u_exact);
-        free(u);
-        free(u_exact);
+        //std::cout << "Took " << iterations << " iterations" << std::endl;
     }
-
     free(local_u_old);
     free(local_u_new);
     free(local_b);
+    return u;
+}
+
+int main(int argc, char** argv) {
+    int rank, size;
+    MPI_Init(&argc,&argv);
+    MPI_Comm_size(MPI_COMM_WORLD,&size);
+    MPI_Comm_rank(MPI_COMM_WORLD,&rank);
+
+    /* SOLVING ONCE
+    float* u = solve_problem(size, rank);    
+    if (rank == MASTER) {
+        float* u_exact = (float*) std::malloc(sizeof(float)*(N+2)*(N+2));
+        fill_in_exact_solution(u_exact);
+        std::cout << mean_error(u, u_exact) << std::endl;
+        free(u);
+        free(u_exact);
+    }
+    */
+
+    ///* MEASURING RUNTIME
+    float* u;
+    double mean_runtime = 0;
+    for (int measurement=0; measurement < NUM_MEASUREMENTS; measurement++) {
+        MPI_Barrier(MPI_COMM_WORLD);
+        std::chrono::_V2::system_clock::time_point begin;
+        if (rank == MASTER) begin = std::chrono::high_resolution_clock::now();
+        u = solve_problem(size, rank);
+        MPI_Barrier(MPI_COMM_WORLD);
+        if (rank == MASTER) {
+            auto end = std::chrono::high_resolution_clock::now();
+            auto elapsed = std::chrono::duration_cast<std::chrono::milliseconds>(end - begin);
+            mean_runtime += ((double) elapsed.count()) / NUM_MEASUREMENTS;
+        }
+    }
+    if (rank == MASTER) {
+        std::cout << "Took " << mean_runtime << " ms on average" << std::endl;
+        free(u);
+    }
+    //*/
+    
     MPI_Finalize();
     return 0;
 }

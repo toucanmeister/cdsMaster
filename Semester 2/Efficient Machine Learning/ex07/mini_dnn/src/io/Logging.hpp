@@ -5,6 +5,7 @@
 #include <iostream>
 
 #define MINI_DNN_LOG_INFO std::cout << ""
+#define MINI_DNN_LOG_ERROR std::cerr << ""
 
 namespace mini_dnn {
   namespace io {

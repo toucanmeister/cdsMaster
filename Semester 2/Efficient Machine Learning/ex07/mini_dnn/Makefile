@@ -9,19 +9,34 @@ PYTORCH_INCLUDE = $(shell python -c 'from torch.utils.cpp_extension import inclu
 PYTORCH_LINK = $(shell python -c 'from torch.utils.cpp_extension import library_paths; [print(p) for p in library_paths()]')
 
 CXXFLAGS += $(foreach inc,$(PYTORCH_INCLUDE),-isystem$(inc)) -fopenmp
-LDFLAGS += $(foreach lin,$(PYTORCH_LINK),-L$(lin)) -lc10 -ltorch -ltorch_cpu -ldl
+LDFLAGS += $(foreach lin,$(PYTORCH_LINK),-L$(lin)) -lc10 -ltorch -ltorch_cpu -ldl ${LIBXSMM_DIR}/lib/libxsmm.a
 RPATHS += $(foreach lin,$(PYTORCH_LINK),-Wl,-rpath,$(lin))
 
 $(info $$CXXFLAGS is [${CXXFLAGS}])
 $(info $$LDFLAGS is [${LDFLAGS}])
 
-matmul: src/backend/MatmulAtenBlocked.cpp src/backend/MatmulAtenBlocked.test.cpp src/backend/MatmulReluAten.cpp src/backend/MatmulReluAten.test.cpp
+#
+# Matmul
+#
+${BUILD_DIR}/backend/MatmulAtenBlocked.o: src/backend/MatmulAtenBlocked.cpp
 		$(CXX) ${OPTIONS} ${CXXFLAGS} -c src/backend/MatmulAtenBlocked.cpp -o ${BUILD_DIR}/backend/MatmulAtenBlocked.o
+
+${BUILD_DIR}/tests/MatmulAtenBlocked.test.o: src/backend/MatmulAtenBlocked.test.cpp
 		$(CXX) ${OPTIONS} ${CXXFLAGS} -c src/backend/MatmulAtenBlocked.test.cpp -o ${BUILD_DIR}/tests/MatmulAtenBlocked.test.o
 
+${BUILD_DIR}/backend/MatmulLibxsmm.o: src/backend/MatmulLibxsmm.cpp
+		$(CXX) ${OPTIONS} ${CXXFLAGS} -c src/backend/MatmulLibxsmm.cpp -I${LIBXSMM_DIR}/include -o ${BUILD_DIR}/backend/MatmulLibxsmm.o
+
+${BUILD_DIR}/tests/MatmulLibxsmm.test.o: src/backend/MatmulLibxsmm.test.cpp
+		$(CXX) ${OPTIONS} ${CXXFLAGS} -c src/backend/MatmulLibxsmm.test.cpp -o ${BUILD_DIR}/tests/MatmulLibxsmm.test.o
+
+${BUILD_DIR}/backend/MatmulReluAten.o: src/backend/MatmulReluAten.cpp
 		$(CXX) ${OPTIONS} ${CXXFLAGS} -c src/backend/MatmulReluAten.cpp -I${LIBXSMM_DIR}/include -o ${BUILD_DIR}/backend/MatmulReluAten.o
+
+${BUILD_DIR}/tests/MatmulReluAten.test.o: src/backend/MatmulReluAten.test.cpp
 		$(CXX) ${OPTIONS} ${CXXFLAGS} -c src/backend/MatmulReluAten.test.cpp -I${LIBXSMM_DIR}/include -o ${BUILD_DIR}/tests/MatmulReluAten.test.o
 
+matmul: ${BUILD_DIR}/backend/MatmulAtenBlocked.o ${BUILD_DIR}/tests/MatmulAtenBlocked.test.o ${BUILD_DIR}/backend/MatmulLibxsmm.o ${BUILD_DIR}/tests/MatmulLibxsmm.test.o ${BUILD_DIR}/backend/MatmulReluAten.o ${BUILD_DIR}/tests/MatmulReluAten.test.o
 		$(CXX) ${OPTIONS} ${CXXFLAGS} src/performance_matmul.cpp  ${BUILD_DIR}/backend/Matmul*.o -o ${BUILD_DIR}/performance_matmul ${RPATHS} ${LDFLAGS}
 
 all: matmul

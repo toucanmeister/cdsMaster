@@ -1,0 +1,17 @@
+each avg of 50 runs with N=100
+
+P  | (a)sync | run time (ms)
+-------------------------------
+1  | sync    | 1884
+4  | sync    | 701
+9  | sync    | 532
+16 | sync    | 383
+25 | sync    | 432
+36 | sync    | 456
+-------------------------------
+1  | async   | 1793
+4  | async   | 572
+9  | async   | 432
+16 | async   | 319
+25 | async   | 343
+36 | async   | 374

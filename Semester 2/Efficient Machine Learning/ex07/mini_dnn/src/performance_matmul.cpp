@@ -144,5 +144,5 @@ int main() {
   MINI_DNN_LOG_INFO << "  FP32 GFLOPS:         " << l_gflops << std::endl;
 
   // TODO: benchmark the performance of your new implementations, i.e.,
-  //       MatmulAtenBlocked nad MatmulLibxsmm
+  //       MatmulAtenBlocked and MatmulLibxsmm
 }
