@@ -1,8 +1,8 @@
-#include "MatmulLibxsmm.h"
+#include "MatmulReluLibxsmm.h"
 #include <libxsmm.h>
 
-at::Tensor mini_dnn::backend::MatmulLibxsmm::forward( at::Tensor i_x,
-                                                      at::Tensor i_w ) {
+at::Tensor mini_dnn::backend::MatmulReluLibxsmm::forward( at::Tensor i_x,
+                                                          at::Tensor i_w ) {
   // get involved sizes
   Matmul::Sizes l_sizes = Matmul::getSizes( i_x,
                                             i_w );
@@ -48,6 +48,18 @@ at::Tensor mini_dnn::backend::MatmulLibxsmm::forward( at::Tensor i_x,
           0,
           sizeof(libxsmm_gemm_param) );
 
+  libxsmm_meltw_unary_shape l_unary_shape = libxsmm_create_meltw_unary_shape( l_m,
+                                                                              l_n,
+                                                                              l_m,
+                                                                              l_m,
+                                                                              LIBXSMM_DATATYPE_F32,
+                                                                              LIBXSMM_DATATYPE_F32,
+                                                                              LIBXSMM_DATATYPE_F32);
+  // generate kernel
+  libxsmm_meltwfunction_unary l_relu = libxsmm_dispatch_meltw_unary_v2( LIBXSMM_MELTW_TYPE_UNARY_RELU,
+                                    l_unary_shape,
+                                    LIBXSMM_MELTW_FLAG_UNARY_NONE );
+
   // prepare data for blocked LIBXSMM calls
   at::Tensor l_y = at::zeros( {l_sizes.kb, l_sizes.nb, l_sizes.bk, l_sizes.bn} );
 
@@ -78,6 +90,11 @@ at::Tensor mini_dnn::backend::MatmulLibxsmm::forward( at::Tensor i_x,
         l_param.c.primary = l_ptr_c + l_offset_c;
 
         l_kernel_forward.gemm( &l_param );
+
+        libxsmm_meltw_unary_param l_param_relu;
+        l_param_relu.in.primary = l_offset_c;
+        l_param_relu.out.primary = l_offset_c;
+        l_relu( &l_param_relu );
       }
     }
   }
