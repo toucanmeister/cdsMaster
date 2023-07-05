@@ -1,0 +1,158 @@
+1. Data description
+ a. How does your project generate new data?
+  - existing DFG template in RDMO
+ b. Is existing data reused?
+  - existing DFG template in RDMO
+  - remove free text input for "No, no existing data will be used"
+  - remove option "After own research, no suitable data are available"
+ c. Which data types (in terms of data formats like image data, text data or measurement data)
+  - add option for .csv
+  - Question Layout, with subquestions when a checkbox is selected:
+   [ ] Do you use text data?
+     [ ] .docx
+	 [ ] ... (checkboxes for data formats defined in DFG RDMO template)
+   [ ] Do you use tabular data?
+     [ ] .csv
+	 [ ] ...
+   [ ] Do you use picture, video or audio data?
+     [ ] ...
+ d. In what way is the data processed in your project?
+   [free text field]
+ e. What is the anticipated data volume?
+   ( ) about: [number field] [drop-down-menu: MB, GB, TB, PB]
+   ( ) exact size: [number field] [drop-down-menu: MB, GB, TB, PB]
+   ( ) not yet defined
+ f. Is the data reproducible?
+	( ) yes
+	  How much effort is associated with the reproduction of this data?
+	    [free text field]
+	( ) no
+	
+
+2. Documentation and data quality
+ a. What approaches are being taken to describe the data in a comprehensible manner (such as the use of available metadata, documentation standards or ontologies)?
+   - existing DFG template in RDMO
+   - change option "As part of the project, it is determined..." to "The usage of a specific approach is planned, but not yet clearly specified."
+   - add BE data policy as pre-chosen option
+ b. Does your project use data that is only readable using special software?
+   ( ) no
+   ( ) yes
+     Which digital methods and tools (e.g. software) are required to use the data?
+      - existing DFG template in RDMO
+      // we don't know any specific tools that are *needed* for some data, but if they are known to you, you could add radio buttons in addition to the free text entries
+	  - for each tool/method: How is this tool/method used? [free text field]
+ c. What measures are being adopted to ensure high data quality?
+   - existing DFG template in RDMO
+ d. Are quality controls foreseen and if so, how do they operate?
+   - existing DFG template in RDMO
+   - group options by "data collection", "digitization and data entry" and "data verification"
+   - expand options of one group when checkbox is ticked (like in question 1c)
+ 
+3. Storage and technical archiving the project
+ a. How are data to be stored and archived throughout the project duration?
+   - existing DFG template in RDMO
+   - add "BExIS" as pre-chosen answer to "Facility's central storage and data management service: [text field]"
+   - remove option "Central solution..." because it is included in "Facility's central storage and data management service: [text field]"
+   - remove option "Decentralized solution..." because it is indistinguishable from "Facility's central storage and data management service: [text field]" and "Central cloud service of the facility. [text field]" (OR: change the wording to make it distinct)
+ b. What is in place to secure sensitive data throughout the project duration (access and usage rights)?
+   [ ] non-public dataset on BExIS
+   [ ] password protection on local machines
+   [ ] role management for remote central storage and data management
+   [ ] other: [free text field]
+
+4. Legal obligations and conditions
+ a. Do you anticipate any implications or restrictions regarding subsequent publication or accessibility?
+   - existing DFG template in RDMO
+ b. Are there any significant research codes or professional standards to be taken into account?
+   - existing DFG template in RDMO
+   - add pre-chosen option "BE Data Policy, specifically section B, §1"
+ c. How are aspects of use and copyright law as well as ownership issues considered?
+   - existing DFG template in RDMO
+ d. Which further legal specifics apply to the handling of research data in your project?
+   - existing DFG template in RDMO
+ e. If applicable, what license will you use for your data?
+   [x] Creative Commons Attribution Non Commercial License (CC-BY-NC)
+   [ ] Other: [free text field]
+     Why is another license needed? [free text field]	 
+
+5. Data exchange and long-term data accessibility
+ a. Are these data suitable for subsequent use in other contexts?
+   - existing DFG template in RDMO
+ b. Which criteria are used to select research data to make it available for subsequent use by others? //** Maybe change this question
+   - existing DFG template in RDMO
+   - remove duplicate option "For reproduction or verification of scientific results"
+ c. When and under which conditions is the research data available for use by third parties?
+   ( ) In all probability already during the project
+   ( ) Immediately after the end of the project
+   ( ) 3 years after the end of the project
+   ( ) 5 years after the end of the project (this requires a message to the data manager)
+   ( ) [number field] years after the end of the project (if longer than 5 years, this requires a justification to the data manager, who consults with the Data Management and Publication Committee)
+   ( ) The data record will not be usable for third parties (this requires a justification to the data manager, who consults with the Data Management and Publication Committee)
+   ( ) This dataset is reused by us and already published
+ d. Are you planning to archive your data in a suitable infrastructure? If so, how and where?
+   - existing DFG template in RDMO
+   - append "(BExIS)" to option "Archive service of the institution" and make it pre-chosen
+
+6. Responsibilities and resources
+ a. Who is responsible for adequate handling of the research data (description of roles and responsibilities within the project)?
+   - Entries of the following form:
+     Role: [drop-down-menu: Data Manager, Rights Holder, Project Leader, Contact Person, Metadata Creator, Data Creator, Data Collector]
+     First Name: [text field]
+	 Last Name: [text field]
+	 ORCID ID (if existing): [4 digit field] [4 digit field] [4 digit field] [4 digit field]
+	 Professional Position: [text field]
+	 Institute: [text field]
+	 E-Mail: [text field]
+	 Phone number: [text field]
+	 // Add definitions from the BE Data Policy for the roles
+ b. Who is responsible for curating the data once the project has ended?
+   - Same as last question
+ c. Which resources (costs; time or other) are required to implement adequate handling of research data within the project?
+    - existing DFG template in RDMO
+	- group infrastructure resource options
+	- pre-choose option "RDMO"
+ d. How will these resources be raised?
+    [ ] External funding: [text field]
+	[ ] Other: [text field]
+	// if more possibilities are known, they should be added to this question
+
+7. Sub-Project Section
+ a. What is the official name of your research project?
+   [text field]
+ b. Who are the principle investigators?
+   - list people from question 6a along with checkboxes
+   - option to create new entries of the same type as in question 6a
+ c. In which of the following categories does your project fit? 
+   drop-down-menu: [Algen und Protisten, Bakteriologie und Virologie, Botanik, Ökologie und Umwelt, Geowissenschaften, Mikrobiologie, Mykologie, Paläontologie, Zoologie, Andere]
+   // if its possible that one project belongs to multiple categories, then do checkboxes instead
+ d. Which of the following types fits your project?
+   drop-down-menu: [Feldarbeit, Beobachtend Experimentell, Labor, Simulation, Assimilation, Modellierung, Andere] 
+   // if its possible that one project belongs to multiple types, then do checkboxes instead
+ e. Who is the person to contact when it comes to questions about your research data during the projects run time?
+   - list people from question 6a along with checkboxes
+ f. Do you hand in physical objects along with your data?
+  ( ) no
+  ( ) yes
+    fa. Are your objects alive or dead?
+	  ( ) alive 
+	  ( ) dead
+	  ( ) some are alive, some dead
+	  // one could add an option for things that were never alive, like rocks (if this is interesting to reviewers)
+    fb. Is your object taxon based on a taxon?
+	  ( ) yes
+	  ( ) no
+	  // we don't really understand this question
+ g. Are you primarily generating sequence data?
+   ( ) yes
+   ( ) no
+ h. Do you need a persistent identifier (i.e. ePIC PID / DOI) for your data?
+   ( ) yes
+     ( ) ePIC PID
+	 ( ) DOI
+	 ( ) Other: [text field]
+   ( ) no
+
+
+Changelog:
+- modified order and some questions to fit to the dfg template as it is implemented in RDMO
+- added UI specifications

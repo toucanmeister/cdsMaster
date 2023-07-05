@@ -1,0 +1,1 @@
+I could not get the color map to look better for the labels, so I only added it to one image.

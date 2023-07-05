@@ -1,0 +1,28 @@
+Original UNet:
+-------------------------------------
+training epoch 100
+  processed 94 batches
+  training loss: 5.424385514110327
+applying net to test data
+  test loss: 16.239611893892288
+  test accuracy: 0.8454221721369207
+
+Took 3013.317095041275 seconds.
+-------------------------------------
+
+
+
+UNet trained on 4 GPUs:
+-------------------------------------
+training epoch 100
+  processed 94 batches
+  training loss: 0.5042236614972353
+applying net to test data
+  test loss: 12.782075479626656
+  test accuracy: 0.9276927736300887
+
+Took 1009.9521262645721 seconds.
+-------------------------------------
+
+// Note: There may be mistakes in the calculation of loss and accuracy on the 4-GPU-trained net, the numbers seem too good.
+// But the reduction in time seems reasonable.

@@ -1,0 +1,19 @@
+ ~ Max Pooling ~
+-----------------
+In an n*m max pooling layer, each output-pixel is computed as the maximum of n*m input-pixels in a rectangle around a center.
+This reduces the number of pixels.
+
+ ~ Upsampling ~
+----------------
+Upsampling is used as the inverse operation of pooling in the UNet architecture, increasing the number of pixels.
+Each pixel is computed as the bilinear interpolation of its 4 neighbor pixels in the input. (bilinear interpolation = inverse-distance-weighted sum)
+
+ ~ Skip Connection ~
+---------------------
+We refer to a connection of an earlier layer of a neural network to a later layer as a skip connection if there is at least one (skipped) layer between the two connected ones.
+The output of the earlier layer is usually concatenated to the input of the later layer.
+
+ ~ Batch Normalization ~
+-------------------------
+Batch normalization is a technique to make neural networks more stable and make them train faster.
+Using batch normalization means re-centering and re-scaling the inputs of a layer before they are used, by subtracting the mean and dividing by the standard deviation of the batch.

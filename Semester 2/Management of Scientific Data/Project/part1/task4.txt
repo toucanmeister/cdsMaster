@@ -1,0 +1,34 @@
+Proposed UI changes to the DFG catalog:
+
+"Are existing data reused?"
+- remove free text input for "No, no existing data will be used"
+- remove option "After own research, no suitable data are available"
+
+"Which data types in terms of data formats (e.g. image data, text data or measurement data) arise in your project?"
+- add option for .csv files
+
+"What approaches are being taken to describe the data in a comprehensible manner (such as the use of existing standards for metadata or documentation, or ontologies)?"
+- change option "As part of the project, it is determined..." to "The usage of a specific approach is planned, but not yet clearly specified."
+
+"How are data stored and secured during the project duration?"
+- remove option "Central solution..." because it is included in "Facility's central storage and data management service: [text field]"
+- remove option "Decentralized solution..." because it is indistinguishable from "Facility's central storage and data management service: [text field]" and "Central cloud service of the facility. [text field]" (OR: change the wording to make it distinct)
+
+"Do you anticipate any implications or restrictions regarding subsequent publication or accessibility?"
+- change option "Yes, the data cannot be published due to the following legal aspects: [text field]" to "Yes, the data cannot be published due to the following other legal aspects: [text field]"
+
+"Which criteria select research data to make them available for subsequent use by others?"
+- remove duplicate option "For reproduction or verification of scientific results"
+
+"Are you planning to archive your data in a suitable infrastructure? How and where?"
+- change option "Cross-disciplinary archive services such as RADAR: [text field]" to "Cross-disciplinary archive services (i.e. RADAR): [text field]"
+
+"Who is responsible for adequate handling of the research data (description of the roles and responsibilities within the project)?"
+- add text fields for each item; each item should look like this:
+	"Title: [text field]   First Name: [text field]   Last Name: [text field]   ORCID ID: [field allowing 4 digits] [field allowing 4 digits] [field allowing 4 digits] [field allowing 4 digits]
+
+"Who is responsible for adequate handling of the research data (description of the roles and responsibilities within the project)?"
+- same change as the last question
+
+"Which resources (costs, time or other) are required to implement adequate handling of research data within the project?"
+- only show option "GitLab/versioning: [text field]" if the corresponding option in question "How are data stored and secured during the project duration?" was ticked
