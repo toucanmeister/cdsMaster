@@ -1,0 +1,112 @@
+{
+    "activation_encodings": {
+        "flatten": {
+            "input": {
+                "0": {
+                    "bitwidth": 8,
+                    "dtype": "int",
+                    "is_symmetric": "False",
+                    "max": 1.0,
+                    "min": 0.0,
+                    "offset": 0,
+                    "scale": 0.00392156862745098
+                }
+            },
+            "output": {
+                "0": {
+                    "bitwidth": 8,
+                    "dtype": "int",
+                    "is_symmetric": "False",
+                    "max": 1.0,
+                    "min": 0.0,
+                    "offset": 0,
+                    "scale": 0.00392156862745098
+                }
+            }
+        },
+        "stack.1": {
+            "output": {
+                "0": {
+                    "bitwidth": 8,
+                    "dtype": "int",
+                    "is_symmetric": "False",
+                    "max": 4.138113021850586,
+                    "min": 0.0,
+                    "offset": 0,
+                    "scale": 0.016227894203335633
+                }
+            }
+        },
+        "stack.3": {
+            "output": {
+                "0": {
+                    "bitwidth": 8,
+                    "dtype": "int",
+                    "is_symmetric": "False",
+                    "max": 5.026632308959961,
+                    "min": 0.0,
+                    "offset": 0,
+                    "scale": 0.019712283564548867
+                }
+            }
+        },
+        "stack.4": {
+            "output": {
+                "0": {
+                    "bitwidth": 8,
+                    "dtype": "int",
+                    "is_symmetric": "False",
+                    "max": 16.65583255992216,
+                    "min": -10.923630445143756,
+                    "offset": -101,
+                    "scale": 0.10815475688261145
+                }
+            }
+        }
+    },
+    "excluded_layers": [],
+    "param_encodings": {
+        "stack.0.weight": [
+            {
+                "bitwidth": 8,
+                "dtype": "int",
+                "is_symmetric": "True",
+                "max": 0.09109781682491302,
+                "min": -0.09181512246920367,
+                "offset": -128,
+                "scale": 0.0007173056442906537
+            }
+        ],
+        "stack.2.weight": [
+            {
+                "bitwidth": 8,
+                "dtype": "int",
+                "is_symmetric": "True",
+                "max": 0.09442739933729172,
+                "min": -0.09517092216671921,
+                "offset": -128,
+                "scale": 0.0007435228294274939
+            }
+        ],
+        "stack.4.weight": [
+            {
+                "bitwidth": 8,
+                "dtype": "int",
+                "is_symmetric": "True",
+                "max": 0.2924182116985321,
+                "min": -0.2947207173024576,
+                "offset": -128,
+                "scale": 0.00230250560392545
+            }
+        ]
+    },
+    "quantizer_args": {
+        "activation_bitwidth": 8,
+        "dtype": "int",
+        "is_symmetric": true,
+        "param_bitwidth": 8,
+        "per_channel_quantization": false,
+        "quant_scheme": "post_training_tf"
+    },
+    "version": "0.6.1"
+}

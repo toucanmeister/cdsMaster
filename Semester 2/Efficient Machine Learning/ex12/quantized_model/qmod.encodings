@@ -1,0 +1,49 @@
+{
+    "activation_encodings": {
+        "5": [
+            {
+                "bitwidth": 8,
+                "dtype": "int",
+                "is_symmetric": "False",
+                "max": 1.9657727148018633,
+                "min": -2.076743755153581,
+                "offset": -131,
+                "scale": 0.015853005764531154
+            }
+        ],
+        "t.1": [
+            {
+                "bitwidth": 8,
+                "dtype": "int",
+                "is_symmetric": "False",
+                "max": 0.7074509742213231,
+                "min": -0.9325490114735622,
+                "offset": -145,
+                "scale": 0.006431372492921118
+            }
+        ]
+    },
+    "excluded_layers": [],
+    "param_encodings": {
+        "m_layer.weight": [
+            {
+                "bitwidth": 8,
+                "dtype": "int",
+                "is_symmetric": "True",
+                "max": 3.7799999713897705,
+                "min": -3.8097637506920523,
+                "offset": -128,
+                "scale": 0.02976377930228166
+            }
+        ]
+    },
+    "quantizer_args": {
+        "activation_bitwidth": 8,
+        "dtype": "int",
+        "is_symmetric": true,
+        "param_bitwidth": 8,
+        "per_channel_quantization": false,
+        "quant_scheme": "post_training_tf"
+    },
+    "version": "0.6.1"
+}
