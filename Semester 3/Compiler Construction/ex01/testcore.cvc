@@ -1,0 +1,18 @@
+#include "civic.h"
+#include "core.cvc"
+
+export int main() {
+    printlineInt(gcd(15,19)); 
+    printlineInt(gcd(15,18));
+    printlineInt(fac(5));
+    printlineInt(fib(10));
+    printlineInt((int) isprime(15));
+    printlineInt((int) isprime(17));
+
+    return 1;
+}
+
+void printlineInt(int n) {
+    printInt(n);
+    printNewlines(1);
+}

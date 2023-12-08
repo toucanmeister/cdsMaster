@@ -1,0 +1,51 @@
+#include "civic.h"
+#include "array.cvc"
+
+export int main() {
+    int[5] vi = [1, 5, 2, 4, 3];
+    float[5] vf = [1.5, 5.5, 2.5, 4.5, 3.5];
+    int[3,3] mi = [[1, 2, 3], 
+                   [4, 5, 6], 
+                   [7, 8, 9]];
+    float[3,3] mf = [[1.1, 2.2, 3.3], 
+                     [4.4, 5.5, 6.6], 
+                     [7.7, 8.8, 9.9]];
+    float[3,2] a = [[1.0, 0.5], 
+                    [0.5, 1.0], 
+                    [1.0, 1.0]];
+    float[2,2] b = [[1.0, 2.0], 
+                    [3.0, 4.0]];
+    float[3,2] c;
+
+    printIntVec(vi);
+    printNewlines(2);
+    printFloatVec(vf);
+    printNewlines(2);
+
+    printIntMat(mi);
+    printNewlines(2);
+    printFloatMat(mf);
+    printNewlines(2);
+
+    scanIntVec(vi);
+    printIntVec(vi);
+    printNewlines(2);
+
+    scanFloatVec(vf);
+    printFloatVec(vf);
+    printNewlines(2);
+
+    scanIntMat(mi);
+    printIntMat(mi);
+    printNewlines(2);
+
+    scanFloatMat(mf);
+    printFloatMat(mf);
+    printNewlines(2);
+
+    matMul(a, b, c);
+    printFloatMat(c);
+    printNewlines(2);
+
+    return 1;
+}

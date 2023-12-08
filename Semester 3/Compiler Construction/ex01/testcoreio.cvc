@@ -1,0 +1,10 @@
+#include "civic.h"
+#include "coreio.cvc"
+
+export int main() {
+    fibs(10);
+    printNewlines(1);
+    primes(10);
+
+    return 1;
+}

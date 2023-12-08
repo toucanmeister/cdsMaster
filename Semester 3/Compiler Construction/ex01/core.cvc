@@ -1,0 +1,29 @@
+export int gcd(int a, int b) {
+    int tmp;
+    while (b != 0) {
+        tmp = a % b;
+        a = b;
+        b = tmp;
+    }
+    return a;
+}
+
+export int fac(int n) {
+    int result = 1;
+    for (int i = 1, n+1) {
+        result = result * i;
+    }
+    return result;
+}
+
+export int fib(int n) {
+    if (n == 0 || n == 1) return 1;
+    return fib(n-1) + fib(n-2);
+}
+
+export bool isprime(int n) {
+    for (int k = 2, n) {
+        if (n % k == 0) return false;
+    }
+    return true;
+}
