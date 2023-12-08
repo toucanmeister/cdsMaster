@@ -1,0 +1,68 @@
+Original Grammar
+-----------------
+Expr    => Id
+		|  Expr + Expr
+		|  - Expr
+		|  Expr ++
+		|  ( Expr )
+
+
+-------
+| 5.1 |
+-------
+
+Expr    => Expr + Term
+		|  Term
+
+Term    => - Term
+		|  Factor
+
+Factor  => Factor ++
+		|  Foo
+
+Foo		=> ( Expr )
+		|  Id
+
+
+-------
+| 5.2 |
+-------
+
+Expr	=> Term Expr'
+
+Expr'	=> + Term Expr'
+		|  eps
+
+Term	=> - Term
+		| Factor
+
+Factor	=> Foo Factor'
+
+Factor'	=> ++ Factor' 
+		|  eps
+
+Foo		=> ( Expr )
+		|  Id
+
+
+-------
+| 5.3 |
+-------
+
+Start	=> Expr
+
+Expr	=> Term Expr'
+
+Expr'	=> + Term Expr'
+		|  eps
+
+Term	=> - Term
+		| Factor
+
+Factor	=> Foo Factor'
+
+Factor'	=> ++ Factor' 
+		|  eps
+
+Foo		=> ( Expr )
+		|  Id

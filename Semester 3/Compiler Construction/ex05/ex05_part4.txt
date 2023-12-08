@@ -1,0 +1,39 @@
+bool Start():
+	return Expr() && nextToken() == EOF
+
+bool Expr():
+	return Term() && Expr'()
+
+bool Expr'():
+	token = nextToken()
+	match token:
+		ADD 	  => return Term() && Expr'()
+		otherwise => unget(token)
+				     return Eps()
+
+bool Eps():
+	return True
+
+bool Term():
+	token = nextToken()
+	match token:
+		SUB		  => return Term()
+		otherwise => unget(token)
+					 return Factor()
+
+bool Factor():
+	return Foo() && Factor'()
+
+bool Factor'():
+	token = nextToken()
+	match token:
+		INCR	   => return Factor'()
+		otherwise  => unget(token)
+					  return Eps()
+
+bool Foo():
+	token = nextToken()
+	match token:
+		LPAREN    => return Expr() && (nextToken() == RPAREN)
+		ID(_)     => return True
+		otherwise => return False
