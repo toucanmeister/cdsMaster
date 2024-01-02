@@ -1,0 +1,34 @@
+int d = 2;
+int foo ( int a)
+{
+	int b = 1;
+	int c;
+	int f( int x) {
+		int b = x + b ;
+		return b;
+	}
+	int g( int x) {
+		c = f ( x - b );
+		return c + a ;
+	}
+	c = c + g( d - b );
+	return c;
+}
+
+a) 
+foo( 8 ) is called.
+	b is declared and assigned 1.
+	c is declared.
+	the function f is defined.
+	the function g is defined.
+	c is assigned c + g( d - b ).
+	which evaluates to c + g( 1 ).
+	which calls g( 1 ).
+		c is assigned f( x-b ).
+		which calls f ( 0 ).
+			b (local to f) is declared and assigned 0 + 1.
+			f returns b, which evaluates to 1.
+		c is thus assigned 1.
+		g returns c + a, which evaluates to 9.
+	c is thus assigned c + 9, which evaluates to 10.
+	foo returns c, which evaluates to 10.

@@ -1,0 +1,37 @@
+Original:
+
+int d = 2;
+int foo ( int a)
+{
+	int b = 1;
+	int c;
+	int f( int x) {
+		int b = x + b;
+		return b;
+	}
+	int g( int x) {
+		c = f ( x - b );
+		return c + a ;
+	}
+	c = c + g( d - b );
+	return c;
+}
+
+
+Lambda-Lifted:
+
+int d = 2;
+int foo_f ( int x ) {
+	int b = x + b;
+	return b;
+}
+int foo_g ( int *c, int b, int a, int x ) {
+	c = f ( x - b );
+	return c + a;
+}
+int foo( int a ) {
+	int b = 1;
+	int c;
+	c = c + g( &c, b, a, d - b );
+	return c;
+}
