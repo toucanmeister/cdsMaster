@@ -20,7 +20,7 @@ Term    => - Term
 Factor  => Factor ++
 		|  Foo
 
-Foo		=> ( Expr )
+Foo		  => ( Expr )
 		|  Id
 
 
