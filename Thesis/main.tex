@@ -84,25 +84,27 @@ Supervisor: Prof. Dr. Michael Habeck
 \clearpage
 
 \chapter*{Introduction}
-Bayesian statistical models are widely used in traditional small data settings.
+Bayesian models are widely used for statistical inference tasks.
 They provide a way to extract information from data that leads to intuitively interpretable results.
-Because the outcome of a Bayesian model fitting comprises not just the most likely parameter values (as it would in a maximum likelihood model), but a whole probability distribution over all possible parameter values, it is also easy to compute error bounds.
+Because the outcome of a Bayesian model fit comprises not just the most likely parameter values (as it would in a maximum likelihood model), but a whole probability distribution over all possible parameter values, it is also easy to compute error bounds.
 
 The upsides of Bayesian models come at the cost of being more difficult to fit than maximum likelihood models, especially so with increasing model complexity.
-Many techniques have been developed for this purpose, with all state-of-the-art approaches being Monte Carlo methods.
-The most prevalent ones are Gibbs sampling \cite{gibbs}, Metropolis Hastings \cite{metropolishastings} and Hamiltonian Monte Carlo (HMC) \cite{hmc}.
-All of these come with some downsides, however.
-
-A downside that all of these methods share is that they focus purely on the posterior distribution of a model fit and do not compute the evidence term.
+Many techniques have been developed for this purpose, with most state-of-the-art approaches being Monte Carlo methods.
+The most commonly used methods (Gibb sampling \cite{gibbs}, Metropolis Hastings \cite{metropolishastings}, Hamiltonian Monte Carlo (HMC) \cite{hmc}, Slice Sampling \cite{slice_sampling}, etc.) all come with one downside, however.
+These methods focus purely on the posterior distribution of a model fit and do not compute the evidence term.
 The evidence is a useful tool that can be used to compare whole classes of models with respect to how well they fit some data.
-Nested sampling \cite{skilling} is another Monte Carlo approach whose main objective is computing the evidence, although it also generates samples from the posterior.
-This makes it unique among methods for Bayesian model fitting.
-Nested sampling does however have the problem of not being able to use the gradient information of the likelihood in its sampling, which other successful methods like HMC rely heavily upon.
-This makes it difficult to explore the posterior efficiently.
+There exist approaches that allow for computation of the evidence, like Annealed Importance Sampling \cite{annealed_importance_sampling} or Probabilistic Integration \cite{bayesian_cubature}.
+This thesis focuses on one approach called Nested Sampling.
 
-In this thesis, I propose a modified version of Nested Sampling which uses ideas from convex optimization to achieve higher acceptance rates during the crucial likelihood-restricted prior sampling step of Nested Sampling.
-I begin by recapping important background information on the methods and ideas this thesis is based on, including Bayesian statistics, the Nested Sampling algorithm and the barrier method for solving convex optimization problems.
-Following that, using inspiration from the barrier method, I derive Nested Sampling with barriers as an alternative to the standard Nested Sampling algorithm. 
+Introduced by Skilling \cite{skilling}, Nested Sampling is a Monte Carlo method for Bayesian inference whose main objective is computing the evidence, altough it also generates posterior samples.
+Nested sampling contains a step where a samples have to be generated from a likelihood-constricted prior (likelihood-restricted prior sampling or LRPS).
+This step is difficult and, in its original form, cannot make use of likelihood-gradient information, which other successful methods like HMC rely heavily upon.
+
+In this thesis, I propose a modified version of Nested Sampling which uses ideas from convex optimization to introduce likelihood-gradient information into the crucial LRPS step of Nested Sampling.
+I begin by recapping important background information on the methods and ideas this thesis is based on, including Bayesian statistics in general, the Nested Sampling algorithm and the barrier method for solving convex optimization problems.
+Following that, using inspiration from the barrier method, I derive Nested Sampling with Barriers as an alternative to the standard Nested Sampling algorithm.
+I then review some of the variables and parameters introduced by Nested Sampling with Barriers and analyze their effects on the algorithm.
+Finally, I present the results of a benchmark where basic Nested Sampling and Nested Sampling with Barriers in different configurations were run on a set of example problems with varying number of dimensions and modes.
 \addcontentsline{toc}{chapter}{Introduction}
 \pagenumbering{arabic}
 \setcounter{page}{5}
