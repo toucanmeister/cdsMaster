@@ -163,7 +163,7 @@
     </bcf:option>
     <bcf:option type="singlevalued">
       <bcf:key>sortingtemplatename</bcf:key>
-      <bcf:value>nty</bcf:value>
+      <bcf:value>none</bcf:value>
     </bcf:option>
     <bcf:option type="singlevalued">
       <bcf:key>sortsets</bcf:key>
@@ -2351,100 +2351,80 @@
     <bcf:citekey order="5">annealed_importance_sampling</bcf:citekey>
     <bcf:citekey order="6">bayesian_cubature</bcf:citekey>
     <bcf:citekey order="7">skilling</bcf:citekey>
-    <bcf:citekey order="8">jaynes</bcf:citekey>
-    <bcf:citekey order="9">mcelreath</bcf:citekey>
+    <bcf:citekey order="8">hmc_in_ns</bcf:citekey>
+    <bcf:citekey order="9">jaynes</bcf:citekey>
     <bcf:citekey order="10">mcelreath</bcf:citekey>
     <bcf:citekey order="11">mcelreath</bcf:citekey>
     <bcf:citekey order="12">mcelreath</bcf:citekey>
     <bcf:citekey order="13">mcelreath</bcf:citekey>
     <bcf:citekey order="14">mcelreath</bcf:citekey>
     <bcf:citekey order="15">mcelreath</bcf:citekey>
-    <bcf:citekey order="16">mckay</bcf:citekey>
-    <bcf:citekey order="17">mckay</bcf:citekey>
+    <bcf:citekey order="16">mcelreath</bcf:citekey>
+    <bcf:citekey order="17">mcelreath</bcf:citekey>
     <bcf:citekey order="18">mckay</bcf:citekey>
     <bcf:citekey order="19">mckay</bcf:citekey>
     <bcf:citekey order="20">mckay</bcf:citekey>
     <bcf:citekey order="21">mckay</bcf:citekey>
-    <bcf:citekey order="22">bayesian_cubature</bcf:citekey>
-    <bcf:citekey order="23">skilling</bcf:citekey>
-    <bcf:citekey order="24">liebloss</bcf:citekey>
-    <bcf:citekey order="25">measure_theory</bcf:citekey>
+    <bcf:citekey order="22">mckay</bcf:citekey>
+    <bcf:citekey order="23">mckay</bcf:citekey>
+    <bcf:citekey order="24">mcelreath</bcf:citekey>
+    <bcf:citekey order="25">bayesian_cubature</bcf:citekey>
     <bcf:citekey order="26">skilling</bcf:citekey>
-    <bcf:citekey order="27">skilling</bcf:citekey>
-    <bcf:citekey order="28">skilling</bcf:citekey>
-    <bcf:citekey order="29">mckay</bcf:citekey>
-    <bcf:citekey order="30">casellaberger</bcf:citekey>
-    <bcf:citekey order="31">computational_stats</bcf:citekey>
-    <bcf:citekey order="32">skilling</bcf:citekey>
-    <bcf:citekey order="33">nested_sampling_talk</bcf:citekey>
-    <bcf:citekey order="34">skilling</bcf:citekey>
-    <bcf:citekey order="35">mckay</bcf:citekey>
-    <bcf:citekey order="36">automala</bcf:citekey>
-    <bcf:citekey order="37">hmc</bcf:citekey>
-    <bcf:citekey order="38">hmc_in_ns</bcf:citekey>
-    <bcf:citekey order="39">boyd</bcf:citekey>
-    <bcf:citekey order="40">boyd</bcf:citekey>
-    <bcf:citekey order="41">boyd</bcf:citekey>
+    <bcf:citekey order="27">liebloss</bcf:citekey>
+    <bcf:citekey order="28">measure_theory</bcf:citekey>
+    <bcf:citekey order="29">skilling</bcf:citekey>
+    <bcf:citekey order="30">skilling</bcf:citekey>
+    <bcf:citekey order="31">skilling</bcf:citekey>
+    <bcf:citekey order="32">mckay</bcf:citekey>
+    <bcf:citekey order="33">casellaberger</bcf:citekey>
+    <bcf:citekey order="34">computational_stats</bcf:citekey>
+    <bcf:citekey order="35">skilling</bcf:citekey>
+    <bcf:citekey order="36">nested_sampling_talk</bcf:citekey>
+    <bcf:citekey order="37">skilling</bcf:citekey>
+    <bcf:citekey order="38">mckay</bcf:citekey>
+    <bcf:citekey order="39">automala</bcf:citekey>
+    <bcf:citekey order="40">hmc</bcf:citekey>
+    <bcf:citekey order="41">hmc_in_ns</bcf:citekey>
     <bcf:citekey order="42">boyd</bcf:citekey>
     <bcf:citekey order="43">boyd</bcf:citekey>
     <bcf:citekey order="44">boyd</bcf:citekey>
     <bcf:citekey order="45">boyd</bcf:citekey>
-    <bcf:citekey order="46">collapsed_gibbs</bcf:citekey>
-    <bcf:citekey order="47">casellaberger</bcf:citekey>
-    <bcf:citekey order="48">gibbs</bcf:citekey>
-    <bcf:citekey order="49">metropolishastings</bcf:citekey>
-    <bcf:citekey order="50">hmc</bcf:citekey>
-    <bcf:citekey order="51">slice_sampling</bcf:citekey>
-    <bcf:citekey order="52">annealed_importance_sampling</bcf:citekey>
-    <bcf:citekey order="53">bayesian_cubature</bcf:citekey>
-    <bcf:citekey order="54">skilling</bcf:citekey>
-    <bcf:citekey order="55">jaynes</bcf:citekey>
-    <bcf:citekey order="56">mcelreath</bcf:citekey>
-    <bcf:citekey order="57">mckay</bcf:citekey>
-    <bcf:citekey order="58">liebloss</bcf:citekey>
-    <bcf:citekey order="59">measure_theory</bcf:citekey>
-    <bcf:citekey order="60">casellaberger</bcf:citekey>
-    <bcf:citekey order="61">computational_stats</bcf:citekey>
-    <bcf:citekey order="62">nested_sampling_talk</bcf:citekey>
-    <bcf:citekey order="63">automala</bcf:citekey>
-    <bcf:citekey order="64">hmc_in_ns</bcf:citekey>
-    <bcf:citekey order="65">boyd</bcf:citekey>
-    <bcf:citekey order="66">collapsed_gibbs</bcf:citekey>
+    <bcf:citekey order="46">boyd</bcf:citekey>
+    <bcf:citekey order="47">boyd</bcf:citekey>
+    <bcf:citekey order="48">boyd</bcf:citekey>
+    <bcf:citekey order="49">collapsed_gibbs</bcf:citekey>
+    <bcf:citekey order="50">casellaberger</bcf:citekey>
+    <bcf:citekey order="51">gibbs</bcf:citekey>
+    <bcf:citekey order="52">metropolishastings</bcf:citekey>
+    <bcf:citekey order="53">hmc</bcf:citekey>
+    <bcf:citekey order="54">slice_sampling</bcf:citekey>
+    <bcf:citekey order="55">annealed_importance_sampling</bcf:citekey>
+    <bcf:citekey order="56">bayesian_cubature</bcf:citekey>
+    <bcf:citekey order="57">skilling</bcf:citekey>
+    <bcf:citekey order="58">hmc_in_ns</bcf:citekey>
+    <bcf:citekey order="59">jaynes</bcf:citekey>
+    <bcf:citekey order="60">mcelreath</bcf:citekey>
+    <bcf:citekey order="61">mckay</bcf:citekey>
+    <bcf:citekey order="62">liebloss</bcf:citekey>
+    <bcf:citekey order="63">measure_theory</bcf:citekey>
+    <bcf:citekey order="64">casellaberger</bcf:citekey>
+    <bcf:citekey order="65">computational_stats</bcf:citekey>
+    <bcf:citekey order="66">nested_sampling_talk</bcf:citekey>
+    <bcf:citekey order="67">automala</bcf:citekey>
+    <bcf:citekey order="68">boyd</bcf:citekey>
+    <bcf:citekey order="69">collapsed_gibbs</bcf:citekey>
   </bcf:section>
   <!-- SORTING TEMPLATES -->
-  <bcf:sortingtemplate name="nty">
+  <bcf:sortingtemplate name="none">
     <bcf:sort order="1">
-      <bcf:sortitem order="1">presort</bcf:sortitem>
-    </bcf:sort>
-    <bcf:sort order="2" final="1">
-      <bcf:sortitem order="1">sortkey</bcf:sortitem>
-    </bcf:sort>
-    <bcf:sort order="3">
-      <bcf:sortitem order="1">sortname</bcf:sortitem>
-      <bcf:sortitem order="2">author</bcf:sortitem>
-      <bcf:sortitem order="3">editor</bcf:sortitem>
-      <bcf:sortitem order="4">translator</bcf:sortitem>
-      <bcf:sortitem order="5">sorttitle</bcf:sortitem>
-      <bcf:sortitem order="6">title</bcf:sortitem>
-    </bcf:sort>
-    <bcf:sort order="4">
-      <bcf:sortitem order="1">sorttitle</bcf:sortitem>
-      <bcf:sortitem order="2">title</bcf:sortitem>
-    </bcf:sort>
-    <bcf:sort order="5">
-      <bcf:sortitem order="1">sortyear</bcf:sortitem>
-      <bcf:sortitem order="2">year</bcf:sortitem>
-    </bcf:sort>
-    <bcf:sort order="6">
-      <bcf:sortitem order="1">volume</bcf:sortitem>
-      <bcf:sortitem literal="1" order="2">0</bcf:sortitem>
+      <bcf:sortitem order="1">citeorder</bcf:sortitem>
     </bcf:sort>
   </bcf:sortingtemplate>
   <!-- DATALISTS -->
   <bcf:datalist section="0"
-                name="nty/global//global/global"
+                name="none/global//global/global"
                 type="entry"
-                sortingtemplatename="nty"
+                sortingtemplatename="none"
                 sortingnamekeytemplatename="global"
                 labelprefix=""
                 uniquenametemplatename="global"

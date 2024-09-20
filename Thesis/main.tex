@@ -15,7 +15,7 @@
 \usepackage{algpseudocode}
 \usepackage{setspace}
 \usepackage{parskip}
-\usepackage{biblatex}
+\usepackage[sorting=none]{biblatex}
 \usepackage{subcaption}
 \usepackage{tocloft}
 \usepackage{setspace}
@@ -86,23 +86,27 @@ Supervisor: Prof. Dr. Michael Habeck
 \chapter*{Introduction}
 Bayesian models are widely used for statistical inference tasks.
 They provide a way to extract information from data that leads to intuitively interpretable results.
-Because the outcome of a Bayesian model fit comprises not just the most likely parameter values (as it would in a maximum likelihood model), but a whole probability distribution over all possible parameter values, it is also easy to compute error bounds.
+Fitting a parameterized Bayesian model comprises more than just computing a point estimate for the parameter values, as would be the case in a maximum likelihood model.
+Instead, the result of Bayesian inference comprises a whole probability distribution over the parameter space, called the posterior distribution.
+A distribution, a opposed to a point estimate, provides extra information about how sure we can be of the results of our inference. 
 
 The upsides of Bayesian models come at the cost of being more difficult to fit than maximum likelihood models, especially so with increasing model complexity.
 Many techniques have been developed for this purpose, with most state-of-the-art approaches being Monte Carlo methods.
-The most commonly used methods (Gibb sampling \cite{gibbs}, Metropolis Hastings \cite{metropolishastings}, Hamiltonian Monte Carlo (HMC) \cite{hmc}, Slice Sampling \cite{slice_sampling}, etc.) all come with one downside, however.
-These methods focus purely on the posterior distribution of a model fit and do not compute the evidence term.
-The evidence is a useful tool that can be used to compare whole classes of models with respect to how well they fit some data.
+Instead of producing a parameterized version of the posterior distribution, they instead generate samples from it.
+The most commonly used methods (Gibb sampling \cite{gibbs}, Metropolis Hastings \cite{metropolishastings}, Hamiltonian Monte Carlo (HMC) \cite{hmc}, Slice Sampling \cite{slice_sampling}, etc.) all come with one downside.
+These methods focus purely on the posterior distribution of a model fit and do not compute the evidence.
+The evidence is a term that comes up in Bayesian inference and is a useful tool that can be used to compare whole classes of models with respect to how well they fit some data.
 There exist approaches that allow for computation of the evidence, like Annealed Importance Sampling \cite{annealed_importance_sampling} or Probabilistic Integration \cite{bayesian_cubature}.
-This thesis focuses on one approach called Nested Sampling.
+This thesis focuses on one such approach called Nested Sampling.
 
 Introduced by Skilling \cite{skilling}, Nested Sampling is a Monte Carlo method for Bayesian inference whose main objective is computing the evidence, altough it also generates posterior samples.
-Nested sampling contains a step where a samples have to be generated from a likelihood-constricted prior (likelihood-restricted prior sampling or LRPS).
-This step is difficult and, in its original form, cannot make use of likelihood-gradient information, which other successful methods like HMC rely heavily upon.
+Nested sampling contains a step where a samples have to be generated from a likelihood-restricted prior (likelihood-restricted prior sampling or LRPS).
+This step is difficult \cite[9]{hmc_in_ns} and, in its original form, cannot make use of likelihood-gradient information, which other successful methods like HMC rely heavily upon.
 
 In this thesis, I propose a modified version of Nested Sampling which uses ideas from convex optimization to introduce likelihood-gradient information into the crucial LRPS step of Nested Sampling.
-I begin by recapping important background information on the methods and ideas this thesis is based on, including Bayesian statistics in general, the Nested Sampling algorithm and the barrier method for solving convex optimization problems.
-Following that, using inspiration from the barrier method, I derive Nested Sampling with Barriers as an alternative to the standard Nested Sampling algorithm.
+
+I begin with by recapping important background information about the methods and ideas this thesis is based on, including Bayesian statistics in general, the Nested Sampling algorithm and the Barrier Method for solving convex optimization problems.
+Following that, using inspiration from the Barrier Method, I derive Nested Sampling with Barriers as an alternative to the standard Nested Sampling algorithm.
 I then review some of the variables and parameters introduced by Nested Sampling with Barriers and analyze their effects on the algorithm.
 Finally, I present the results of a benchmark where basic Nested Sampling and Nested Sampling with Barriers in different configurations were run on a set of example problems with varying number of dimensions and modes.
 \addcontentsline{toc}{chapter}{Introduction}
@@ -117,16 +121,19 @@ In Bayesian statistics, probability is used to model uncertainty.
 Imagine we had a (possibly unfair) coin, with a certain inherent probability of landing heads (or tails) each time it is flipped.
 Let us call this inherent probability of landing heads $\theta \in [0, 1]$.
 If we, for example, knew that the coin was exactly fair, we could say $\theta = 0.5$.
-In classical formal logic, we would say ``$\theta = 0.5$'' is true.
+Using the vocabulary of classical formal logic, we would say ``$\theta = 0.5$'' is true.
 
-But since even the most accurately manufactured coin will have some asymmetries, we can never be sure of the coin's fairness.
+But since even the most accurately manufactured coin will have some microscopic asymmetries, bumps and ridges, we can never be sure of the coin's fairness.
 If we are not certain whether a statement is true or false, formal logic leaves us with no options.
 And if we cannot even meaningfully describe the flip of a coin, how should we expect to be able to examine complex systems like the weather, the spread of diseases, the development of ecosystems, etc.
 This is where probability as an extension of formal logic saves us \cite[12]{jaynes}.
 We can express our knowledge of the coin's fairness by assigning a probability density to each possible value of $\theta$.
-In doing this, we create a probability distribution over $\theta$.
-If we knew nothing about the coin's fairness, we might assign every possible value the same probability density using a uniform distribution.
-But to make the example a bit more interesting, let us say that by the shape of the coin, we would assume that it would land tails more often than heads.
+In doing so, we create a probability distribution over $\theta$.
+If we knew nothing about the coin's fairness, we might assign every possible value the same probability density using a uniform distribution:
+$$
+    P(\theta) = 1 \quad \forall \; \theta \in [0,1]
+$$
+To make the example a bit more interesting, let us say that by the shape and embossing of the coin, we would assume that it would land tails more often than heads.
 In this case, we might use a probability distribution like this, which assigns lower values of $\theta$ a higher probability density:
 $$
     P(\theta) = 2 \cdot (1-\theta) \quad \forall \; \theta \in [0,1]
@@ -136,8 +143,8 @@ A plot of this function can be found on the left side of Figure \ref{fig:coin_ex
 By representing the coin's fairness using a parameter $\theta$, we created a simple parametric statistical model.
 Statisticians would call our model generative, because by plugging $\theta$ into a Bernoulli-distribution, we can generate new samples from it (simulating coin flips).
 When we equip a statistical model's parameters with a probability distribution, as we did in the last paragraph, we give it what Bayesian statisticians would call a prior \cite[34]{mcelreath}.
-It is called a prior since it encapsulates our beliefs about the model before we have seen any data.
-The name giving process of Bayesian statistics is updating our beliefs about the model's parameter values after seeing new data using Bayes' rule (Equation \ref{eq:bayes}).
+It is called a prior since it encapsulates our beliefs about the model before we have seen any data that resulted from the process we are modeling (before we ever flipped the coin).
+The name giving process of Bayesian statistics is updating our beliefs about the model's parameter values after seeing new data using Bayes' rule.
 Bayes' rule prescribes how to integrate data $D$, originating from the process we are modeling, into our prior beliefs $P(\theta)$ to arrive at updated beliefs $P(\theta \, | \, D)$ (read ``probability of $\theta$ given $D$'') \cite[36]{mcelreath}.
 It follows naturally from the product rule for probability:
 \begin{align}
@@ -148,16 +155,21 @@ It follows naturally from the product rule for probability:
     \label{eq:bayes}
 \end{align}
 
-Bayes' rule is made up of four parts.
-Let us take a look at each of them:
+Bayes' rule (Eq. \ref{eq:bayes}) is made up of four parts.
+Let us take a closer look at each of them:
 
 \textbf{Likelihood}: Given a generative model with parameters $\theta$ in some space $\Theta$, and some data $D$ originating from the process the model is representing, we call $P(D \,|\, \theta)$ the likelihood of $\theta$, often written $L(\theta)$.
 It is the probability of the data when the model uses a certain set of parameters $\theta$.
 Note that when viewed as a function of $\theta$, the likelihood is not a probability distribution, since it generally does not integrate to 1.
-I abbreviate the natural logarithm of the likelihood as $l(\theta)$.
+I abbreviate the natural logarithm of the likelihood as $l(\theta) = \log(L(\theta))$.
 
 \textbf{Prior}: Bayes' rule requires a prior distribution over the model parameters, $P(\theta)$, often written $\pi(\theta)$.
-This represents beliefs we have about the parameter values before taking the data into account, which could be results from previous experiments or qualitative knowledge about the modeled process (e.g. "We know this relationship is positive. Therefore, this slope parameter's prior is zero for negative values.") \cite[34 f.]{mcelreath}.
+This represents beliefs we have about the parameter values before taking the data into account, which could be results from previous experiments or qualitative knowledge about the modeled process (like in our coin example) \cite[34 f.]{mcelreath}.
+Priors like this may seem arbitrary or subjective, but they are required for Bayes' rule to work and have two positives:
+\begin{enumerate}
+    \item With enough data, all but the most confident priors are overwhelmed and end up contributing little to the resulting posterior.
+    \item Non-Bayesian methods can often be shown to be equivalent to a Bayesian inference with a certain choice of prior. \cite[36]{mcelreath} By putting our prior beliefs on display openly, they, like the model itself, become subject to the research process and scientific discussion instead of staying hidden. 
+\end{enumerate}
 Other authors prefer to write the prior as $P(\theta \, | \, M)$ to make explicit that it still depends on our choice of model.
 I omit the conditional for the sake of less cluttered formulas, but still want to call attention to this fact.
 
@@ -185,7 +197,7 @@ For comparison, the likelihood of $\theta = 0.25$ would be $0.25 \cdot 0.75 \cdo
 We can see how the likelihood lets us rank parameter values by how well the data supports them (see also the right side of Figure \ref{fig:coin_example}).
 
 Now we can use Bayes' rule to generate the posterior.
-For our simple, one-dimensional example we approximate the posterior numerically by discretizing the $\theta$-space and evaluating Bayes' rule for each discrete point.
+For our simple, one-dimensional example we can approximate the posterior numerically by discretizing the $\theta$-space and evaluating Bayes' rule for each discrete point.
 More information on how this step is done in practice follows in the next section.
 For each value of $\theta$, we compute the unnormalized posterior probability $L(\theta) \cdot \pi(\theta) = P(\textrm{H T H H H} \, | \, \theta) \cdot 2 \cdot (1 - \theta)$.
 We can approximate the evidence (\ref{eq:evidence}) using $Z \approx \sum_{i} L(\theta) \cdot \pi(\theta) \cdot \frac{1}{N}$, where $N$ is the number of points we discretize the $\theta$-space into.
@@ -202,9 +214,9 @@ The data updated our ideas of the coin's fairness, but did not completely overri
                 axis lines=center,
                 xlabel=$\theta$,
                 ylabel=$\pi(\theta)$,
-                y label style={at={(axis description cs:-0.1, 0.5)},anchor=east},
-                x label style={at={(axis description cs:0.5,-0.1)},anchor=north},
-                scale=0.7
+                y label style={at={(axis description cs:-0.2, 0.5)},anchor=east},
+                x label style={at={(axis description cs:0.5,-0.15)},anchor=north},
+                scale=0.6
             ]
             \addplot[
                 name path=A,
@@ -221,9 +233,9 @@ The data updated our ideas of the coin's fairness, but did not completely overri
                 axis lines=center,
                 xlabel=$\theta$,
                 ylabel=$L(\theta)$,
-                y label style={at={(axis description cs:-0.22, 0.5)},anchor=east},
-                x label style={at={(axis description cs:0.5,-0.1)},anchor=north},
-                scale=0.7,
+                y label style={at={(axis description cs:-0.3, 0.5)},anchor=east},
+                x label style={at={(axis description cs:0.5,-0.15)},anchor=north},
+                scale=0.6,
                 yticklabel style={
                     /pgf/number format/fixed,
                     /pgf/number format/precision=5
@@ -245,14 +257,14 @@ The data updated our ideas of the coin's fairness, but did not completely overri
             axis lines=center,
             xlabel=$\theta$,
             ylabel=$P(\theta \, | \, \textrm{H T H H H})$,
-            y label style={at={(axis description cs:-0.1, 0.5)},anchor=east},
-            x label style={at={(axis description cs:0.5,-0.1)},anchor=north},
+            y label style={at={(axis description cs:-0.2, 0.5)},anchor=east},
+            x label style={at={(axis description cs:0.5,-0.15)},anchor=north},
             yticklabel style={
                     /pgf/number format/fixed,
                     /pgf/number format/precision=5
                 },
             scaled y ticks=false,
-            scale=0.8
+            scale=0.6
         ]
         \addplot[
             name path=A,
@@ -268,12 +280,12 @@ The data updated our ideas of the coin's fairness, but did not completely overri
 
 
 \subsection{Fitting Bayesian Models}
-Having introduced Bayesian statistics and described how Bayesian model fitting works conceptually, let us now turn our attention to how to do it in practice.
+Having introduced Bayesian statistics and described how Bayesian inference works conceptually, let us now turn our attention to how to do it in practice.
 
 In some cases, the posterior can be computed analytically, yielding a parameterized probability distribution.
-However, this only works for very simple models and limits the types of prior one can use (the prior has to be ``conjugate'' to the likelihood) \cite[39]{mcelreath}.
+However, this only works for very simple models and severely limits the types of prior one can use (the prior has to be ``conjugate'' to the likelihood) \cite[39]{mcelreath}.
 Another option is the one we used in the previous section, a numerical approximation utilizing a discretization of the parameter space.
-This approach has the drawback of its computational requirements scaling exponentially with the number of parameters.
+This approach does not work for models with many parameters, because its computational requirements scale exponentially with the dimensionality of the parameter space.
 For most real-world problems, both analytical and numerical computation of the posterior is infeasible.
 
 The most prevalent family of algorithms for Bayesian model fitting do not try to evaluate the posterior as a parameterized distribution, nor discretize the parameter space.
@@ -281,65 +293,65 @@ Instead, they generate samples from the posterior distribution.
 These samples can then be used to approximate statistics (mean, variance, credible intervals, etc.) of the posterior distribution.
 Because of their probabilistic nature, these algorithms are called Monte Carlo algorithms.
 
-Generating samples from a general distribution is still a difficult task.
+Generating samples from a general probability distribution is still a difficult task.
 Especially for continuous distributions, where we cannot enumerate all possible values, there is no obvious way to do it \cite[358]{mckay}.
-Another fact to consider is that we do not actually the probability density function (PDF) of the distribution we want to sample from.
-Because we only know the likelihood and prior, but not the evidence (see \ref{eq:bayes}), we can only evaluate a function proportional to the posterior's density, an unnormalized version of it.
-A relatively simple way to sample from a distribution when we can evaluate an unnormalized version of its density function is rejection sampling.
-I will present a quick overview of it to give an example of a Monte Carlo method.
+Another fact to consider is that we do not actually know the probability density function (PDF) of the distribution we want to sample from.
+Because we only know the likelihood and prior, but not the evidence (see (\ref{eq:bayes})), we can only evaluate a function proportional to the posterior's density, an unnormalized version of it.
+All Monte Carlo methods for Bayesian inference have to solve this problem of sampling from a distribution while only being able to evaluate an unnormalized version of its density function.
+One of the simplest approaches to this problem is Rejection Sampling, which I will give a brief overview of in the following paragraph.
 
-Like most other Monte Carlo methods, rejection sampling makes use of a proposal distribution.
-Given an unnormalized density function $\mathbf{P}(\theta)$ of the target distribution we want to sample from, rejection sampling requires a distribution we can sample from and whose density $\mathbf{Q}(\theta)$ we can scale up using a constant $c$ to fully envelop the target density:
+Like most other Monte Carlo methods, Rejection Sampling makes use of a proposal distribution.
+Given an unnormalized density function $\mathbf{P}(\theta)$ of the target distribution, Rejection Sampling requires a so-called proposal distribution that we can easily sample from and whose density $\mathbf{Q}(\theta)$ we can scale up using a constant $c$ to fully envelop the target density:
 \begin{equation}
     c \cdot \mathbf{Q}(\theta) > \mathbf{P}(\theta) \quad \forall \, \theta \in \Theta \nonumber
 \end{equation}
 Then, we can generate a sample from the target distribution by sampling a $\theta^*$ from the proposal distribution and accepting the proposal with probability $\frac{\mathbf{P}(\theta^*)}{c \cdot \mathbf{Q}(\theta^*)}$.
 If the proposal is not accepted, the process may be repeated until an accepted sample is found \cite[364]{mckay}.
 
-Rejection sampling fails in practice because
+While the simplicity of Rejection sampling is appealing, it fails in practice because
 \begin{enumerate}
-    \item we normally do not know the modes of our target distribution and thus do not know how to choose $c$, and
-    \item even if we did know how to choose $c$, the fact that in high dimensional problems only a small fraction of the parameter space carries significant posterior mass forces us to scale $\mathbf{Q}$ so much everywhere else that acceptance rates plummet.
+    \item we normally do not know the global maximum of our target distribution and thus do not know how to choose $c$, and
+    \item even if we did know how to choose $c$, the fact that in high dimensional problems typically only a small fraction of the parameter space carries high posterior density forces us to scale $\mathbf{Q}$ so much everywhere else that acceptance rates plummet.
 \end{enumerate}
  
-The most used algorithms in Bayesian statistics try overcome these problems by choosing a proposal distribution that depends on the previous sample.
-They are a subcategory of Monte Carlo methods called Markov chain Monte Carlo (MCMC).
-Each MCMC sample is dependent on its predecessor and is often close to it.
-This allows more efficient exploration of posterior mass, because once a region of high posterior density is found, its local surroundings often also carry high posterior density. 
+The most used algorithms in Bayesian statistics try overcome these problems by choosing a proposal distribution with dependent samples.
+They are a subcategory of Monte Carlo methods called Markov chain Monte Carlo (MCMC) methods.
+Each MCMC sample is dependent on its predecessor and often lands in the vicinity of it.
+This allows more efficient exploration of the posterior, because once a region of high posterior density is found, its local surroundings often also carry high posterior density. 
 
 Again, let us take a look at one relatively simple example algorithm, the Metropolis algorithm.
-The Metropolis algorithm uses a symmetrical proposal distribution $\mathbf{Q}(\theta^{\textrm{new}} \,|\, \theta^{\textrm{old}})$.
+The Metropolis algorithm uses a symmetrical proposal distribution $\mathbf{Q}(\theta_{\textrm{new}} \,|\, \theta_{\textrm{old}})$.
 Often, a simple normal distribution around the last sample is used.
-The proposal is then accepted with probability $\frac{\mathbf{P}(\theta^{\textrm{new}})}{\mathbf{P}(\theta^{\textrm{old}})}$ \cite[365f.]{mckay}.
+The proposal is then accepted with probability $\frac{\mathbf{P}(\theta_{\textrm{new}})}{\mathbf{P}(\theta_{\textrm{old}})}$ \cite[365f.]{mckay}.
 
 I will not go into detail on why the Metropolis algorithm works, but I do want to at least mention the fundamentals of Markov chain Monte Carlo.
 Markov chain Monte Carlo methods get their name from the fact that their samples form a Markov chain.
-Markov chains are defined as a set of states $\Theta$ (in our case these are all possible parameter values) with an initial probability distribution $P^0(\theta)$ over these states, along with a transition probability function $T: \Theta \times \Theta \rightarrow [0,1]$ assigning a probability to every transition from one state to another.
-We can simulate a Markov chain by sampling an initial state $\theta_0 \sim P^0(\theta)$, then sampling the next state from the transition probabtility distribution $\theta_k \sim T(\theta_k \,|\, \theta_{k-1})$.
+Markov chains are defined as a set of states $\Theta$ (in our case these are all possible parameter values) with an initial probability distribution $P_0(\theta)$ over these states, along with a transition probability function $T: \Theta \times \Theta \rightarrow [0,1]$ assigning a probability to every transition from one state to another.
+We can simulate a Markov chain by sampling an initial state $\theta_0 \sim P_0(\theta)$, then sampling the next state from the transition probabtility distribution $\theta_k \sim T(\theta_k \,|\, \theta_{k-1})$.
 We can also analyse the probability of being in a certain state after $k$ steps \cite[372]{mckay}: 
 $$
-    P^k(\theta^*) = \int_{\Theta} P^{k-1}(\theta) \, T(\theta^* \,|\, \theta) \, d\theta 
+    P_k(\theta^*) = \int_{\Theta} P_{k-1}(\theta) \, T(\theta^* \,|\, \theta) \, d\theta 
 $$
 This also lets us define stationary distributions of Markov chains.
 These are the key to using Markov chains for sampling, because once a Markov chain finds its way into a stationary distribution, it stays there.
 We call $\mathcal{P}(\theta)$ a stationary distribution of a Markov chain if \cite[372]{mckay}:
 $$
-    \mathcal{P}(\theta^*) = \int_{\Theta} \mathcal{P}(\theta) \, T(\theta^* \,|\, \theta) \, d\theta
+    \mathcal{P}(\theta^*) = \int_{\Theta} \mathcal{P}(\theta) \, T(\theta^* \,|\, \theta) \, d\theta \quad \forall \theta^* \in \Theta
 $$
-All MCMC methods revolve around cleverly defining their transition probabilities in such a way that the target distribution is the only stationary distribution of the Markov chain.
+MCMC methods focus on cleverly defining their transition probabilities in such a way that the target distribution is the only stationary distribution of the Markov chain.
 That way, when the chain is sampled for long enough, it eventually produces samples from the target distribution \cite[372]{mckay}.
 
-Now that I've touched on how Bayesian models are normally fit, I want to explain why there is room for improvement.
-As covered in section 1.1, the evidence is an immensely useful part of Bayes' formula (Equation \ref{eq:bayes}) because it allows model comparison that accounts for overfitting.
-MCMC methods only generate samples from the posterior, they do not compute the evidence.
-Computing the evidence integral is generally a difficult task.
-Since the parameter space for real-world models is very high-dimensional, with only a small fraction of this space containing meaningful posterior probability mass, numerical quadrature methods fail.
+Now that I've touched on how Bayesian inference is most commonly is normally done, I want to explain why there is room for improvement.
+As covered in Section 1.1, the evidence is an immensely useful part of Bayes' formula (Equation (\ref{eq:bayes})) because it allows model comparison that accounts for overfitting.
+Most MCMC methods only generate samples from the posterior, they do not compute the evidence.
+Computing the evidence integral is generally a difficult task \cite[221]{mcelreath}.
+Since the parameter space for real-world models is very high-dimensional, with only a small fraction of this space containing meaningful posterior probability mass, numerical quadrature that discretize the space evenly fail.
 One might think to use the modes of the posterior as a guide, since posterior density concentrates around them, but the evidence is an integral, and integration accumulates not densities, but density times volume, or mass.
 In high dimensional spaces, most of the probability mass lies not at the modes, where there is high probability density, because it concentrates on very little volume.
 Instead, most probability mass is found a ways out from the mode, where there is still relatively high density, but spread over magnitudes more volume.
 For this reason, we cannot simply explore the posterior in a region around the modes.
-There are methods that estimate the evidence from given MCMC samples \cite{bayesian_cubature}, which by definition concentrate where there is high posterior mass.
-However, this thesis focuses on a method whose main objective is computing the evidence.
+There are methods that estimate the evidence from a set of given MCMC samples \cite{bayesian_cubature}, which by definition concentrate where there is high posterior mass.
+However, this thesis focuses on a method whose main objective, from the start, is computing the evidence.
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -715,7 +727,7 @@ Since the prior mass inside the likelihood-constraint is expected to shrink by a
 Another simple, non-MCMC method for LRPS involves discretizing the sample space into a uniform grid.
 In each iteration, we randomly draw one of the grid points with likelihood higher than the constraint, with the probability of each point being drawn being proportional to its prior.
 
-Like rejection sampling, this method falls short because of its lacking performance.
+Like Rejection Sampling, this method falls short because of its lacking performance.
 Since the number of grid points scales exponentially with the dimensionality of the sample space, this method is hopelessly time- and memory-inefficient for problems with even a modest number of parameters.
 
 \subsection{Metropolis Algorithm}
@@ -743,7 +755,7 @@ If the proposal distribution is not symmetric, the standard Metropolis algorithm
 \end{algorithm}
 
 The main advantage of the Metropolis algorithm in LRPS is its local exploration.
-Since it always starts from a valid point and explores its local surroundings, its acceptance rate can be much higher than that of rejection sampling.
+Since it always starts from a valid point and explores its local surroundings, its acceptance rate can be much higher than that of Rejection Sampling.
 It does, however, have two major disadvantages.
 Firstly, because the samples are dependent, we have to draw many intermediate samples before returning an actual sample, to allow them to decorrelate.
 Secondly, since the proportion of prior space within the likelihood-constraint becomes smaller with each Nested Sampling iteration, the step size (standard deviation of the proposal distribution) required to efficiently explore the space changes continually.
@@ -794,10 +806,10 @@ This adaptation of HMC was introduced by Betancourt in \cite{hmc_in_ns}.
 Having introduced Nested Sampling, we require one more piece of background knowledge before we are ready to tackle the contributions this thesis makes.
 \FloatBarrier
 \section{The Barrier Method}
-This section provides an introduction to the barrier method, an algorithm for solving constrained convex optimization problems.
+This section provides an introduction to the Barrier Method, an algorithm for solving constrained convex optimization problems.
 We will later incorporate ideas of this method into Nested Sampling.
 
-The barrier method is used to solve optimization problems of the form
+The Barrier Method is used to solve optimization problems of the form
 \begin{align}
     &\textrm{minimize} && f(x) && \nonumber\\
     &\textrm{subject to}  && f_i(x) \leq 0 \quad \textrm{for} \; i=1,...,m &&
@@ -895,13 +907,13 @@ $x^*(t)$ is provably $\frac{m}{t}$-suboptimal, meaning that its objective functi
 
 However, as the log barrier function becomes a better approximation of the strict barrier with larger $t$, its derivatives become more extreme.
 This causes the standard optimization procedures, such as Newton's method, to fail, because they rely on gradient information \cite[564]{boyd}.
-The barrier method is an approach that solves this issue by applying an iterative strategy.
+The Barrier Method is an approach that solves this issue by applying an iterative strategy.
 In each iteration, $x^*(t_i)$ is computed using Newton's Method (called a centering step).
 The value of $t_i$ increases with each iteration, and the result of the last iteration is used as the starting point for the current one.
 This stabilizes the centering steps \cite[569]{boyd}.
 
 \begin{algorithm}
-    \caption[The basic barrier method.]{BarrierMethod ($x_0$, $t_0$, $\mu$, $\epsilon$)}
+    \caption[The basic Barrier Method.]{BarrierMethod ($x_0$, $t_0$, $\mu$, $\epsilon$)}
     \label{alg:product_axes}
     \begin{algorithmic}
         \State $x \gets x_0$
@@ -916,7 +928,7 @@ This stabilizes the centering steps \cite[569]{boyd}.
     \end{algorithmic}
 \end{algorithm}
 
-The most important idea we take from the barrier method is how the log barrier function provides a way to make a hard boundary soft and differentiable.
+The most important idea we take from the Barrier Method is how the log barrier function provides a way to make a hard boundary soft and differentiable.
 In the next chapter, we incorporate this idea into the LRPS step of Nested Sampling.
 
 
@@ -925,15 +937,15 @@ In the next chapter, we incorporate this idea into the LRPS step of Nested Sampl
 \chapter{Nested Sampling with Barriers}
 
 \section{Motivation}
-As was shown in section 1.3, LRPS is difficult.
+As was shown in Section 1.3, LRPS is difficult.
 Because the likelihood-constraint grows tighter, finding samples in the valid area becomes more difficult with every Nested Sampling iteration.
-For methods like rejection sampling and the Metropolis algorithm, this manifests in low acceptance rates of proposals, which leads to wasted computational work.
+For methods like Rejection Sampling and the Metropolis algorithm, this manifests in low acceptance rates of proposals, which leads to wasted computational work.
 For HMC adapted to LRPS, detecting the point at which the particle breaches the likelihood-constraint-boundary and must be reflected also becomes harder, since the distance the particle can travel before leaving the valid region decreases with each iteration.
 
 We would like an approach where the sampler can ``feel'' the likelihood-constraint before it crosses it.
-Thinking back to the barrier method, we can make the following observation.
+Thinking back to the Barrier Method, we can make the following observation.
 By approximating the hard constraint function, the log barrier also lets the optimizer ``feel'' the constraint before crossing it.
-This leads us to the main idea of this thesis: incorporating the log barrier from the barrier method into the LRPS step of Nested Sampling.
+This leads us to the main idea of this thesis: incorporating the log barrier from the Barrier Method into the LRPS step of Nested Sampling.
 
 \section{Derivation}
 \subsection{Deriving the log barrier term}
@@ -942,7 +954,7 @@ In this section we draw parallels between LRPS and convex optimization to find a
 In convex optimization, we minimize a function constrained by a set of convex functions (as can be seen in (\ref{eq:cvxproblem})).
 In LRPS, we sample from a probability distribution $\pi(\theta)$, constrained by $L(\theta) > L^*$.
 Even though this constraint is not necessarily convex (for most real-world applications it will not be), it still takes on a similar role to the constraint functions in convex optimization.
-By viewing LRPS through the lens of optimization, we are able to apply the ideas of chapter 2 to it.
+By viewing LRPS through the lens of optimization, we are able to apply the ideas of Chapter 2 to it.
 That said, we are only doing this for inspiration.
 We will not be solving the optimization problem we set up.
 \begin{align}
