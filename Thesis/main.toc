@@ -27,5 +27,5 @@
 \contentsline {subsection}{\numberline {2.4.3}Hamiltonian Monte Carlo}{36}{}%
 \contentsline {section}{\numberline {2.5}Results}{37}{}%
 \contentsline {chapter}{\numberline {3}Summary}{38}{}%
-\contentsline {chapter}{Bibliography}{39}{}%
-\contentsline {chapter}{Appendix}{39}{}%
+\contentsline {chapter}{Bibliography}{40}{}%
+\contentsline {chapter}{Appendix}{41}{}%
