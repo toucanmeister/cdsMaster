@@ -8,10 +8,12 @@
 \usepackage{amsmath}
 \usepackage{amsthm}
 \usepackage{amsfonts}
+\usepackage{listings}
 \usepackage{bbm}
 \usepackage{placeins}
 \usepackage{tikz}
 \usepackage{algorithm}
+\usepackage{xcolor}
 \usepackage{algpseudocode}
 \usepackage{setspace}
 \usepackage{parskip}
@@ -44,6 +46,20 @@
 \renewcommand{\listfigurename}{\Large List of Figures \vspace{-30pt}}
 \renewcommand{\listtablename}{\Large List of Tables \vspace{-30pt}}
 \renewcommand{\listalgorithmname}{\Large List of Algorithms \vspace{-30pt}}
+
+\lstdefinestyle{mystyle}{
+    basicstyle=\ttfamily\tiny,
+    breakatwhitespace=false,         
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                                                   
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=2
+}
+
+\lstset{style=mystyle}
 
 \newtheorem{definition}{Definition}
 
@@ -1168,7 +1184,7 @@ By setting $a = \frac{1}{t}$, $x = 0$ and $y = \log(q_{\textrm{max}})$, we can a
     \end{algorithmic}
 \end{algorithm}
 
-With that, we have succesfully defined a version of Nested Sampling that incorporates the log barrier term from \ref{eq:log_barrier_term}.
+With that, we have successfully defined a version of Nested Sampling that incorporates the log barrier term from (\ref{eq:log_barrier_term}).
 Next, we will examine the newly introduced parts of the algorithm, namely the auxiliary variable $q$ and the parameters $t$ and $q_{\textrm{max}}$.
 
 \section{Interpretation}
@@ -1256,7 +1272,7 @@ A larger value for $q_{\textrm{max}}$ lets the log barrier term affect sampling 
 As discussed in Section 1.4, $t$ determines how closely the log barrier approximates the true barrier, with larger values of $t$ leading to better approximations (see right side of Figure \ref{fig:q_normalized}).
 This makes the log barrier term act less strongly in regions further away from the likelihood-constraint-boundary.
 Lower values of $t$ give the log barrier term more influence even in these regions.
-We will discuss how $t$ and $q_{\textrm{max}}$ practically influence the algorithm's performance in Section %TODO: SECTION HERE.
+We will discuss how $t$ and $q_{\textrm{max}}$ practically influence the algorithm's performance in Section 2.5.
 
 In the next section, we discuss, in theory, which methods for LRPS can make use of the introduced log barrier term.
 
@@ -1294,6 +1310,58 @@ The step size may, however, not need to be decreased as quickly as with HMC with
 
 \FloatBarrier
 \section{Results}
+This chapter contains the results of a number of experiments on Nested Sampling with Barriers.
+First, I show how Nested Sampling with Barriers compares to standard Nested Sampling using multiple example problems.
+Then, I demonstrate the influence of the parameters $t$ and $q_{\textrm{max}}$ on Nested Sampling with Barriers on one example problem.
+
+\subsection{Nested Sampling with and without Barriers}
+Both standard Nested Sampling and the Barriers variant were tested on four example problems with the following likelihood functions:
+\begin{itemize}
+    \item a 2D slab and spike
+    \item a 20D slab and spike
+    \item a 2D mixture of 5 nonconcentric Gaussians
+    \item a 20D mixture of 5 nonconcentric Gaussians 
+\end{itemize}
+The examples' likelihoods are defined in the following piece of Python code:
+\vspace{0.4cm}
+
+\hrule
+\begin{lstlisting}[language=Python]
+def spike_likelihood(x, dim):
+    slab = 50 * multivariate_normal.pdf(x, mean=np.zeros(dim), cov=np.eye(dim)*2)
+    spike = multivariate_normal.pdf(x, mean=np.zeros(dim), cov=np.eye(dim)*0.01)
+    return slab + spike
+
+gauss_2d_mus = [np.array([-2,-2]), np.array([-2,2]), np.array([0,0]), np.array([2,-2]), np.array([2, 2])]
+gauss_20d_mus = [np.array([-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2]),
+                 np.array([ 2, 2, 2, 2, 2, 2, 2, 2, 2, 2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2]),
+                 np.array([ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]),
+                 np.array([-2,-2,-2,-2,-2,-2,-2,-2,-2,-2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2]),
+                 np.array([ 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2])]
+sigmas = [0.2, 0.4, 1, 0.4, 0.2]
+def concentric_gauss_likelihood(x, dim, mus, sigmas):
+    result = 0
+    for i in range(len(mus)):
+        result += multivariate_normal.pdf(x, mean=mus[i], cov=np.eye(len(mus[i]))*sigmas[i])
+    return result
+\end{lstlisting}
+\hrule
+%TODO: Add images of 2D example problems
+
+Each example uses a uniform prior on $[-5, 5]$ over all dimensions.
+Since the behaviour of Nested Sampling is heavily dependent on the method for LRPS used, I applied both standard Nested Sampling and the Barriers variant to each example problem with different LRPS methods.
+The following LRPS approaches were used:
+\begin{itemize}
+    \item Discretized LRPS (only for 2D problems, with 6000 points per dimension)
+    \item Metropolis Algorithm (with simple adaptive step size)
+    \item HMC with reflection (only for standard Nested Sampling, with static HMC path length of 3 and step size of 0.5)
+    \item HMC (only for Nested Sampling with Barriers, with simple adaptive step size)
+    \item an optimal method for sampling inside an n-sphere (only for slab-and-spike examples)
+\end{itemize}
+Each configuration of example problem, algorithm and LRPS method was run 150 times, with each run using 10000 live points and a stopping criterion of $\epsilon = 10^{-6}$.
+An exception to this are the configurations using discretized LRPS, which could only be done with 1000 live points and $\epsilon = 10^{-4}$, because the number of discrete points required for the original configuration exceeds my memory limits.
+
+\subsection{Influence of $t$ and $q_{\textrm{max}}$}
 
 \chapter{Summary}
 
@@ -1318,7 +1386,7 @@ Plugging the PDF-formula into the CDF:
     &= \int_0^\lambda \int_\Theta \pi(\theta) \, \mathbbm{1}_{\{L(\theta)>L^*\}}(\theta) \, \delta(\lambda' - L(\theta)) \, d\theta \, d\lambda' \nonumber\\
     &= \int_\Theta \int_0^\lambda \pi(\theta) \, \mathbbm{1}_{\{L(\theta)>L^*\}}(\theta) \, \delta(\lambda' - L(\theta)) \, d\lambda'\, d\theta \nonumber\\
     &= \int_\Theta \pi(\theta) \, \mathbbm{1}_{\{L(\theta)>L^*\}}(\theta) \int_0^\lambda \, \delta(\lambda' - L(\theta)) \, d\lambda' \, d\theta \nonumber\\
-    &= \int_\Theta \pi(\theta) \, \mathbbm{1}_{\{L(\theta)>L^*\}}(\theta) \, \mathbbm{1}_{\{L(\theta) < \lambda\}}(\theta) \, d\theta \\nonumber\
+    &= \int_\Theta \pi(\theta) \, \mathbbm{1}_{\{L(\theta)>L^*\}}(\theta) \, \mathbbm{1}_{\{L(\theta) < \lambda\}}(\theta) \, d\theta \nonumber\\
     &= \int_{\{L^* < L(\theta) < \lambda\}} \pi(\theta)\, d\theta \label{eq:prior_mass_integral_appendix}\\
     &= \mu(L^*) - \mu(\lambda) \nonumber
 \end{align}

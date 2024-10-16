@@ -26,6 +26,8 @@
 \contentsline {subsection}{\numberline {2.4.2}Metropolis}{36}{}%
 \contentsline {subsection}{\numberline {2.4.3}Hamiltonian Monte Carlo}{36}{}%
 \contentsline {section}{\numberline {2.5}Results}{37}{}%
-\contentsline {chapter}{\numberline {3}Summary}{38}{}%
-\contentsline {chapter}{Bibliography}{40}{}%
-\contentsline {chapter}{Appendix}{41}{}%
+\contentsline {subsection}{\numberline {2.5.1}Nested Sampling with and without Barriers}{37}{}%
+\contentsline {subsection}{\numberline {2.5.2}Influence of $t$ and $q_{\textrm {max}}$}{38}{}%
+\contentsline {chapter}{\numberline {3}Summary}{39}{}%
+\contentsline {chapter}{Bibliography}{41}{}%
+\contentsline {chapter}{Appendix}{42}{}%

@@ -1,0 +1,15 @@
+def spike_likelihood(x, dim):
+    return 50 * multivariate_normal.pdf(x, mean=np.zeros(dim), cov=np.eye(dim)*2) + multivariate_normal.pdf(x, mean=np.zeros(dim), cov=np.eye(dim)*0.01)
+
+concentric_gauss_2d_mus = [np.array([-2,-2]), np.array([-2,2]), np.array([0,0]), np.array([2,-2]), np.array([2, 2])]
+concentric_gauss_20d_mus = [np.array([-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2]),
+                            np.array([ 2, 2, 2, 2, 2, 2, 2, 2, 2, 2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2]),
+                            np.array([ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]),
+                            np.array([-2,-2,-2,-2,-2,-2,-2,-2,-2,-2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2]),
+                            np.array([ 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2])]
+sigmas = [0.2, 0.4, 1, 0.4, 0.2]
+def concentric_gauss_likelihood(x, dim, mus, sigmas):
+    result = 0
+    for i in range(len(mus)):
+        result += multivariate_normal.pdf(x, mean=mus[i], cov=np.eye(len(mus[i]))*sigmas[i])
+    return result
