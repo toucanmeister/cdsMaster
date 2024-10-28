@@ -98,7 +98,9 @@ Supervisor: Prof. Dr. Michael Habeck
 %TODO: Deutsche Zusammenfassung schreiben
 
 \chapter*{Abstract}
-%TODO: Write Abstract
+Nested Sampling is an algorithm for fitting Bayesian statistical models.
+The most computationally expensive and most variable step in Nested Sampling involves sampling from the part of a prior distribution that lies above a certain likelihood value.
+This step 
 
 \clearpage
 \tableofcontents
@@ -667,13 +669,13 @@ Specifically, we can introduce a constraint that forces new contributions to be 
 This solves the problem of prior samples missing the regions with signifant posterior mass.
 
 We need an ensemble of prior samples to use our strategy for estimating prior masses from the last section, so we start by drawing $n$ prior samples $\theta_1, ..., \theta_n$; we call these the live points.
-Then we take the one with the lowest likelihood, remove it from the live points and use it along with an estimate of its prior mass as the first contribution to the evidence.
+Then we take the sample with the lowest likelihood, remove it from the live points and use it along with an estimate of its prior mass as the first contribution to the evidence.
 Its likelihood value becomes the likelihood-constraint $L^*$, meaning all points we sample thereafter have to have a likelihood higher than it.
 Luckily, all other live points already fulfill this constraint, since we chose the one with the lowest likelihood to remove.
 This means we only have to draw one new live point according to the constraint, $\theta_{\textrm{new}} \sim \pi(\theta) \mathbbm{1}_{\{L > L*\}}(\theta)$.
 We call this step likelihood-restricted prior sampling (LRPS).
 
-To be sure of its correctness, we have to show that the prior masses of these samples from the likelihood-restricted prior are still uniformly distributed; a proof of this can be found in the Appendix.
+To be sure that this strategy is correct, we have to show that the prior masses of these samples from the likelihood-restricted prior are still uniformly distributed; a proof of this can be found in the Appendix.
 Also, the prior masses of $\theta_1, ..., \theta_n$ cannot follow a $\textrm{Beta}(i, n-i+1)$ distribution anymore, since the prior masses are now distributed uniformly on $[0,\mu(L^*)]$ instead of $[0,1]$.
 However, if we call $\mu(L^*)$ the remaining prior mass, then the fraction of this mass that each drawn sample is connected to, $\frac{\mu(L(\theta))}{\mu(L^*)}$, is still uniformly distributed on $[0,1]$.
 So we can get our estimate of the prior mass of a sample $\theta$ by sampling a mass fraction $f \sim \textrm{Beta}(0,1)$ and multiplying it by the remaining prior mass $\mu(L^*)$.
@@ -682,6 +684,7 @@ As the likelihood-constraint increases, the LRPS-samples will naturally come fro
 This process is carried out for a given number of iterations or, more sophisticatedly, until an estimate of the remaining evidence becomes small enough.
 A simple estimate of an upper bound of the remaining evidence can be made by taking the highest likelihood present in the live points and multiplying it by the remaining prior mass.
 Once the algorithm terminates, the evidence is computed according to (\ref{eq:approx_evidence}), by multiplying each dead point's likelihood and estimated prior mass and summing over all of them.
+
 Posterior samples can also be generated easily.
 One randomly draws from the dead points, where each dead point's probability to be sampled is proportional to the product of its likelihood and its corresponding prior mass \cite[9]{nested_sampling_talk}.
 In this aspect, Nested Sampling is similar to a technique called Sequential Monte Carlo, which also samples from previously generated points using weights.
@@ -690,8 +693,15 @@ Inputs to the algorithm are the prior and likelihood functions as well as the st
 The stopping threshold determines how much of the evidence to accumulate, while the number of live points works like a resolution parameter.
 The more live points we keep, the more likely we are to find and explore small peaks in the likelihood, making the evidence estimate more accurate.
 More live points also cause the algorithm to take longer, since each evidence contribution will be associated with a smaller prior mass.
-The number of iterations required to fulfill the same stopping threshold scales linearly with the number of live points. %TODO: MORE DETAILS ON CONVERGENCE RATE WITH SOURCE
-See Algorithm \ref{alg:nested_sampling} for an overview of the Nested Sampling procedure.
+The number of iterations required to fulfill the same stopping threshold scales linearly with the number of live points.
+Specifically, the run time of nested sampling can be described as $T \sim T_L \cdot n_{\textrm{live}} \cdot f_{\textrm{sampler}} \cdot \mathcal{D}_{\textrm{KL}}$, where
+\begin{itemize}
+    \item $T_L$ is the time required to evaluate the likelihood once
+    \item $n_{\textrm{live}}$ is the number of live points
+    \item $T_{\textrm{LRPS}}$ is the mean time required for the LRPS step over the course of the run
+    \item $\mathcal{D}_{\textrm{KL}}$ is the Kullback-Leibler Divergence between prior and posterior \cite[1]{nested_sampling_talk}
+\end{itemize}
+See Algorithm \ref{alg:nested_sampling} for an overview of the Nested Sampling procedure and see a visualization in Figure \ref{fig:ns_eggcrate_example}.
 
 \begin{algorithm}
     \caption[The basic Nested Sampling algorithm.]{NestedSampling ($n$, $\epsilon$, $\pi$, $L$)}
@@ -732,7 +742,7 @@ Having explained the main ideas of Nested Sampling, let us now get into the deta
 \FloatBarrier
 \section{Likelihood-restricted prior sampling}
 In the sampling of new points from the likelihood-restricted prior lies most of the computational work of Nested Sampling.
-It is also where the original paper by Skilling provides little guidance, only that "such points will usually be found by some MCMC approximation, ..." \cite[6]{skilling}
+The original paper by Skilling provides little guidance for this step, only that "such points will usually be found by some MCMC approximation, ..." \cite[6]{skilling}
 In this section, we summarize multiple ways to do LRPS while presenting their advantages and drawbacks.
 
 \subsection{Rejection Sampling}
@@ -780,7 +790,9 @@ Since it always starts from a valid point and explores its local surroundings, i
 It does, however, have two major disadvantages.
 Firstly, because the samples are dependent, we have to draw many intermediate samples before returning an actual sample, to allow them to decorrelate.
 Secondly, since the proportion of prior space within the likelihood-constraint becomes smaller with each Nested Sampling iteration, the step size (standard deviation of the proposal distribution) required to efficiently explore the space changes continually.
-The standard Metropolis algorithm provides no way to adapt the step size during sampling, although more advanced methods have been developed to achieve this \cite{automala}.
+This second problem can be overcome by using an adaptive step size.
+A simple approach would be to decrease the step size by some factor each time a sample lands outside the likelihood-constraint while increasing it whenever a sample lands inside the constraint.
+More nuanced methods for step size adaptation have been developed as well \cite{automala}.
 
 \subsection{Hamiltonian Monte Carlo}
 Hamiltonian Monte Carlo (HMC) is a widely used MCMC algorithm for Bayesian model fitting.
@@ -816,11 +828,17 @@ The main adaptation made is when the particle hits the likelihood-constraint bar
 In this case, it is reflected off the barrier to stay inside the valid region.
 This adaptation of HMC was introduced by Betancourt in \cite{hmc_in_ns}.
 
+Like the Metropolis Algorithm, HMC for LRPS requires an adaptive step size.
+Without it, tight likelihood constraint boundary during the later iterations of Nested would lead to degenrate behavior as HMC reflects with every integration step.
+This is especially bad since the likelihood gradient used for reflection is calculated at the end of the integration step that lands outside of the likelihood constraint.
+If the step size is very large in relation to the valid sampling area, the gradient will calculated far away from the actual constraint boundary, leading to inaccurate reflection.
+
 \begin{figure}
     \centering
-    \includegraphics[scale=0.8]{hmc_reflection_example.png}
-    \caption{A run of HMC for LRPS with reflection and a chain of five samples on a standard-normal-likelihood-restricted uniform prior space.
-    The black dot is the starting spot, each blue cross is a generated sample.}
+    \includegraphics[scale=0.45]{hmc_reflection_example.png}
+    \includegraphics[scale=0.45]{hmc_reflection_degenerate_example.png}
+    \caption{Left: An iteration of HMC for LRPS with reflection and a chain of five samples on a standard-normal-likelihood-restricted uniform prior space.
+    The black dot is the starting spot, each blue cross is a generated sample. Right: An later iteration on the same example. Note how every integration step contains a reflection and how far away the reflection points are from the actual boundary.}
     \label{fig:hmc_example}
 \end{figure}
 
@@ -959,13 +977,15 @@ In the next chapter, we incorporate this idea into the LRPS step of Nested Sampl
 
 \section{Motivation}
 As was shown in Section 1.3, LRPS is difficult.
-Because the likelihood-constraint grows tighter, finding samples in the valid area becomes more difficult with every Nested Sampling iteration.
-For methods like Rejection Sampling and the Metropolis algorithm, this manifests in low acceptance rates of proposals, which leads to wasted computational work.
+Because the likelihood-constraint grows tighter and the ratio of valid area to the area of the whole sample space decreases steadily, finding samples within the constraint boundary becomes more difficult with every Nested Sampling iteration.
+For methods like Rejection Sampling and the Metropolis algorithm, this manifests in low acceptance rates of proposals, which lead to wasted computational work.
 For HMC adapted to LRPS, detecting the point at which the particle breaches the likelihood-constraint-boundary and must be reflected also becomes harder, since the distance the particle can travel before leaving the valid region decreases with each iteration.
+All these methods only notice the likelihood constraint boundary once they have crossed it.
+The proposals for Rejection Sampling and the Metropolis Algorithm do not take into account the likelihood at all, having to reject (intermediate) samples that cross the boundary, and while HMC for LRPS can reflect during proposal generation, this only happens after the boundary has been crossed.
+We would like an approach that softens the hard likelihood constraint and pushes the samples away from the boundary during sampling.
 
-We would like an approach where the sampler can ``feel'' the likelihood-constraint before it crosses it.
-Thinking back to the Barrier Method, we can make the following observation.
-By approximating the hard constraint function, the log barrier also lets the optimizer ``feel'' the constraint before crossing it.
+Thinking back to the Barrier Method, we can make the following observation:
+The log barrier also softens a hard constraint function and allows the optimization algorithm to feel the constraint before crossing it.
 This leads us to the main idea of this thesis: incorporating the log barrier from the Barrier Method into the LRPS step of Nested Sampling.
 
 \section{Derivation}
@@ -1322,14 +1342,16 @@ Both standard Nested Sampling and the Barriers variant were tested on four examp
     \item a 2D mixture of 5 nonconcentric Gaussians
     \item a 20D mixture of 5 nonconcentric Gaussians 
 \end{itemize}
+The slab-and-spike problems are taken from Skilling introductory paper on Nested Sampling \cite{skilling}, where it serves as an example of a type of problem Nested Sampling is well-suited for.
+The nonconcentric Gaussians are example problems with multimodality, which remains difficult for MCMC methods to do well with.
 The examples' likelihoods are defined in the following piece of Python code:
 \vspace{0.4cm}
 
 \hrule
 \begin{lstlisting}[language=Python]
 def spike_likelihood(x, dim):
-    slab = 50 * multivariate_normal.pdf(x, mean=np.zeros(dim), cov=np.eye(dim)*2)
-    spike = multivariate_normal.pdf(x, mean=np.zeros(dim), cov=np.eye(dim)*0.01)
+    slab = 100 * multivariate_normal.pdf(x, mean=np.zeros(dim), cov=np.eye(dim)*0.01)
+    spike = multivariate_normal.pdf(x, mean=np.zeros(dim), cov=np.eye(dim)*0.1)
     return slab + spike
 
 gauss_2d_mus = [np.array([-2,-2]), np.array([-2,2]), np.array([0,0]), np.array([2,-2]), np.array([2, 2])]
@@ -1346,20 +1368,26 @@ def concentric_gauss_likelihood(x, dim, mus, sigmas):
     return result
 \end{lstlisting}
 \hrule
-%TODO: Add images of 2D example problems
 
-Each example uses a uniform prior on $[-5, 5]$ over all dimensions.
+\begin{figure}
+    \centering
+    \includegraphics[scale=0.6, trim={1.5cm 1.5cm 1.5cm 1.5cm},clip]{spike_example.png}
+    \includegraphics[scale=0.6, trim={1.5cm 1.5cm 1.5cm 1.5cm},clip]{gauss_example.png}
+    \label{fig:benchmark_examples}
+    \caption{Plot of the 2D example problem likelihoods with the slab-and-spike on the left and the nonconcentric Gaussians on the right.}
+\end{figure}
+
+The spike-and-slab examples use a uniform prior on $[-0.5, 0.5]$ over all dimensions, while the nonconcentric Gaussians use a uniform prior on $[-5, 5]$.
 Since the behaviour of Nested Sampling is heavily dependent on the method for LRPS used, I applied both standard Nested Sampling and the Barriers variant to each example problem with different LRPS methods.
 The following LRPS approaches were used:
 \begin{itemize}
-    \item Discretized LRPS (only for 2D problems, with 6000 points per dimension)
     \item Metropolis Algorithm (with simple adaptive step size)
-    \item HMC with reflection (only for standard Nested Sampling, with static HMC path length of 3 and step size of 0.5)
+    \item HMC with reflection (only for standard Nested Sampling, with simple adaptive step size)
     \item HMC (only for Nested Sampling with Barriers, with simple adaptive step size)
     \item an optimal method for sampling inside an n-sphere (only for slab-and-spike examples)
 \end{itemize}
-Each configuration of example problem, algorithm and LRPS method was run 150 times, with each run using 10000 live points and a stopping criterion of $\epsilon = 10^{-6}$.
-An exception to this are the configurations using discretized LRPS, which could only be done with 1000 live points and $\epsilon = 10^{-4}$, because the number of discrete points required for the original configuration exceeds my memory limits.
+Each configuration of example problem, algorithm and LRPS method was run 1000 times, with each run using 1000 live points and a stopping criterion of $\epsilon = 10^{-16}$.
+
 
 \subsection{Influence of $t$ and $q_{\textrm{max}}$}
 

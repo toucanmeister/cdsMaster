@@ -506,7 +506,7 @@
       \field{labeltitlesource}{title}
       \field{note}{Invited talk at MIAPbP}
       \field{title}{Gradients and Nested Sampling}
-      \warn{\item Entry 'nested_sampling_talk' (bib.bib): Invalid format '7th July 2023' of date field 'date' - ignoring}
+      \warn{\item Entry 'nested_sampling_talk' (bib.bib): Invalid format '07.07.2023' of date field 'date' - ignoring}
     \endentry
     \entry{automala}{misc}{}
       \name{author}{5}{}{%
@@ -542,8 +542,8 @@
       \strng{authorbibnamehash}{68789c260763d7d53810e8b7f72f7e95}
       \strng{authornamehash}{68789c260763d7d53810e8b7f72f7e95}
       \strng{authorfullhash}{6476ce4496bc45efd15b15d6c6eb62af}
-      \field{sortinit}{3}
-      \field{sortinithash}{ad6fe7482ffbd7b9f99c9e8b5dccd3d7}
+      \field{sortinit}{4}
+      \field{sortinithash}{9381316451d1b9788675a07e972a12a7}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
       \field{eprintclass}{stat.CO}
@@ -600,8 +600,8 @@
       \strng{authorbibnamehash}{e9d8ae3a8d167f57a3562a4b5395aa32}
       \strng{authornamehash}{e9d8ae3a8d167f57a3562a4b5395aa32}
       \strng{authorfullhash}{e9d8ae3a8d167f57a3562a4b5395aa32}
-      \field{sortinit}{4}
-      \field{sortinithash}{9381316451d1b9788675a07e972a12a7}
+      \field{sortinit}{5}
+      \field{sortinithash}{20e9b4b0b173788c5dace24730f47d8c}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
       \field{journaltitle}{Journal of the American Statistical Association}
