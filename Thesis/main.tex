@@ -94,13 +94,20 @@ Supervisor: Prof. Dr. Michael Habeck
 \maketitle
 
 \chapter*{Zusammenfassung}
-
-%TODO: Deutsche Zusammenfassung schreiben
+Nested Sampling ist ein Algorithmus zur Anpassung von parametrischen Modellen in der Bayesschen Statistik.
+Der aufwändigste Schritt im Nested Sampling ist das likelihoodbeschränkte Sampling des Priors.
+Hier wird zufällig von dem Teil des Priors gezogen, der oberhalb eines bestimmten Likelihoodwerts liegt.
+Standard Markow-Chain-Monte-Carlo-Verfahren sind hier dadurch limitiert, dass sie die Likelihood-Grenze erst dann bemerken, wenn sie sie bereits überschritten haben.
+In dieser Arbeit stelle ich Nested Sampling mit Barrieren vor; eine Methode, die die Idee einer logarithmischen Barrierefunktion aus der konvexen Optimierung in Nested Sampling integriert, um das likelihoodbeschränkte Sampling des Priors gezielt zu lenken.
+Dieser Ansatz erreicht %TODO: results
 
 \chapter*{Abstract}
 Nested Sampling is an algorithm for fitting Bayesian statistical models.
-The most computationally expensive and most variable step in Nested Sampling involves sampling from the part of a prior distribution that lies above a certain likelihood value.
-This step 
+The most computationally expensive step in Nested Sampling involves sampling from the part of a prior distribution that lies above a certain likelihood value, called likelihood-restricted prior sampling.
+In standard Nested Sampling, this step is limited by samplers not noticing the likelihood-constraint boundary until they have crossed it, causing low acceptance rates of samples.
+In this thesis, I propose Nested Sampling with Barriers, a method that incorporates the idea of a log barrier from convex optimization into Nested Sampling to guide the likelihood-restricted prior sampler.
+This approach achieves %TODO: results
+
 
 \clearpage
 \tableofcontents
