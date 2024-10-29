@@ -486,7 +486,7 @@
       \field{title}{Computational Statistics}
       \field{year}{2009}
     \endentry
-    \entry{nested_sampling_talk}{mics}{}
+    \entry{nested_sampling_talk}{misc}{}
       \name{author}{1}{}{%
         {{hash=4b64c8836900e852f8f78a973b2ac218}{%
            family={Handley},
@@ -504,9 +504,12 @@
       \field{sortinithash}{ad6fe7482ffbd7b9f99c9e8b5dccd3d7}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
+      \field{day}{7}
+      \field{month}{7}
       \field{note}{Invited talk at MIAPbP}
       \field{title}{Gradients and Nested Sampling}
-      \warn{\item Entry 'nested_sampling_talk' (bib.bib): Invalid format '07.07.2023' of date field 'date' - ignoring}
+      \field{year}{2023}
+      \field{dateera}{ce}
     \endentry
     \entry{automala}{misc}{}
       \name{author}{5}{}{%

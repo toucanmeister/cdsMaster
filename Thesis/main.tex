@@ -64,7 +64,7 @@
 \newtheorem{definition}{Definition}
 
 \title{
-\includegraphics[scale=0.7]{logo.png} \vspace{50pt}
+\includegraphics[scale=0.7]{figs/logo.png} \vspace{50pt}
 
 Optimization-inspired Barriers in Nested Sampling \vspace{20pt}
 
@@ -738,8 +738,8 @@ See Algorithm \ref{alg:nested_sampling} for an overview of the Nested Sampling p
 
 \begin{figure}
     \centering
-    \includegraphics[trim={3cm 1cm 2.4cm 1cm}, clip, scale=0.65]{ns_eggcrate_example_1.png}
-    \includegraphics[trim={2.4cm 1cm 3cm 1cm}, clip, scale=0.65]{ns_eggcrate_example_2.png}
+    \includegraphics[trim={3cm 1cm 2.4cm 1cm}, clip, scale=0.65]{figs/ns_eggcrate_example_1.png}
+    \includegraphics[trim={2.4cm 1cm 3cm 1cm}, clip, scale=0.65]{figs/ns_eggcrate_example_2.png}
     \caption{Intermediate states of two Nested Sampling runs on an eggcrate-shaped likelihood with a uniform prior. Black crosses are dead points, red crosses are live points. All live points are inside the current likelihood-constraint contour. The likelihood is visualized by the colored background, lighter colors represent higher likelihood values. The left image shows an earlier iteration than the right one, as can be seen by the lower number of dead points and the looser likelihood-constraint contours.}
     \label{fig:ns_eggcrate_example}
 \end{figure}
@@ -822,7 +822,7 @@ Betancourt provides a thorough explanation of HMC with solid theoretical foundat
 
 \begin{figure}
     \centering
-    \includegraphics[scale=0.8]{hmc_example.png}
+    \includegraphics[scale=0.8]{figs/hmc_example.png}
     \caption{Visualization of HMC in a two-dimensional sample space. Contour lines and shading indicate the negative log probability of the target distribution (a mixture of two Gaussians). The dot is the starting point and each cross is a sampled point.}
     \label{fig:hmc_example}
 \end{figure}
@@ -839,14 +839,15 @@ Like the Metropolis Algorithm, HMC for LRPS requires an adaptive step size.
 Without it, tight likelihood constraint boundary during the later iterations of Nested would lead to degenrate behavior as HMC reflects with every integration step.
 This is especially bad since the likelihood gradient used for reflection is calculated at the end of the integration step that lands outside of the likelihood constraint.
 If the step size is very large in relation to the valid sampling area, the gradient will calculated far away from the actual constraint boundary, leading to inaccurate reflection.
+See the visualization in Figure \ref{fig:hmc_reflection_example}.
 
 \begin{figure}
     \centering
-    \includegraphics[scale=0.45]{hmc_reflection_example.png}
-    \includegraphics[scale=0.45]{hmc_reflection_degenerate_example.png}
+    \includegraphics[scale=0.45]{figs/hmc_reflection_example.png}
+    \includegraphics[scale=0.45]{figs/hmc_reflection_degenerate_example.png}
     \caption{Left: An iteration of HMC for LRPS with reflection and a chain of five samples on a standard-normal-likelihood-restricted uniform prior space.
     The black dot is the starting spot, each blue cross is a generated sample. Right: An later iteration on the same example. Note how every integration step contains a reflection and how far away the reflection points are from the actual boundary.}
-    \label{fig:hmc_example}
+    \label{fig:hmc_reflection_example}
 \end{figure}
 
 Having introduced Nested Sampling, we require one more piece of background knowledge before we are ready to tackle the contributions this thesis makes.
@@ -943,7 +944,7 @@ It converges to the true solution as $t \rightarrow \infty$, as can be seen in F
 
 \begin{figure}
     \centering
-    \includegraphics[scale=0.6]{barrier_method_example.png}
+    \includegraphics[scale=0.6]{figs/barrier_method_example.png}
     \caption{Central path of an example optimization problem. The shaded area is the feasible region, given by the constraint functions in black. The grey lines indicate contours of the objective function, with the unconstrained optimum at the grey dot. The central path of the problem is shown in red. $x^*(1)$ is marked by a red cross.}
     \label{fig:barrier_method_example}
 \end{figure}
@@ -1328,7 +1329,7 @@ The step size may, however, not need to be decreased as quickly as with HMC with
 
 \begin{figure}
     \centering
-    \includegraphics[scale=0.8]{barrier_sampling_hmc.png}
+    \includegraphics[scale=0.8]{figs/barrier_sampling_hmc.png}
     \caption{A run of HMC for LRPS with a chain of five samples on a standard-normal-likelihood-restricted uniform prior space.
     The black dot is the starting spot, each blue cross is a generated sample.
     The background color shows the negative log density the particles move on, with lighter colors representing higher values.}
@@ -1378,8 +1379,8 @@ def concentric_gauss_likelihood(x, dim, mus, sigmas):
 
 \begin{figure}
     \centering
-    \includegraphics[scale=0.6, trim={1.5cm 1.5cm 1.5cm 1.5cm},clip]{spike_example.png}
-    \includegraphics[scale=0.6, trim={1.5cm 1.5cm 1.5cm 1.5cm},clip]{gauss_example.png}
+    \includegraphics[scale=0.6, trim={1.5cm 1.5cm 1.5cm 1.5cm},clip]{figs/spike_example.png}
+    \includegraphics[scale=0.6, trim={1.5cm 1.5cm 1.5cm 1.5cm},clip]{figs/gauss_example.png}
     \label{fig:benchmark_examples}
     \caption{Plot of the 2D example problem likelihoods with the slab-and-spike on the left and the nonconcentric Gaussians on the right.}
 \end{figure}
