@@ -995,9 +995,9 @@ INPUT e:/Program Files (x86)/texlive/2022/texmf-dist/fonts/tfm/public/cm/cmbx12.
 OUTPUT main.toc
 INPUT e:/Program Files (x86)/texlive/2022/texmf-dist/fonts/tfm/public/cm/cmr17.tfm
 INPUT e:/Program Files (x86)/texlive/2022/texmf-dist/fonts/tfm/public/cm/cmbx12.tfm
-INPUT e:/Program Files (x86)/texlive/2022/texmf-dist/fonts/tfm/public/cm/cmbx12.tfm
 INPUT e:/Program Files (x86)/texlive/2022/texmf-dist/fonts/tfm/public/cm/cmbx8.tfm
 INPUT e:/Program Files (x86)/texlive/2022/texmf-dist/fonts/tfm/public/cm/cmbx6.tfm
+INPUT e:/Program Files (x86)/texlive/2022/texmf-dist/fonts/tfm/public/cm/cmbx12.tfm
 INPUT e:/Program Files (x86)/texlive/2022/texmf-dist/tex/latex/bbm-macros/ubbm.fd
 INPUT e:/Program Files (x86)/texlive/2022/texmf-dist/tex/latex/bbm-macros/ubbm.fd
 INPUT e:/Program Files (x86)/texlive/2022/texmf-dist/tex/latex/bbm-macros/ubbm.fd

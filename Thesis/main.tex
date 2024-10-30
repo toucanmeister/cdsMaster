@@ -97,14 +97,14 @@ Supervisor: Prof. Dr. Michael Habeck
 Nested Sampling ist ein Algorithmus zur Anpassung von parametrischen Modellen in der Bayesschen Statistik.
 Der aufwändigste Schritt im Nested Sampling ist das likelihoodbeschränkte Sampling des Priors.
 Hier wird zufällig von dem Teil des Priors gezogen, der oberhalb eines bestimmten Likelihoodwerts liegt.
-Standard Markow-Chain-Monte-Carlo-Verfahren sind hier dadurch limitiert, dass sie die Likelihood-Grenze erst dann bemerken, wenn sie sie bereits überschritten haben.
-In dieser Arbeit stelle ich Nested Sampling mit Barrieren vor; eine Methode, die die Idee einer logarithmischen Barrierefunktion aus der konvexen Optimierung in Nested Sampling integriert, um das likelihoodbeschränkte Sampling des Priors gezielt zu lenken.
+Standardmethoden wie Markow-Chain-Monte-Carlo-Verfahren sind hier dadurch limitiert, dass sie die Likelihood-Grenze erst dann bemerken, wenn sie bereits überschritten wurde.
+In dieser Arbeit stelle ich Nested Sampling mit Barrieren vor; eine Methode, welche die Idee einer logarithmischen Barrierefunktion aus der konvexen Optimierung in Nested Sampling integriert, um das likelihoodbeschränkte Sampling des Priors gezielt zu lenken.
 Dieser Ansatz erreicht %TODO: results
 
 \chapter*{Abstract}
 Nested Sampling is an algorithm for fitting Bayesian statistical models.
 The most computationally expensive step in Nested Sampling involves sampling from the part of a prior distribution that lies above a certain likelihood value, called likelihood-restricted prior sampling.
-In standard Nested Sampling, this step is limited by samplers not noticing the likelihood-constraint boundary until they have crossed it, causing low acceptance rates of samples.
+Standard methods like Markov Chain Monte Carlo can be used for this step, but are limited by not noticing the likelihood-constraint boundary until they have crossed it, causing low acceptance rates of proposals.
 In this thesis, I propose Nested Sampling with Barriers, a method that incorporates the idea of a log barrier from convex optimization into Nested Sampling to guide the likelihood-restricted prior sampler.
 This approach achieves %TODO: results
 
@@ -115,30 +115,31 @@ This approach achieves %TODO: results
 
 \chapter*{Introduction}
 Bayesian models are widely used for statistical inference tasks.
-They provide a way to extract information from data that leads to intuitively interpretable results.
+They can extract information from data in a way that leads to intuitively interpretable results.
 Fitting a parameterized Bayesian model comprises more than just computing a point estimate for the parameter values, as would be the case in a maximum likelihood model.
 Instead, the result of Bayesian inference comprises a whole probability distribution over the parameter space, called the posterior distribution.
-A distribution, a opposed to a point estimate, provides extra information about how sure we can be of the results of our inference. 
+A distribution, as opposed to a point estimate, provides extra information about how sure we can be of the results of our inference. 
 
 The upsides of Bayesian models come at the cost of being more difficult to fit than maximum likelihood models, especially so with increasing model complexity.
-Many techniques have been developed for this purpose, with most state-of-the-art approaches being Monte Carlo methods.
+Many techniques have been developed for this purpose, the most common of which are Monte Carlo methods.
 Instead of producing a parameterized version of the posterior distribution, they instead generate samples from it.
-The most commonly used methods (Gibb sampling \cite{gibbs}, Metropolis Hastings \cite{metropolishastings}, Hamiltonian Monte Carlo (HMC) \cite{hmc}, Slice Sampling \cite{slice_sampling}, etc.) all come with one downside.
-These methods focus purely on the posterior distribution of a model fit and do not compute the evidence.
-The evidence is a term that comes up in Bayesian inference and is a useful tool that can be used to compare whole classes of models with respect to how well they fit some data.
-There exist approaches that allow for computation of the evidence, like Annealed Importance Sampling \cite{annealed_importance_sampling} or Probabilistic Integration \cite{bayesian_cubature}.
-This thesis focuses on one such approach called Nested Sampling.
+These commonly used methods (Gibbs sampling \cite{gibbs}, Metropolis Hastings \cite{metropolishastings}, Hamiltonian Monte Carlo (HMC) \cite{hmc}, Slice Sampling \cite{slice_sampling}, etc.) all come with one downside.
+They focus purely on the posterior distribution of a model fit and do not compute the evidence.
+The evidence is a term that comes up in Bayesian inference.
+It is a useful tool that can be used to compare whole classes of models with respect to how well they fit some data.
+Approaches that allow for computation of the evidence are, for example, Annealed Importance Sampling \cite{annealed_importance_sampling} and Probabilistic Integration \cite{bayesian_cubature}.
+Another one is Nested Sampling, introduced by Skilling \cite{skilling}, which is the method this thesis focuses on.
 
-Introduced by Skilling \cite{skilling}, Nested Sampling is a Monte Carlo method for Bayesian inference whose main objective is computing the evidence, altough it also generates posterior samples.
-Nested sampling contains a step where a samples have to be generated from a likelihood-restricted prior (likelihood-restricted prior sampling or LRPS).
-This step is difficult \cite[9]{hmc_in_ns} and, in its original form, cannot make use of likelihood-gradient information, which other successful methods like HMC rely heavily upon.
-
-In this thesis, I propose a modified version of Nested Sampling which uses ideas from convex optimization to introduce likelihood-gradient information into the crucial LRPS step of Nested Sampling.
+Nested Sampling is a Monte Carlo method for Bayesian inference whose main objective is computing the evidence, although it can also generate posterior samples.
+Nested sampling contains a step where samples have to be generated from a likelihood-restricted prior (likelihood-restricted prior sampling or LRPS).
+This step is challenging \cite[9]{hmc_in_ns}, with standard Markov Chain Monte Carlo (MCMC) methods struggling to achieve high acceptance rates of proposals, because they only notice the likelihood-constraint boundary once they have crossed it.
+In this thesis, I propose a modified version of Nested Sampling which uses the idea of a log barrier from convex optimization to guide the crucial LRPS step of Nested Sampling.
+This allows %TODO: results
 
 I begin with by recapping important background information about the methods and ideas this thesis is based on, including Bayesian statistics in general, the Nested Sampling algorithm and the Barrier Method for solving convex optimization problems.
 Following that, using inspiration from the Barrier Method, I derive Nested Sampling with Barriers as an alternative to the standard Nested Sampling algorithm.
 I then review some of the variables and parameters introduced by Nested Sampling with Barriers and analyze their effects on the algorithm.
-Finally, I present the results of a benchmark where basic Nested Sampling and Nested Sampling with Barriers in different configurations were run on a set of example problems with varying number of dimensions and modes.
+Finally, I present the results of a benchmark where basic Nested Sampling and Nested Sampling with Barriers were run in different configurations on a set of example problems with a varying number of dimensions and modes.
 \addcontentsline{toc}{chapter}{Introduction}
 \pagenumbering{arabic}
 \setcounter{page}{5}
@@ -194,7 +195,7 @@ Note that when viewed as a function of $\theta$, the likelihood is not a probabi
 I abbreviate the natural logarithm of the likelihood as $l(\theta) = \log(L(\theta))$.
 
 \textbf{Prior}: Bayes' rule requires a prior distribution over the model parameters, $P(\theta)$, often written $\pi(\theta)$.
-This represents beliefs we have about the parameter values before taking the data into account, which could be results from previous experiments or qualitative knowledge about the modeled process (like in our coin example) \cite[34 f.]{mcelreath}.
+This represents beliefs we have about the parameter values before taking the data into account, which could be results from previous experiments or qualitative knowledge about the modeled process (like in our coin example) \cite[p. 34 f.]{mcelreath}.
 Priors like this may seem arbitrary or subjective, but they are required for Bayes' rule to work and have two positives:
 \begin{enumerate}
     \item With enough data, all but the most confident priors are overwhelmed and end up contributing little to the resulting posterior.
@@ -309,7 +310,7 @@ The data updated our ideas of the coin's fairness, but did not completely overri
 \end{figure}
 
 
-\subsection{Fitting Bayesian Models}
+\section{Fitting Bayesian Models}
 Having introduced Bayesian statistics and described how Bayesian inference works conceptually, let us now turn our attention to how to do it in practice.
 
 In some cases, the posterior can be computed analytically, yielding a parameterized probability distribution.
@@ -352,12 +353,12 @@ This allows more efficient exploration of the posterior, because once a region o
 Again, let us take a look at one relatively simple example algorithm, the Metropolis algorithm.
 The Metropolis algorithm uses a symmetrical proposal distribution $\mathbf{Q}(\theta_{\textrm{new}} \,|\, \theta_{\textrm{old}})$.
 Often, a simple normal distribution around the last sample is used.
-The proposal is then accepted with probability $\frac{\mathbf{P}(\theta_{\textrm{new}})}{\mathbf{P}(\theta_{\textrm{old}})}$ \cite[365f.]{mckay}.
+The proposal is then accepted with probability $\frac{\mathbf{P}(\theta_{\textrm{new}})}{\mathbf{P}(\theta_{\textrm{old}})}$ \cite[p. 365f.]{mckay}.
 
 I will not go into detail on why the Metropolis algorithm works, but I do want to at least mention the fundamentals of Markov chain Monte Carlo.
 Markov chain Monte Carlo methods get their name from the fact that their samples form a Markov chain.
 Markov chains are defined as a set of states $\Theta$ (in our case these are all possible parameter values) with an initial probability distribution $P_0(\theta)$ over these states, along with a transition probability function $T: \Theta \times \Theta \rightarrow [0,1]$ assigning a probability to every transition from one state to another.
-We can simulate a Markov chain by sampling an initial state $\theta_0 \sim P_0(\theta)$, then sampling the next state from the transition probabtility distribution $\theta_k \sim T(\theta_k \,|\, \theta_{k-1})$.
+We can simulate a Markov chain by sampling an initial state $\theta_0 \sim P_0(\theta)$, then sampling the next state from the transition probability distribution $\theta_k \sim T(\theta_k \,|\, \theta_{k-1})$.
 We can also analyse the probability of being in a certain state after $k$ steps \cite[372]{mckay}: 
 $$
     P_k(\theta^*) = \int_{\Theta} P_{k-1}(\theta) \, T(\theta^* \,|\, \theta) \, d\theta 
@@ -366,33 +367,33 @@ This also lets us define stationary distributions of Markov chains.
 These are the key to using Markov chains for sampling, because once a Markov chain finds its way into a stationary distribution, it stays there.
 We call $\mathcal{P}(\theta)$ a stationary distribution of a Markov chain if \cite[372]{mckay}:
 $$
-    \mathcal{P}(\theta^*) = \int_{\Theta} \mathcal{P}(\theta) \, T(\theta^* \,|\, \theta) \, d\theta \quad \forall \theta^* \in \Theta
+    \mathcal{P}(\theta^*) = \int_{\Theta} \mathcal{P}(\theta) \, T(\theta^* \,|\, \theta) \, d\theta \quad \forall \, \theta^* \in \Theta
 $$
 MCMC methods focus on cleverly defining their transition probabilities in such a way that the target distribution is the only stationary distribution of the Markov chain.
 That way, when the chain is sampled for long enough, it eventually produces samples from the target distribution \cite[372]{mckay}.
 
-Now that I've touched on how Bayesian inference is most commonly is normally done, I want to explain why there is room for improvement.
+Now that I've touched on how Bayesian inference is normally done, I want to explain why there is room for improvement.
 As covered in Section 1.1, the evidence is an immensely useful part of Bayes' formula (Equation (\ref{eq:bayes})) because it allows model comparison that accounts for overfitting.
 Most MCMC methods only generate samples from the posterior, they do not compute the evidence.
 Computing the evidence integral is generally a difficult task \cite[221]{mcelreath}.
-Since the parameter space for real-world models is very high-dimensional, with only a small fraction of this space containing meaningful posterior probability mass, numerical quadrature that discretize the space evenly fail.
+Since the parameter space for real-world models is high-dimensional, with only a small fraction of this space containing meaningful posterior probability mass, numerical quadrature methods that discretize the space evenly fail.
 One might think to use the modes of the posterior as a guide, since posterior density concentrates around them, but the evidence is an integral, and integration accumulates not densities, but density times volume, or mass.
 In high dimensional spaces, most of the probability mass lies not at the modes, where there is high probability density, because it concentrates on very little volume.
 Instead, most probability mass is found a ways out from the mode, where there is still relatively high density, but spread over magnitudes more volume.
-For this reason, we cannot simply explore the posterior in a region around the modes.
-There are methods that estimate the evidence from a set of given MCMC samples \cite{bayesian_cubature}, which by definition concentrate where there is high posterior mass.
+For this reason, we cannot simply explore the posterior in a small region around the modes \cite{betancourt_talk}.
+There are probabilistic integration methods like Bayesian cubature \cite{bayesian_cubature}, that estimate the evidence from a set of given MCMC samples, which by definition concentrate where there is high posterior mass.
 However, this thesis focuses on a method whose main objective, from the start, is computing the evidence.
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Nested Sampling}
-Nested sampling, introduced by Skilling \cite{skilling}, is an algorithm that computes the evidence (Equation \ref{eq:evidence}) of a Bayesian model while also generating samples from the posterior distribution.
+Nested sampling, introduced by Skilling \cite{skilling}, is an algorithm that computes the evidence of a Bayesian model while also generating samples from the posterior distribution.
 In this chapter, I derive the Nested Sampling algorithm, explaining the main ideas along the way.
 
 \FloatBarrier
 \subsection{From a multi- to a one-dimensional Integral}
-We start by reducing the potentially multidimensional evidence integral (Equation \ref{eq:evidence}) to a one-dimensional integral.
+We start by reducing the potentially multidimensional evidence integral (Equation (\ref{eq:evidence})) to a one-dimensional integral.
 To this end, we first replace the likelihood in the evidence integral by its layer cake representation, a tool borrowed from measure theory \cite[26]{liebloss}.
 For a quick derivation of the layer cake representation, let us define the indicator function $\mathbbm{1}_S(x)$  and the super level set $\{f \, > \, t\}$:
 \begin{align*}
@@ -409,7 +410,7 @@ With these definitions we rewrite $L(\theta)$ as its layer cake representation:
     \; = \; \int_0^{\infty} \mathbbm{1}_{[0,L(\theta)]}(\lambda) \; d\lambda
     \; = \; \quad \int_0^{\infty} \mathbbm{1}_{\{ L \, > \, \lambda \}}(\theta) \; d\lambda 
 \end{align*}
-The last equality holds because the integral still has a 1 for all values of $\lambda$ that are smaller than $L(\theta)$ and a 0 for all $\lambda > L(\theta)$.
+The last equality holds because the integrand is still 1 for all values of $\lambda$ that are smaller than $L(\theta)$ and 0 for all $\lambda > L(\theta)$.
 Now we plug this layer cake representation of $L(\theta)$ into the evidence integral:
 \begin{align}
     Z = \int_\Theta L(\theta) \, \pi(\theta) \; d\theta &= \int_{\Theta} \int_0^{\infty} \mathbbm{1}_{\{ L \, > \, \lambda \}}(\theta) \; d\lambda \; \pi(\theta) \; d\theta \nonumber\\
@@ -418,7 +419,7 @@ Now we plug this layer cake representation of $L(\theta)$ into the evidence inte
     &= \int_0^{\infty} \mu(\lambda) \; d\lambda
     \label{eq:integral_2}
 \end{align}
-We may swap the integrals in step \ref{eq:tonelli} thanks to Tonelli's theorem \cite[147]{measure_theory}.
+We may swap the integrals in step (\ref{eq:tonelli}) thanks to Tonelli's theorem \cite[147]{measure_theory}.
 With that, we have defined one of the key functions of Skilling's original paper \cite{skilling}. $\mu$ returns, for a given likelihood-threshold $\lambda$, the amount of prior mass which exists above that likelihood threshold. A visualization is given in Figure \ref{fig:xlambda}.
 $$
 \mu(\lambda) 
@@ -475,7 +476,7 @@ $$
         \node [color=black] at (axis cs:2.98,0.085) {$\mu(\lambda)$};
         \end{axis}
     \end{tikzpicture}
-    \caption{Visualization of the relationship between a likelihood threshold $\lambda$ and the corresponding prior mass $\mu(\lambda)$ for a uniform prior (purple) and a likelihood (blue) in two dimensions.}
+    \caption{Visualization of the relationship between a likelihood threshold $\lambda$ and the corresponding prior mass $\mu(\lambda)$ for a uniform prior (purple) and a likelihood (blue).}
     \label{fig:xlambda}
 \end{figure}
 
@@ -513,7 +514,7 @@ Since $\mathcal{L}$ is a decreasing function, this would also sort the $X_i$ in 
     \mathcal{L}(X_1)& &<& &\mathcal{L}(X_2)& &<& &\mathcal{L}(X_3)&  &...& &<& &\mathcal{L}(X_n) \label{eq:sample_ordering}
 \end{align}
 
-In the case of there being two equal likelihood thresholds, we may randomly add a very small value to one of them to artifically create an order.
+In the case of there being two equal likelihood thresholds, we may randomly add a very small value to one of them to artifically create an order \cite[3]{skilling}.
 
 \begin{figure}
     \centering
@@ -611,13 +612,14 @@ As can be seen in Figure \ref{fig:integral_approximate}, we can approximate our 
     \int_0^1 \mathcal{L}(X) \, dX \approx \sum_{i=2}^n \mathcal{L}(X_i) \cdot (X_i - X_{i-1}) \label{eq:approx_evidence}
 \end{equation}
 Sadly, we cannot actually compute $\mathcal{L}(X)$, so prior mass samples do not help us.
-We have to find another way of obtaining the terms that make up our evidence approximation (Equation \ref{eq:approx_evidence}).
+We have to find another way of obtaining the terms that make up our evidence approximation in (\ref{eq:approx_evidence}).
 
 Instead of sampling prior masses directly, we may instead sample $\theta_1, ..., \theta_n$ from the prior.
 We can prove that their corresponding prior masses are uniformly distributed.
 
+\FloatBarrier
 \subsubsection{Proof: Prior Masses of Prior Samples are Uniformly Distributed}
-Let $\mathbb{T}$ be a random variable with the PDF $f_T(\theta) = \pi(\theta)$; it represents samples from our prior.
+Let $\mathbb{T}$ be a random variable with the PDF $f_{\mathbb{T}}(\theta) = \pi(\theta)$; it represents samples from our prior.
 Let $\mathbb{L} = L(\mathbb{T})$ and $\mathbb{M} = \mu(\mathbb{L})$ also be random variables.
 $\mathbb{M}$ represents the prior masses; we want to prove that $\mathbb{M}$ follows a uniform distribution.
 First, let us take a look at the distribution of the likelihoods $\mathbb{L}$.
@@ -649,7 +651,7 @@ and plug this representation of the PDF of $\mathbb{L}$ into the formula for its
 \end{align}
 The probability integral transform tells us that a random variable $\mathbb{Y} = f(\mathbb{X})$ is uniform if $f$ is the CDF of $\mathbb{X}$ \cite[54]{casellaberger}.
 This, combined with (\ref{eq:L_cdf}) means that a random variable $\overline{\mathbb{M}} = 1 - \mu(\mathbb{L})$ would be uniformly distributed, since $1 - \mu(\lambda)$ is the CDF of $\mathbb{L}$.
-And since $\mathbb{M}$'s values are simply the values of $\overline{\mathbb{M}}$ mirrored at $m = 0.5$, $\mathbb{M}$ is also uniformly distributed.
+Finally, since $\mathbb{M}$'s values are simply the values of $\overline{\mathbb{M}}$ mirrored at $m = 0.5$, $\mathbb{M}$ is also uniformly distributed.
 \hfill $\qed$
 
 With that, we have the first part we need to approximate the evidence using (\ref{eq:approx_evidence}), the likelihood thresholds of prior mass samples.
@@ -658,7 +660,7 @@ We cannot compute the prior masses of our samples $\theta_1, ... ,\theta_n$, but
 
 Order statistics study the distributions of random values when they are sorted.
 The $i$-th order statistic represents the distribution of the $i$-th lowest value in a set of $n$ randomly drawn values.
-We make use of the fact that when $n$ values are drawn from a $\textrm{Uniform}(0,1)$ distribution, the $i$th order statistic follows a $\textrm{Beta}(i, n-i+1)$ distribution \cite[63]{computational_stats}.
+We make use of the fact that when $n$ values are drawn from a $\textrm{Uniform}(0,1)$ distribution, the $i$-th order statistic follows a $\textrm{Beta}(i, n-i+1)$ distribution \cite[63]{computational_stats}.
 As we remember from (\ref{eq:sample_ordering}), we can order our samples' prior masses by ordering them by their likelihoods.
 We know that the sample with the $i$-th lowest likelihood value will also have the $i$-th lowest prior mass, and that its prior mass follows a $\textrm{Beta}(i, n-i+1)$ distribution.
 We can thus estimate its prior mass by either sampling a value from $\textrm{Beta}(i, n-i+1)$ or by using the mean of this distribution.
@@ -666,8 +668,8 @@ We can thus estimate its prior mass by either sampling a value from $\textrm{Bet
 In $\theta_{i}$, we have thus obtained a likelihood value $L(\theta_{i})$ and an estimate for its prior mass $X_{i} \sim  \textrm{Beta}(i,n-i+1)$.
 We could now simply sample $n$ values from the prior, compute their likelihoods and estimate their prior masses to get an estimate of the evidence according to (\ref{eq:approx_evidence}).
 This would generally, however, lead to horribly inaccurate estimates.
-Because the area of the sample space with high likelihood values is generally very small and away from the high prior values (where the prior samples will concenctrate), finding samples with high likelihood that contribute significantly to the evidence would be very difficult \cite[7]{skilling}.
-Nested sampling cleverly solves this problem.
+Because the area of the sample space with high likelihood values is generally very small and away from the high prior values (where the prior samples will concentrate), finding samples with high likelihood that contribute significantly to the evidence would be difficult \cite[7]{skilling}.
+Nested sampling cleverly solves this problem, as I will show in the next section.
 
 \subsection{Introducing a Likelihood-Constraint}
 Nested sampling generates contributions to the evidence à la (\ref{eq:approx_evidence}) iteratively.
@@ -681,6 +683,7 @@ Its likelihood value becomes the likelihood-constraint $L^*$, meaning all points
 Luckily, all other live points already fulfill this constraint, since we chose the one with the lowest likelihood to remove.
 This means we only have to draw one new live point according to the constraint, $\theta_{\textrm{new}} \sim \pi(\theta) \mathbbm{1}_{\{L > L*\}}(\theta)$.
 We call this step likelihood-restricted prior sampling (LRPS).
+Having sampled a new live point, we again take the sample with the lowest likelihood, remove it from the live points, add its contribution to the evidence and set its likelihood as the new likelihood-constraint, etc.
 
 To be sure that this strategy is correct, we have to show that the prior masses of these samples from the likelihood-restricted prior are still uniformly distributed; a proof of this can be found in the Appendix.
 Also, the prior masses of $\theta_1, ..., \theta_n$ cannot follow a $\textrm{Beta}(i, n-i+1)$ distribution anymore, since the prior masses are now distributed uniformly on $[0,\mu(L^*)]$ instead of $[0,1]$.
@@ -731,7 +734,7 @@ See Algorithm \ref{alg:nested_sampling} for an overview of the Nested Sampling p
             \State sample $\theta_{\textrm{new}}$ from likelihood-restricted prior $\pi(\theta) \, \mathbbm{1}_{\{L(\theta) > L^*\}}$
             \State append $\theta_{\textrm{new}}$ to $live\_points$
             \State $L_{\textrm{max}} \gets \max_{\theta \, \in \, live\_points} L(\theta)$
-        \Until{$mass \cdot L_{\textrm{max}} < \epsilon$}
+        \Until{$(mass \cdot L_{\textrm{max}}) / Z < \epsilon$}
         \State return $Z,\, dead\_points$
     \end{algorithmic}
 \end{algorithm}

@@ -93,6 +93,7 @@
       \strng{authorbibnamehash}{1982fa604a3f94837efceaa53330b2a4}
       \strng{authornamehash}{1982fa604a3f94837efceaa53330b2a4}
       \strng{authorfullhash}{1982fa604a3f94837efceaa53330b2a4}
+      \field{extraname}{1}
       \field{sortinit}{3}
       \field{sortinithash}{ad6fe7482ffbd7b9f99c9e8b5dccd3d7}
       \field{labelnamesource}{author}
@@ -375,6 +376,32 @@
       \field{isbn}{0521642981}
       \field{title}{Information Theory, Inference \& Learning Algorithms}
       \field{year}{2002}
+    \endentry
+    \entry{betancourt_talk}{misk}{}
+      \name{author}{1}{}{%
+        {{hash=1982fa604a3f94837efceaa53330b2a4}{%
+           family={Betancourt},
+           familyi={B\bibinitperiod},
+           given={Michael},
+           giveni={M\bibinitperiod}}}%
+      }
+      \strng{namehash}{1982fa604a3f94837efceaa53330b2a4}
+      \strng{fullhash}{1982fa604a3f94837efceaa53330b2a4}
+      \strng{bibnamehash}{1982fa604a3f94837efceaa53330b2a4}
+      \strng{authorbibnamehash}{1982fa604a3f94837efceaa53330b2a4}
+      \strng{authornamehash}{1982fa604a3f94837efceaa53330b2a4}
+      \strng{authorfullhash}{1982fa604a3f94837efceaa53330b2a4}
+      \field{extraname}{2}
+      \field{sortinit}{2}
+      \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{day}{29}
+      \field{month}{4}
+      \field{note}{Talk at the Machine Learning Summer School of the Reykjavik University}
+      \field{title}{Efficient Bayesian Inference with Hamiltonian Monte Carlo}
+      \field{year}{2014}
+      \field{dateera}{ce}
     \endentry
     \entry{liebloss}{book}{}
       \name{author}{2}{}{%
