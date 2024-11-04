@@ -104,7 +104,7 @@ Dieser Ansatz erreicht %TODO: results
 \chapter*{Abstract}
 Nested Sampling is an algorithm for fitting Bayesian statistical models.
 The most computationally expensive step in Nested Sampling involves sampling from the part of a prior distribution that lies above a certain likelihood value, called likelihood-restricted prior sampling.
-Standard methods like Markov Chain Monte Carlo can be used for this step, but are limited by not noticing the likelihood-constraint boundary until they have crossed it, causing low acceptance rates of proposals.
+Standard methods like Markov Chain Monte Carlo can be used for this step, but are limited by not noticing the likelihood-constraint-boundary until they have crossed it, causing low acceptance rates of proposals.
 In this thesis, I propose Nested Sampling with Barriers, a method that incorporates the idea of a log barrier from convex optimization into Nested Sampling to guide the likelihood-restricted prior sampler.
 This approach achieves %TODO: results
 
@@ -132,7 +132,7 @@ Another one is Nested Sampling, introduced by Skilling \cite{skilling}, which is
 
 Nested Sampling is a Monte Carlo method for Bayesian inference whose main objective is computing the evidence, although it can also generate posterior samples.
 Nested sampling contains a step where samples have to be generated from a likelihood-restricted prior (likelihood-restricted prior sampling or LRPS).
-This step is challenging \cite[9]{hmc_in_ns}, with standard Markov Chain Monte Carlo (MCMC) methods struggling to achieve high acceptance rates of proposals, because they only notice the likelihood-constraint boundary once they have crossed it.
+This step is challenging \cite[9]{hmc_in_ns}, with standard Markov Chain Monte Carlo (MCMC) methods struggling to achieve high acceptance rates of proposals, because they only notice the likelihood-constraint-boundary once they have crossed it.
 In this thesis, I propose a modified version of Nested Sampling which uses the idea of a log barrier from convex optimization to guide the crucial LRPS step of Nested Sampling.
 This allows %TODO: results
 
@@ -810,7 +810,7 @@ Normally used to sample from the posterior of a Bayesian model all on its own, w
 As the theory behind HMC is quite involved, I will only give an overview of the algorithm, not delving into the reasons for why it works.
 
 As HMC is an MCMC method, it generates dependent samples like the Metropolis algorithm does.
-However, it uses a physical analogy to find samples that are much further away from the starting sample, thus decorrelating and exploring the target distribution faster.
+However, it uses a physical analogy to find samples that are much further away from the starting point, thus decorrelating and exploring the target distribution faster.
 
 The negative logarithm of the target distribution is viewed as representing potential energy.
 One can imagine this as a hills-and-valleys landscape.
@@ -819,7 +819,7 @@ Starting with a sample, a random, normally distributed vector is drawn.
 This vector represents a momentum that the sample particle has.
 The path of the particle across the landscape with its given starting momentum is then simulated using a special type of solver for partial differential equations called a symplectic integrator.
 At an arbitrarily chosen point of time, the particle is stopped.
-The resulting position of the sample is then treated like a metropolis proposal and accepted with a probability based on the ratio of probability values of the proposal and the last sample.
+The resulting position of the sample is then treated like a Metropolis proposal and accepted with a probability based on the ratio of probability values of the proposal and the last sample.
 A visualization of this process can be seen in Figure \ref{fig:hmc_example}.
 Betancourt provides a thorough explanation of HMC with solid theoretical foundations in \cite{hmc}.
 
@@ -839,9 +839,9 @@ In this case, it is reflected off the barrier to stay inside the valid region.
 This adaptation of HMC was introduced by Betancourt in \cite{hmc_in_ns}.
 
 Like the Metropolis Algorithm, HMC for LRPS requires an adaptive step size.
-Without it, tight likelihood constraint boundary during the later iterations of Nested would lead to degenrate behavior as HMC reflects with every integration step.
+Without it, the tight likelihood constraint boundary during the later iterations of Nested would lead to degenrate behavior as HMC reflects with every integration step.
 This is especially bad since the likelihood gradient used for reflection is calculated at the end of the integration step that lands outside of the likelihood constraint.
-If the step size is very large in relation to the valid sampling area, the gradient will calculated far away from the actual constraint boundary, leading to inaccurate reflection.
+If the step size is very large in relation to the valid sampling area, the gradient will be calculated far away from the actual constraint boundary, leading to inaccurate reflection.
 See the visualization in Figure \ref{fig:hmc_reflection_example}.
 
 \begin{figure}
@@ -849,7 +849,7 @@ See the visualization in Figure \ref{fig:hmc_reflection_example}.
     \includegraphics[scale=0.45]{figs/hmc_reflection_example.png}
     \includegraphics[scale=0.45]{figs/hmc_reflection_degenerate_example.png}
     \caption{Left: An iteration of HMC for LRPS with reflection and a chain of five samples on a standard-normal-likelihood-restricted uniform prior space.
-    The black dot is the starting spot, each blue cross is a generated sample. Right: An later iteration on the same example. Note how every integration step contains a reflection and how far away the reflection points are from the actual boundary.}
+    The black dot is the starting spot, each blue cross is a generated sample. Right: A later iteration of the same example. Note how every integration step contains a reflection and how far away the reflection points are from the actual boundary.}
     \label{fig:hmc_reflection_example}
 \end{figure}
 
@@ -953,14 +953,14 @@ It converges to the true solution as $t \rightarrow \infty$, as can be seen in F
 \end{figure}
 
 Solving the problem in (\ref{eq:objective}) for a large value of $t$ provides a good estimation of the exact solution.
-$x^*(t)$ is provably $\frac{m}{t}$-suboptimal, meaning that its objective function value is at most $\frac{m}{t}$ greater than the optimal value \cite{boyd}.
+$x^*(t)$ is provably $\frac{m}{t}$-suboptimal, meaning that its objective function value is at most $\frac{m}{t}$ greater than the optimal value \cite[566]{boyd}.
 
 However, as the log barrier function becomes a better approximation of the strict barrier with larger $t$, its derivatives become more extreme.
-This causes the standard optimization procedures, such as Newton's method, to fail, because they rely on gradient information \cite[564]{boyd}.
+This causes the standard optimization procedures, such as Newton's method, to fail \cite[564]{boyd}.
 The Barrier Method is an approach that solves this issue by applying an iterative strategy.
 In each iteration, $x^*(t_i)$ is computed using Newton's Method (called a centering step).
 The value of $t_i$ increases with each iteration, and the result of the last iteration is used as the starting point for the current one.
-This stabilizes the centering steps \cite[569]{boyd}.
+This stabilizes the centering steps \cite[569]{boyd}. 
 
 \begin{algorithm}
     \caption[The basic Barrier Method.]{BarrierMethod ($x_0$, $t_0$, $\mu$, $\epsilon$)}
@@ -978,16 +978,14 @@ This stabilizes the centering steps \cite[569]{boyd}.
     \end{algorithmic}
 \end{algorithm}
 
-The most important idea we take from the Barrier Method is how the log barrier function provides a way to make a hard boundary soft and differentiable.
+The most important idea we borrow from the Barrier Method is how the log barrier function provides a way to make a hard boundary soft and differentiable.
 In the next chapter, we incorporate this idea into the LRPS step of Nested Sampling.
-
-
 
 
 \chapter{Nested Sampling with Barriers}
 
 \section{Motivation}
-As was shown in Section 1.3, LRPS is difficult.
+As was shown in Section 1.4, LRPS is difficult.
 Because the likelihood-constraint grows tighter and the ratio of valid area to the area of the whole sample space decreases steadily, finding samples within the constraint boundary becomes more difficult with every Nested Sampling iteration.
 For methods like Rejection Sampling and the Metropolis algorithm, this manifests in low acceptance rates of proposals, which lead to wasted computational work.
 For HMC adapted to LRPS, detecting the point at which the particle breaches the likelihood-constraint-boundary and must be reflected also becomes harder, since the distance the particle can travel before leaving the valid region decreases with each iteration.
@@ -1030,7 +1028,7 @@ By moving the resulting objective function back into probability space, we obtai
 \end{align}
 We call $(l(\theta) - l^*)^\frac{1}{t}$ the log barrier term.
 For valid $\theta$, as the (log-)likelihood of $\theta$ approaches the minimum (log-)likelihood, the log barrier term decreases, making values of $\theta$ close to the likelihood-restriction boundary less likely.
-In the next section we will integrate this term into Nested Sampling.
+In the next section we integrate this term into Nested Sampling.
 
 \subsection{Incorporating the log barrier term}
 Having derived a way to represent log barriers for probabilities, we are now looking for a way to use them during LRPS without introducing a bias into our sampler.
@@ -1063,8 +1061,8 @@ We will call the likelihood-restricted prior $\bar{\pi}$.
 \end{align*}
 $\mathbbm{1}_{\{f(x)\}}$ with a predicate $f$ is short for the indicator function $\mathbbm{1}_{\{x \,|\, f(x)\}}(x)$ and is $1$ whenever the predicate is fulfilled and $0$ otherwise.
 
-We employ a technique called collapsed Gibbs sampling to sample from the likelihood-restricted prior.
-By first sampling from the marginal distribution of $\theta$, we can then use the obtained value to sample from the conditional distribution of $q$ \cite{collapsed_gibbs}.
+We employ a technique called collapsed Gibbs sampling \cite{collapsed_gibbs} to sample from the likelihood-restricted prior.
+By first sampling from the marginal distribution of $\theta$, we can then use the obtained value to sample from the conditional distribution of $q$.
 \begin{align*}
     \theta &\sim  \bar{\pi}(\theta \,|\, L^*) \\
     q &\sim  \bar{\pi}(q \,|\, L^*, \theta)
@@ -1209,7 +1207,7 @@ By setting $a = \frac{1}{t}$, $x = 0$ and $y = \log(q_{\textrm{max}})$, we can a
             \State sample $q_{\textrm{new}}$ from $\pi_q(q) \, \mathbbm{1}_{\{q \,<\, L(\theta_{\textrm{new}}) / L^*\}}$
             \State append $(\theta_{\textrm{new}}, q_{\textrm{new}})$ to $live\_points$
             \State $L_{\textrm{max}} \gets \max_{(\theta,q) \, \in \, live\_points} L(\theta, q)$ 
-        \Until{$mass \cdot L_{\textrm{max}} < \epsilon$}
+        \Until{$(mass \cdot L_{\textrm{max}}) / Z < \epsilon$}
         \State $Z_\theta \gets Z / Z_q(t, q_{\textrm{max}})$
         \State return $Z_\theta,\, dead\_points$
     \end{algorithmic}
@@ -1218,6 +1216,7 @@ By setting $a = \frac{1}{t}$, $x = 0$ and $y = \log(q_{\textrm{max}})$, we can a
 With that, we have successfully defined a version of Nested Sampling that incorporates the log barrier term from (\ref{eq:log_barrier_term}).
 Next, we will examine the newly introduced parts of the algorithm, namely the auxiliary variable $q$ and the parameters $t$ and $q_{\textrm{max}}$.
 
+\FloatBarrier
 \section{Interpretation}
 In this section, we analyse the elements of Nested Sampling with Barriers we introduced in the previous section.
 
@@ -1300,35 +1299,35 @@ Since the log barrier term is incorporated using the CDF of $q$, they also influ
 \end{figure}
 
 A larger value for $q_{\textrm{max}}$ lets the log barrier term affect sampling earlier (for $\theta$ further away from the likelihood-constraint-boundary); a smaller $q_{\textrm{max}}$ confines the influence of the barrier term to a smaller region close to the likelihood-constraint-boundary.
-As discussed in Section 1.4, $t$ determines how closely the log barrier approximates the true barrier, with larger values of $t$ leading to better approximations (see right side of Figure \ref{fig:q_normalized}).
-This makes the log barrier term act less strongly in regions further away from the likelihood-constraint-boundary.
+As discussed in Section 1.5, $t$ determines how closely the log barrier approximates the true barrier.
+A large $t$ leads to a better approximation, generating a steeper barrier, and making the log barrier term act less strongly in regions further away from the likelihood-constraint-boundary (see Figure \ref{fig:q_normalized}).
 Lower values of $t$ give the log barrier term more influence even in these regions.
-We will discuss how $t$ and $q_{\textrm{max}}$ practically influence the algorithm's performance in Section 2.5.
+We will see how $t$ and $q_{\textrm{max}}$ practically influence the algorithm's performance in Section 2.5.
 
 In the next section, we discuss, in theory, which methods for LRPS can make use of the introduced log barrier term.
 
 \section{Implementation of LRPS}
 As with the standard Nested Sampling algorithm, the step of likelihood-restricted prior sampling in the original $\theta$-space still exists (see line 16 of Algorithm \ref{alg:barriersampling}).
 However, we now have the log barrier term affecting the sampling, which we can make use of.
-In this section we recapitulate the options for LRPS presented in Section 1.3 and describe how they may benefit from the log barrier term introduced by Nested Sampling with Barriers.
+In this section we recapitulate the options for LRPS presented in Section 1.4 and describe how they may benefit from the log barrier term introduced by Nested Sampling with Barriers.
 
 \subsection{Rejection Sampling and Discretized LRPS}
-Because of their non-MCMC nature, these techniques do not benefit from the log barrier term.
-In Section 2.5, we only use them as a benchmark, to test Nested Sampling with barriers without the complexities of MCMC methods.
+Because they are not MCMC methods, these techniques do not benefit from the log barrier term.
+Rejection sampling proposals are not affected by the log barrier term, so their acceptance rates stay the same as with standard Nested Sampling.
+Discretized LRPS has no problem with acceptance rates, only with how many discrete points are needed for high-dimensional spaces, which Nested Sampling with Barriers does not help with.
 
-\subsection{Metropolis}
+\subsection{Metropolis Algorithm}
 The Metropolis algorithm for LRPS can make use of the log barrier term.
 When a Metropolis Markov chain gets close to the likelihood-constraint-boundary, the log barrier term discourages it from sampling even closer.
 If the step size is chosen small enough, this may drastically reduce the number of invalid proposals (proposals violating the likelihood-constraint).
 To ensure efficient exploration of the $\theta$-space for the whole Nested Sampling procedure, during which the explorable space continually shrinks, an adaptive step size is still required.
 
 \subsection{Hamiltonian Monte Carlo}
-Like Metropolis, HMC benefits from the log barrier term.
-It does so especially, since the log barrier term curves the negative log density surface, on which the HMC particles move, upwards as they move closer to the likelihood-constraint-boundary.
+Like the Metropolis algorithm, HMC benefits from the log barrier term.
+It does so especially, since the log barrier term curves the negative log density surface, on which the HMC particles move, upwards as it gets closer to the likelihood-constraint-boundary.
 This causes the particles to turn away before they hit the boundary (see Figure \ref{fig:barrier_sampling_hmc}), and leads to all proposals being valid.
 This way, the particles do not have to be reflected off the boundary.
-An adaptive step size is still worth implementing with this method, since the later iterations of Nested Sampling have such tiny valid spaces that the boundary may be crossed before it can be felt otherwise.
-The step size may, however, not need to be decreased as quickly as with HMC with reflection, since the log barrier term can be felt earlier.
+An adaptive step size is still worth implementing with this method, since the later iterations of Nested Sampling have such tiny valid spaces that the boundary may otherwise be crossed before it can be felt.
 
 \begin{figure}
     \centering
@@ -1339,11 +1338,13 @@ The step size may, however, not need to be decreased as quickly as with HMC with
     \label{fig:barrier_sampling_hmc}
 \end{figure}
 
+
+
 \FloatBarrier
 \section{Results}
 This chapter contains the results of a number of experiments on Nested Sampling with Barriers.
 First, I show how Nested Sampling with Barriers compares to standard Nested Sampling using multiple example problems.
-Then, I demonstrate the influence of the parameters $t$ and $q_{\textrm{max}}$ on Nested Sampling with Barriers on one example problem.
+I then demonstrate the influence of the parameters $t$ and $q_{\textrm{max}}$ on Nested Sampling with Barriers on one example problem.
 
 \subsection{Nested Sampling with and without Barriers}
 Both standard Nested Sampling and the Barriers variant were tested on four example problems with the following likelihood functions:
@@ -1353,7 +1354,7 @@ Both standard Nested Sampling and the Barriers variant were tested on four examp
     \item a 2D mixture of 5 nonconcentric Gaussians
     \item a 20D mixture of 5 nonconcentric Gaussians 
 \end{itemize}
-The slab-and-spike problems are taken from Skilling introductory paper on Nested Sampling \cite{skilling}, where it serves as an example of a type of problem Nested Sampling is well-suited for.
+The slab-and-spike problems are taken from Skilling's introductory paper on Nested Sampling \cite{skilling}, where it serves as an example of a type of problem Nested Sampling is well-suited for.
 The nonconcentric Gaussians are example problems with multimodality, which remains difficult for MCMC methods to do well with.
 The examples' likelihoods are defined in the following piece of Python code:
 \vspace{0.4cm}
@@ -1382,8 +1383,8 @@ def concentric_gauss_likelihood(x, dim, mus, sigmas):
 
 \begin{figure}
     \centering
-    \includegraphics[scale=0.6, trim={1.5cm 1.5cm 1.5cm 1.5cm},clip]{figs/spike_example.png}
-    \includegraphics[scale=0.6, trim={1.5cm 1.5cm 1.5cm 1.5cm},clip]{figs/gauss_example.png}
+    \includegraphics[scale=0.5, trim={1cm 1cm 1cm 1cm},clip]{figs/spike_example.png}
+    \includegraphics[scale=0.5, trim={1cm 1cm 1cm 1cm},clip]{figs/gauss_example.png}
     \label{fig:benchmark_examples}
     \caption{Plot of the 2D example problem likelihoods with the slab-and-spike on the left and the nonconcentric Gaussians on the right.}
 \end{figure}
