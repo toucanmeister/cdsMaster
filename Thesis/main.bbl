@@ -377,7 +377,7 @@
       \field{title}{Information Theory, Inference \& Learning Algorithms}
       \field{year}{2002}
     \endentry
-    \entry{betancourt_talk}{misk}{}
+    \entry{betancourt_talk}{misc}{}
       \name{author}{1}{}{%
         {{hash=1982fa604a3f94837efceaa53330b2a4}{%
            family={Betancourt},
@@ -513,6 +513,30 @@
       \field{title}{Computational Statistics}
       \field{year}{2009}
     \endentry
+    \entry{beta_dist}{book}{}
+      \name{author}{1}{}{%
+        {{hash=b72132313805fff9bd1fb6832abe2a4d}{%
+           family={Siegrist},
+           familyi={S\bibinitperiod},
+           given={Kyle},
+           giveni={K\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {LibreTexts}%
+      }
+      \strng{namehash}{b72132313805fff9bd1fb6832abe2a4d}
+      \strng{fullhash}{b72132313805fff9bd1fb6832abe2a4d}
+      \strng{bibnamehash}{b72132313805fff9bd1fb6832abe2a4d}
+      \strng{authorbibnamehash}{b72132313805fff9bd1fb6832abe2a4d}
+      \strng{authornamehash}{b72132313805fff9bd1fb6832abe2a4d}
+      \strng{authorfullhash}{b72132313805fff9bd1fb6832abe2a4d}
+      \field{sortinit}{4}
+      \field{sortinithash}{9381316451d1b9788675a07e972a12a7}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{Probability, Mathematical Statistics, and Stochastic Processes}
+      \field{year}{2022}
+    \endentry
     \entry{nested_sampling_talk}{misc}{}
       \name{author}{1}{}{%
         {{hash=4b64c8836900e852f8f78a973b2ac218}{%
@@ -527,8 +551,8 @@
       \strng{authorbibnamehash}{4b64c8836900e852f8f78a973b2ac218}
       \strng{authornamehash}{4b64c8836900e852f8f78a973b2ac218}
       \strng{authorfullhash}{4b64c8836900e852f8f78a973b2ac218}
-      \field{sortinit}{3}
-      \field{sortinithash}{ad6fe7482ffbd7b9f99c9e8b5dccd3d7}
+      \field{sortinit}{4}
+      \field{sortinithash}{9381316451d1b9788675a07e972a12a7}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
       \field{day}{7}
@@ -537,6 +561,30 @@
       \field{title}{Gradients and Nested Sampling}
       \field{year}{2023}
       \field{dateera}{ce}
+    \endentry
+    \entry{kld}{book}{}
+      \name{author}{1}{}{%
+        {{hash=34c5bbf9876c37127c3abe4e7d7a7198}{%
+           family={Kullback},
+           familyi={K\bibinitperiod},
+           given={Solomon},
+           giveni={S\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {Dover Publications}%
+      }
+      \strng{namehash}{34c5bbf9876c37127c3abe4e7d7a7198}
+      \strng{fullhash}{34c5bbf9876c37127c3abe4e7d7a7198}
+      \strng{bibnamehash}{34c5bbf9876c37127c3abe4e7d7a7198}
+      \strng{authorbibnamehash}{34c5bbf9876c37127c3abe4e7d7a7198}
+      \strng{authornamehash}{34c5bbf9876c37127c3abe4e7d7a7198}
+      \strng{authorfullhash}{34c5bbf9876c37127c3abe4e7d7a7198}
+      \field{sortinit}{4}
+      \field{sortinithash}{9381316451d1b9788675a07e972a12a7}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{Information Theory and Statistics}
+      \field{year}{1968}
     \endentry
     \entry{automala}{misc}{}
       \name{author}{5}{}{%

@@ -555,28 +555,32 @@ In the case of there being two equal likelihood thresholds, we may randomly add 
         ]
         \addplot[
             name path=A,
-            domain=0:0.1, 
+            domain=0.1:0.25, 
             samples=2,
             color=black
         ] { 1 };
         \addplot[
             name path=B,
-            domain=0.1:0.25, 
+            domain=0.25:0.5, 
             samples=2,
             color=black
         ] { 0.6 };
         \addplot[
             name path=C,
-            domain=0.25:0.5, 
+            domain=0.5:0.85, 
             samples=2,
             color=black
         ] { 0.4 };
         \addplot[
             name path=D,
-            domain=0.5:0.85, 
+            domain=0.85:1, 
             samples=2,
             color=black
         ] { 0.2 };
+        \draw[color=black, line width=1]{(axis cs:0.25,1) -- ( axis cs:0.25,0.6)};
+        \draw[color=black, line width=1]{(axis cs:0.5,0.6) -- ( axis cs:0.5,0.4)};
+        \draw[color=black, line width=1]{(axis cs:0.85,0.4) -- ( axis cs:0.85,0.2)};
+        \draw[color=black, line width=1]{(axis cs:1,0.2) -- ( axis cs:1,0)};
         \draw[color=blue, line width=1]{(axis cs:0.1,1) -- ( axis cs:0.1,0)};
         \draw[color=blue, line width=1]{(axis cs:0.25,0.6) -- ( axis cs:0.25,0)};
         \draw[color=blue, line width=1]{(axis cs:0.5,0.4) -- ( axis cs:0.5,0)};
@@ -595,39 +599,41 @@ In the case of there being two equal likelihood thresholds, we may randomly add 
             opacity=0.2, 
             ] fill between [
                 of=A and E,
-                soft clip={domain=0:0.1} 
-        ];
-        \addplot[ 
-            color=gray,
-            opacity=0.2, 
-            ] fill between [
-                of=B and E,
                 soft clip={domain=0.1:0.25} 
         ];
         \addplot[ 
             color=gray,
             opacity=0.2, 
             ] fill between [
-                of=C and E,
+                of=B and E,
                 soft clip={domain=0.25:0.5} 
         ];
         \addplot[ 
             color=gray,
             opacity=0.2, 
             ] fill between [
+                of=C and E,
+                soft clip={domain=0.5:0.85} 
+        ];
+        \addplot[ 
+            color=gray,
+            opacity=0.2, 
+            ] fill between [
                 of=D and E,
-                soft clip={domain=0.5:0.85}
+                soft clip={domain=0.85:1}
         ];
         \end{axis}
     \end{tikzpicture}
-    \caption{Visualization of how the evidence integral can be approximated using prior mass samples $X_i$ sorted by their likelihoods. The shaded region is the approximate evidence. Based on a graphic in \cite[4]{skilling}.}
+    \caption{Visualization of how the evidence integral can be approximated using prior mass samples $X_i$ sorted by their likelihoods, in this case using an upper sum. The shaded region is the approximate evidence. Based on a graphic in \cite[4]{skilling}.}
     \label{fig:integral_approximate}
 \end{figure}
 
 As can be seen in Figure \ref{fig:integral_approximate}, we can approximate our target integral using the samples in the following Riemann sum \cite[p. xvi]{measure_theory}:
-\begin{equation}
-    \int_0^1 \mathcal{L}(X) \, dX \approx \sum_{i=2}^n \mathcal{L}(X_i) \cdot (X_i - X_{i-1}) \label{eq:approx_evidence}
-\end{equation}
+\begin{align}
+    \int_0^1 \mathcal{L}(X) \, dX &\approx \sum_{i=1}^{n} \mathcal{L}(X_i) \cdot (X_{i-1} - X_{i}) \nonumber\\
+    &\approx \sum_{i=1}^{n} \mathcal{L}(X_i) \cdot \Delta X_i \label{eq:approx_evidence}
+\end{align}
+where $\Delta X_i = X_{i-1} - X_{i}$ is called the prior mass shell of $X_i$, and we insert $X_0 = 1$.
 Sadly, we cannot actually compute $\mathcal{L}(X)$, so prior mass samples do not help us.
 We have to find another way of obtaining the terms that make up our evidence approximation in (\ref{eq:approx_evidence}).
 
@@ -635,7 +641,7 @@ Instead of sampling prior masses directly, we may instead sample $\theta_1, ...,
 We can prove that their corresponding prior masses are uniformly distributed.
 
 \FloatBarrier
-\hrule \vspace{-0.45cm}
+\hrule \vspace{-0.45cm} %TODO: CHECK THAT THERE IS NO PAGE BREAK HERE
 \subsubsection{Proof: Prior Masses of Prior Samples are Uniformly Distributed}
 Let $\mathbb{T}$ be a random variable with the PDF $f_{\mathbb{T}}(\theta) = \pi(\theta)$; it represents samples from our prior.
 Let $\mathbb{L} = L(\mathbb{T})$ and $\mathbb{M} = \mu(\mathbb{L})$ also be random variables.
@@ -693,20 +699,28 @@ In $\theta_{i}$, we have thus obtained a likelihood value $L(\theta_{i})$ and an
 We could now simply sample $n$ values from the prior, compute their likelihoods and estimate their prior masses to get an estimate of the evidence according to (\ref{eq:approx_evidence}).
 This would generally, however, lead to horribly inaccurate estimates.
 Because the area of the sample space with high likelihood values is generally very small and away from the high prior values (where the prior samples will concentrate), finding samples with high likelihood that contribute significantly to the evidence would be difficult \cite[7]{skilling}.
-The next section shows how Nested Sampling solves this problem.
+The next section shows how this problem is solved in Nested Sampling.
 
 \subsection{Introducing a Likelihood-Constraint} 
-Nested sampling generates contributions to the evidence à la (\ref{eq:approx_evidence}) iteratively.
+Nested sampling generates contributions to the evidence as in (\ref{eq:approx_evidence}) iteratively.
 This allows us to modify how the contributions are sampled as the algorithm goes along.
 Specifically, we can introduce a constraint that forces new contributions to be sampled in regions of higher likelihood.
 This solves the problem of prior samples missing the regions with signifant posterior mass.
 
-We need an ensemble of prior samples to use our strategy for estimating prior masses from the last section, so we start by drawing $n$ prior samples $\theta_1, ..., \theta_n$; we call these the live points.
-Then we take the sample with the lowest likelihood, remove it from the live points and use it along with an estimate of its prior mass as the first contribution to the evidence.
-%TODO: FIX LAST PART ABOUT PRIOR MASS SAMPLES HERE
-Its likelihood value becomes the likelihood-constraint $L^*$, meaning all points we sample thereafter have to have a likelihood higher than it.
+We need an ensemble of prior samples to use our strategy for estimating prior masses from the last section, so we start by drawing $n$ prior samples $\theta_1, ..., \theta_n$, we call these the live points.
+Then we take the sample with the lowest likelihood, $\theta_{\textrm{min}}$ remove it from the live points and save it as a dead point.
+We also use it to compute the first contribution to the evidence as in (\ref{eq:approx_evidence}), which is the product of its likelihood and an estimate of its prior mass shell.
+Because $\theta_{min}$ has the smallest likelihood of all live points, it will also have the largest associated prior mass, $X_1$. 
+This lets us simplify the estimate of its prior mass shell:
+$$
+    \Delta X_1 = X_0 - X_1 = 1 - X_1
+$$
+$X_1$ follows a $\textrm{Beta}(n,1)$ distribution and one of the properties of the Beta distribution is that if $\mathbb{X} = 1 - \mathbb{Y}$ and $Y \sim \textrm{Beta}(a,b)$, then $X \sim \textrm{Beta}(b,a)$ \cite[5.17.2.]{beta_dist}.
+So $\Delta X_1$ follows a $\textrm{Beta}(1,n)$ distribution and we can again estimate it either by sampling or by using the mean.
+
+The likelihood of $\theta_{min}$ becomes the likelihood-constraint $L^*$, meaning all points we sample thereafter have to have a likelihood higher than it.
 Luckily, all other live points already fulfill this constraint, since we chose the one with the lowest likelihood to remove.
-This means we only have to draw one new live point according to the constraint, $\theta_{\textrm{new}} \sim \pi(\theta) \mathbbm{1}_{\{L > L*\}}(\theta)$.
+This means we only have to draw one new live point according to the constraint, $\theta_{\textrm{new}} \sim \pi(\theta) \, \mathbbm{1}_{\{L > L*\}}(\theta)$.
 We call this step likelihood-restricted prior sampling (LRPS).
 Having sampled a new live point, we again take the sample with the lowest likelihood, remove it from the live points, add its contribution to the evidence and set its likelihood as the new likelihood-constraint, etc.
 
@@ -716,9 +730,9 @@ However, if we call $\mu(L^*)$ the remaining prior mass, then the fraction of th
 So we can get our estimate of the prior mass of a sample $\theta$ by sampling a mass fraction $f \sim \textrm{Beta}(0,1)$ and multiplying it by the remaining prior mass $\mu(L^*)$.
 
 As the likelihood-constraint increases, the LRPS-samples will naturally come from regions of higher and higher likelihood.
-This process is carried out for a given number of iterations or, more sophisticatedly, until an estimate of the remaining evidence becomes small enough.
+This process is carried out for a given number of iterations or, more sophisticatedly, until an estimate of the remaining evidence in relation to the accumulated evidence becomes smaller than some chosen $\epsilon$.
 A simple estimate of an upper bound of the remaining evidence can be made by taking the highest likelihood present in the live points and multiplying it by the remaining prior mass.
-Once the algorithm terminates, the evidence is computed according to (\ref{eq:approx_evidence}), by multiplying each dead point's likelihood and estimated prior mass and summing over all of them.
+Once the algorithm terminates, the evidence is computed according to (\ref{eq:approx_evidence}), by multiplying each dead point's likelihood and estimated prior mass shell and summing over all of them.
 
 Posterior samples can also be generated easily.
 One randomly draws from the dead points, where each dead point's probability to be sampled is proportional to the product of its likelihood and its corresponding prior mass \cite[9]{nested_sampling_talk}.
@@ -734,7 +748,7 @@ Specifically, the run time of nested sampling can be described as $T \sim T_L \c
     \item $T_L$ is the time required to evaluate the likelihood once
     \item $n_{\textrm{live}}$ is the number of live points
     \item $T_{\textrm{LRPS}}$ is the mean time required for the LRPS step over the course of the run
-    \item $\mathcal{D}_{\textrm{KL}}$ is the Kullback-Leibler Divergence between prior and posterior \cite[1]{nested_sampling_talk}
+    \item $\mathcal{D}_{\textrm{KL}}$ is the Kullback-Leibler Divergence \cite[6]{kld} between prior and posterior \cite[1]{nested_sampling_talk}
 \end{itemize}
 See Algorithm \ref{alg:nested_sampling} for an overview of the Nested Sampling procedure and see a visualization in Figure \ref{fig:ns_eggcrate_example}.
 
@@ -778,14 +792,14 @@ Having explained the main ideas of Nested Sampling, let us now get into the deta
 \section{Likelihood-restricted prior sampling}
 In the sampling of new points from the likelihood-restricted prior lies most of the computational work of Nested Sampling.
 The original paper by Skilling provides little guidance for this step, only that "such points will usually be found by some MCMC approximation, ..." \cite[6]{skilling}
-In this section, we summarize multiple ways to do LRPS while presenting their advantages and drawbacks.
+In this section, we summarize multiple ways to do LRPS while presenting their advantages and drawbacks, working our way up from the simplest methods to more complex ones.
 
 \subsection{Rejection Sampling}
 Rejection sampling is the simplest way to sample from the constrained prior.
 We generate a sample from the prior, compute its likelihood and check if it satisfies the likelihood-constraint.
 If it does, we accept the sample; otherwise, we reject it.
 
-Rejection sampling is infeasible for any real world applications due to it being terribly inefficient in higher dimensions.
+Rejection sampling is infeasible larger models due to it being terribly inefficient in higher dimensions.
 The acceptance rate of the generated samples is proportional to how much of the prior mass is inside the likelihood-constraint.
 Since the prior mass inside the likelihood-constraint is expected to shrink by a factor of $\frac{1}{1+n}$ (mean of the $\textrm{Beta}(1, n)$ distribution) each iteration, the acceptance rate quickly plummets, leading to most proposals being rejected.
 
@@ -793,13 +807,13 @@ Since the prior mass inside the likelihood-constraint is expected to shrink by a
 Another simple, non-MCMC method for LRPS involves discretizing the sample space into a uniform grid.
 In each iteration, we randomly draw one of the grid points with likelihood higher than the constraint, with the probability of each point being drawn being proportional to its prior.
 
-Like Rejection Sampling, this method falls short because of its lacking performance.
-Since the number of grid points scales exponentially with the dimensionality of the sample space, this method is hopelessly time- and memory-inefficient for problems with even a modest number of parameters.
+Like Rejection Sampling, this method falls short because of its lacking performance and can only be used for models with few parameters and priors with finite support.
+Since the number of grid points scales exponentially with the dimensionality of the sample space, this method is hopelessly time- and memory-inefficient for problems with even a modest number of dimensions.
 
 \subsection{Metropolis Algorithm}
 The Metropolis algorithm, already sketched out in Section 1.1, is an MCMC method generating dependent samples using a proposal distribution.
-The proposal distribution (often a normal distribution) creates a proposal based on the last sample.
-This proposal is then accepted with a probability based on the ratio of (prior) probability values of the proposal and the last sample.
+The proposal distribution, often a normal distribution, creates a proposal $\theta_p$ based on the last sample $\theta$.
+This proposal is then accepted with a probability $\textrm{max}\left(\frac{P(\theta_p)}{P(\theta)}, 1\right)$.
 In LRPS, this process is repeated a given number of times to decorrelate the samples.
 Proposals which do not satisfy the likelihood-constraint are never accepted.
 Details can be seen in Algorithm \ref{alg:lrpsmetropolis}.
