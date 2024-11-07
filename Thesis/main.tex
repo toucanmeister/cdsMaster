@@ -136,7 +136,7 @@ This step is challenging \cite[9]{hmc_in_ns}, with standard Markov Chain Monte C
 In this thesis, I propose a modified version of Nested Sampling which uses the idea of a log barrier from convex optimization to guide the crucial LRPS step of Nested Sampling.
 This allows %TODO: results
 
-I begin with by recapping important background information about the methods and ideas this thesis is based on, including Bayesian statistics in general, the Nested Sampling algorithm and the Barrier Method for solving convex optimization problems.
+I begin by recapping important background information about the methods and ideas this thesis is based on, including Bayesian statistics in general, the Nested Sampling algorithm and the Barrier Method for solving convex optimization problems.
 Following that, using inspiration from the Barrier Method, I derive Nested Sampling with Barriers as an alternative to the standard Nested Sampling algorithm.
 I then review some of the variables and parameters introduced by Nested Sampling with Barriers and analyze their effects on the algorithm.
 Finally, I present the results of a benchmark where basic Nested Sampling and Nested Sampling with Barriers were run in different configurations on a set of example problems with a varying number of dimensions and modes.
@@ -145,6 +145,7 @@ Finally, I present the results of a benchmark where basic Nested Sampling and Ne
 \setcounter{page}{5}
 
 \chapter{Background}
+This chapter contains the background information necessary to understand the contributions of this thesis, namely Bayesian Statistics in general, Nested Sampling in particular, and the Barrier Method for convex optimization.
 \section{Bayesian Statistics}
 In this section, I introduce the basic principles of Bayesian statistics, including seeing probability as an extension of formal logic, generative models and Bayesian updating using Bayes' rule.
 
@@ -157,27 +158,27 @@ Using the vocabulary of classical formal logic, we would say ``$\theta = 0.5$'' 
 But since even the most accurately manufactured coin will have some microscopic asymmetries, bumps and ridges, we can never be sure of the coin's fairness.
 If we are not certain whether a statement is true or false, formal logic leaves us with no options.
 And if we cannot even meaningfully describe the flip of a coin, how should we expect to be able to examine complex systems like the weather, the spread of diseases, the development of ecosystems, etc.
-This is where probability as an extension of formal logic saves us \cite[12]{jaynes}.
+This is where probability as an extension of formal logic can help \cite[12]{jaynes}.
 We can express our knowledge of the coin's fairness by assigning a probability density to each possible value of $\theta$.
 In doing so, we create a probability distribution over $\theta$.
 If we knew nothing about the coin's fairness, we might assign every possible value the same probability density using a uniform distribution:
 $$
     P(\theta) = 1 \quad \forall \; \theta \in [0,1]
 $$
-To make the example a bit more interesting, let us say that by the shape and embossing of the coin, we would assume that it would land tails more often than heads.
-In this case, we might use a probability distribution like this, which assigns lower values of $\theta$ a higher probability density:
+To make the example a bit more interesting, imagine we that from tossing similarly shaped coins in the past, we would assume that it would land tails more often than heads.
+In this case, we might use a probability distribution like the following, which assigns lower values of $\theta$ a higher probability density:
 $$
     P(\theta) = 2 \cdot (1-\theta) \quad \forall \; \theta \in [0,1]
 $$
 A plot of this function can be found on the left side of Figure \ref{fig:coin_example}.
 
 By representing the coin's fairness using a parameter $\theta$, we created a simple parametric statistical model.
-Statisticians would call our model generative, because by plugging $\theta$ into a Bernoulli-distribution, we can generate new samples from it (simulating coin flips).
+Statisticians would call our model generative, because by plugging $\theta$ into a Bernoulli-distribution, we can generate new samples from it, thereby simulating coin flips.
 When we equip a statistical model's parameters with a probability distribution, as we did in the last paragraph, we give it what Bayesian statisticians would call a prior \cite[34]{mcelreath}.
 It is called a prior since it encapsulates our beliefs about the model before we have seen any data that resulted from the process we are modeling (before we ever flipped the coin).
 The name giving process of Bayesian statistics is updating our beliefs about the model's parameter values after seeing new data using Bayes' rule.
 Bayes' rule prescribes how to integrate data $D$, originating from the process we are modeling, into our prior beliefs $P(\theta)$ to arrive at updated beliefs $P(\theta \, | \, D)$ (read ``probability of $\theta$ given $D$'') \cite[36]{mcelreath}.
-It follows naturally from the product rule for probability:
+It follows naturally from applying the product rule for probability to the joint probability of parameters and data, $P(\theta, D)$: 
 \begin{align}
     P(\theta, D) &= P(\theta) \, P(D \,|\, \theta) \nonumber\\
     &= P(D) \, P(\theta \,|\, D) \nonumber\\
@@ -189,15 +190,16 @@ It follows naturally from the product rule for probability:
 Bayes' rule (Eq. \ref{eq:bayes}) is made up of four parts.
 Let us take a closer look at each of them:
 
-\textbf{Likelihood}: Given a generative model with parameters $\theta$ in some space $\Theta$, and some data $D$ originating from the process the model is representing, we call $P(D \,|\, \theta)$ the likelihood of $\theta$, often written $L(\theta)$.
+\textbf{Likelihood}: Given a generative model with parameters $\theta$ in some space $\Theta$, and some data $D$ originating from the process the model is representing, we call $P(D \,|\, \theta)$ the likelihood of $\theta$, often written as $L(\theta)$.
 It is the probability of the data when the model uses a certain set of parameters $\theta$.
 Note that when viewed as a function of $\theta$, the likelihood is not a probability distribution, since it generally does not integrate to 1.
-I abbreviate the natural logarithm of the likelihood as $l(\theta) = \log(L(\theta))$.
+In the following text, the natural logarithm of the likelihood will often be abbreviated as $l(\theta) = \log(L(\theta))$.
 
-\textbf{Prior}: Bayes' rule requires a prior distribution over the model parameters, $P(\theta)$, often written $\pi(\theta)$.
+\textbf{Prior}: Bayes' rule requires a prior distribution over the model parameters, $P(\theta)$, often written as $\pi(\theta)$.
 This represents beliefs we have about the parameter values before taking the data into account, which could be results from previous experiments or qualitative knowledge about the modeled process (like in our coin example) \cite[p. 34 f.]{mcelreath}.
-Priors like this may seem arbitrary or subjective, but they are required for Bayes' rule to work and have two positives:
+Priors like this may seem arbitrary or subjective, but they are required for Bayes' rule to work and have three positives:
 \begin{enumerate}
+    \item They provide a way to incorporate known information about the problem, which can matter especially when there is little data.
     \item With enough data, all but the most confident priors are overwhelmed and end up contributing little to the resulting posterior.
     \item Non-Bayesian methods can often be shown to be equivalent to a Bayesian inference with a certain choice of prior. \cite[36]{mcelreath} By putting our prior beliefs on display openly, they, like the model itself, become subject to the research process and scientific discussion instead of staying hidden. 
 \end{enumerate}
@@ -215,13 +217,13 @@ The evidence provides a measure of how well the model fits the data across all p
 Because it averages over all parameter values, overly complex models that require a very specific combination of parameter values to do well are penalized \cite[221]{mcelreath}.
 This way, the evidence provides a means to compare models that automatically accounts for overfitting. 
 In general, the evidence is a huge integral and hard to compute \cite[221]{mcelreath}.
-It is a major focus of this thesis.
+Computation of the evidence is a major focus of this thesis.
 
 \textbf{Posterior}: The main result of most Bayesian model fitting is the posterior probability distribution over the model parameters, $P(\theta \,|\, D)$.
 It represents our updated beliefs about the parameter values after having observed the data \cite[36]{mcelreath}.
 
 Let us return to our coin example to illustrate Bayesian updating.
-Say we flip the coin five times and observe the following sequence (``H'' means heads and ``T'' means tails): H T H H H.
+Say we flip the coin five times and observe the sequence H T H H H, where ``H'' means heads and ``T'' means tails.
 The likelihood of any parameter value $\theta$ would then be $P(\textrm{H T H H H} \, | \, \theta)$.
 For example, the likelihood of $\theta = 0.75$ would be $0.75 \cdot 0.25 \cdot 0.75 \cdot 0.75 \cdot 0.75 \approx 0.079$.
 For comparison, the likelihood of $\theta = 0.25$ would be $0.25 \cdot 0.75 \cdot 0.25 \cdot 0.25 \cdot 0.25 \approx 0.0029$.
@@ -236,6 +238,8 @@ To get our posterior values, we divide each of the unnormalized posterior probab
 The posterior can be seen in the bottom image of Figure \ref{fig:coin_example}.
 Note how the posterior mode lands somewhere inbetween the prior and likelihood modes.
 The data updated our ideas of the coin's fairness, but did not completely override them.
+If we get more data by tossing the coin a few more times, we can use the posterior we just computed as the prior of the next inference.
+The more data we collect and incorporate, the more ``sure'' our posterior will be of the true value of $\theta$, becoming increasingly thin and spiky.
 
 \begin{figure}
     \centering
@@ -305,32 +309,35 @@ The data updated our ideas of the coin's fairness, but did not completely overri
         ] { ((x^4 * (1-x)) * (2 * (1-x))) / 0.01895};
         \end{axis}
     \end{tikzpicture}
-    \caption{Prior, likelihood and posterior of $\theta$ in the coin example with $\pi(\theta) = 2 \cdot (1-x)$ and data: H T H H H}
+    \caption{Prior $pi(\theta) = P(\theta)$, likelihood $L(\theta) = P(H T H H H \,|\, \theta)$ and posterior $P(\theta \,|\, H T H H H)$ of $\theta$ in the coin example with $\pi(\theta) = 2 \cdot (1-x)$ and data: H T H H H}
     \label{fig:coin_example}
 \end{figure}
 
 
 \section{Fitting Bayesian Models}
 Having introduced Bayesian statistics and described how Bayesian inference works conceptually, let us now turn our attention to how to do it in practice.
+This section briefly covers methods developed for fitting Bayesian models, starting with analytical and numerical methods, continuing to Monte Carlo methods and then Markov chain Monte Carlo methods.
 
+\subsection{Analytical and Numerical Methods}
 In some cases, the posterior can be computed analytically, yielding a parameterized probability distribution.
 However, this only works for very simple models and severely limits the types of prior one can use (the prior has to be ``conjugate'' to the likelihood) \cite[39]{mcelreath}.
 Another option is the one we used in the previous section, a numerical approximation utilizing a discretization of the parameter space.
 This approach does not work for models with many parameters, because its computational requirements scale exponentially with the dimensionality of the parameter space.
 For most real-world problems, both analytical and numerical computation of the posterior is infeasible.
 
+\subsection{Monte Carlo Methods}
 The most prevalent family of algorithms for Bayesian model fitting do not try to evaluate the posterior as a parameterized distribution, nor discretize the parameter space.
 Instead, they generate samples from the posterior distribution.
 These samples can then be used to approximate statistics (mean, variance, credible intervals, etc.) of the posterior distribution.
-Because of their probabilistic nature, these algorithms are called Monte Carlo algorithms.
+Because of their probabilistic nature, algorithms of this type are called Monte Carlo algorithms.
 
 Generating samples from a general probability distribution is still a difficult task.
 Especially for continuous distributions, where we cannot enumerate all possible values, there is no obvious way to do it \cite[358]{mckay}.
 Another fact to consider is that we do not actually know the probability density function (PDF) of the distribution we want to sample from.
 Because we only know the likelihood and prior, but not the evidence (see (\ref{eq:bayes})), we can only evaluate a function proportional to the posterior's density, an unnormalized version of it.
 All Monte Carlo methods for Bayesian inference have to solve this problem of sampling from a distribution while only being able to evaluate an unnormalized version of its density function.
-One of the simplest approaches to this problem is Rejection Sampling, which I will give a brief overview of in the following paragraph.
 
+To concretize the idea of Monte Carlo, I give a brief overview of one of the simplest Monte Carlo algorithms, Rejection Sampling, in the following paragraphs.
 Like most other Monte Carlo methods, Rejection Sampling makes use of a proposal distribution.
 Given an unnormalized density function $\mathbf{P}(\theta)$ of the target distribution, Rejection Sampling requires a so-called proposal distribution that we can easily sample from and whose density $\mathbf{Q}(\theta)$ we can scale up using a constant $c$ to fully envelop the target density:
 \begin{equation}
@@ -344,20 +351,21 @@ While the simplicity of Rejection sampling is appealing, it fails in practice be
     \item we normally do not know the global maximum of our target distribution and thus do not know how to choose $c$, and
     \item even if we did know how to choose $c$, the fact that in high dimensional problems typically only a small fraction of the parameter space carries high posterior density forces us to scale $\mathbf{Q}$ so much everywhere else that acceptance rates plummet.
 \end{enumerate}
- 
+
+\subsection{Markov Chain Monte Carlo Methods}
 The most used algorithms in Bayesian statistics try overcome these problems by choosing a proposal distribution with dependent samples.
 They are a subcategory of Monte Carlo methods called Markov chain Monte Carlo (MCMC) methods.
 Each MCMC sample is dependent on its predecessor and often lands in the vicinity of it.
 This allows more efficient exploration of the posterior, because once a region of high posterior density is found, its local surroundings often also carry high posterior density. 
 
-Again, let us take a look at one relatively simple example algorithm, the Metropolis algorithm.
+Again, to illustrate, let us take a look at one relatively simple example algorithm, the Metropolis algorithm.
 The Metropolis algorithm uses a symmetrical proposal distribution $\mathbf{Q}(\theta_{\textrm{new}} \,|\, \theta_{\textrm{old}})$.
 Often, a simple normal distribution around the last sample is used.
 The proposal is then accepted with probability $\frac{\mathbf{P}(\theta_{\textrm{new}})}{\mathbf{P}(\theta_{\textrm{old}})}$ \cite[p. 365f.]{mckay}.
 
 I will not go into detail on why the Metropolis algorithm works, but I do want to at least mention the fundamentals of Markov chain Monte Carlo.
 Markov chain Monte Carlo methods get their name from the fact that their samples form a Markov chain.
-Markov chains are defined as a set of states $\Theta$ (in our case these are all possible parameter values) with an initial probability distribution $P_0(\theta)$ over these states, along with a transition probability function $T: \Theta \times \Theta \rightarrow [0,1]$ assigning a probability to every transition from one state to another.
+Markov chains are defined as a set of states $\Theta$ (in the case of Bayesian Inference these are all possible parameter values) with an initial probability distribution $P_0(\theta)$ over these states, along with a transition probability function $T: \Theta \times \Theta \rightarrow [0,1]$ assigning a probability to every transition from one state to another.
 We can simulate a Markov chain by sampling an initial state $\theta_0 \sim P_0(\theta)$, then sampling the next state from the transition probability distribution $\theta_k \sim T(\theta_k \,|\, \theta_{k-1})$.
 We can also analyse the probability of being in a certain state after $k$ steps \cite[372]{mckay}: 
 $$
@@ -365,7 +373,7 @@ $$
 $$
 This also lets us define stationary distributions of Markov chains.
 These are the key to using Markov chains for sampling, because once a Markov chain finds its way into a stationary distribution, it stays there.
-We call $\mathcal{P}(\theta)$ a stationary distribution of a Markov chain if \cite[372]{mckay}:
+We call $\mathcal{P}(\theta)$ a stationary distribution of a Markov chain if the probability of being in a state $\theta^*$ can be computed by integrating over the probabilites of being in any other state and transitioning to $theta^*$ \cite[372]{mckay}:
 $$
     \mathcal{P}(\theta^*) = \int_{\Theta} \mathcal{P}(\theta) \, T(\theta^* \,|\, \theta) \, d\theta \quad \forall \, \theta^* \in \Theta
 $$
