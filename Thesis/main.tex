@@ -391,7 +391,7 @@ However, this thesis focuses on a method whose main objective, from the start, i
 Nested sampling, introduced by Skilling \cite{skilling}, is an algorithm that computes the evidence of a Bayesian model while also generating samples from the posterior distribution.
 In this chapter, I derive the Nested Sampling algorithm, explaining the main ideas along the way.
 
-\FloatBarrier
+\FloatBarrier %TODO: READ ABOUT SEQUENTIAL MONTE CARLO IN NESTED SAMPLING FOR PHYSICAL SCIENTISTS
 \subsection{From a multi- to a one-dimensional Integral}
 We start by reducing the potentially multidimensional evidence integral (Equation (\ref{eq:evidence})) to a one-dimensional integral.
 To this end, we first replace the likelihood in the evidence integral by its layer cake representation, a tool borrowed from measure theory \cite[26]{liebloss}.
@@ -420,12 +420,14 @@ Now we plug this layer cake representation of $L(\theta)$ into the evidence inte
     \label{eq:integral_2}
 \end{align}
 We may swap the integrals in step (\ref{eq:tonelli}) thanks to Tonelli's theorem \cite[147]{measure_theory}.
-With that, we have defined one of the key functions of Skilling's original paper \cite{skilling}. $\mu$ returns, for a given likelihood-threshold $\lambda$, the amount of prior mass which exists above that likelihood threshold. A visualization is given in Figure \ref{fig:xlambda}.
-$$
+With that, we have defined one of the key functions of Skilling's original paper \cite{skilling}.
+$\mu$ returns, for a given likelihood-threshold $\lambda$, the amount of prior mass which exists above that likelihood threshold:
+\begin{align}
 \mu(\lambda) 
-= \int_\Theta \mathbbm{1}_{\{ L \, > \, \lambda \}}(\theta) \, \pi(\theta) \; d\theta 
-= \int_{\{L \,>\, \lambda\}} \pi(\theta) \; d\theta
-$$
+= \int_\Theta \mathbbm{1}_{\{ L \, > \, \lambda \}}(\theta) \, \pi(\theta) \; d\theta
+= \int_{\{L \,>\, \lambda\}} \pi(\theta) \; d\theta \label{eq:mu_definition}
+\end{align}
+A visualization is given in Figure \ref{fig:xlambda}.
 
 \begin{figure}
     \centering
@@ -449,7 +451,7 @@ $$
             name path=B,
             domain=0:6, 
             samples=200,
-            color=purple
+            color=red
         ] { 1/6 };
         \addplot[
             name path=C,
@@ -467,7 +469,7 @@ $$
         \draw[color=black, dashed] (axis cs:3.47, 0) -- (axis cs:3.47, 0.8);
         \addplot[ 
             color=gray,
-            opacity=0.4, 
+            opacity=0.2, 
             ] fill between [
                 of=B and D,
                 soft clip={domain=2.52:3.47} 
@@ -476,7 +478,7 @@ $$
         \node [color=black] at (axis cs:2.98,0.085) {$\mu(\lambda)$};
         \end{axis}
     \end{tikzpicture}
-    \caption{Visualization of the relationship between a likelihood threshold $\lambda$ and the corresponding prior mass $\mu(\lambda)$ for a uniform prior (purple) and a likelihood (blue).}
+    \caption{Visualization of the relationship between a likelihood threshold $\lambda$ and the corresponding prior mass $\mu(\lambda)$ for a uniform prior (red) and a likelihood (blue).}
     \label{fig:xlambda}
 \end{figure}
 
@@ -491,7 +493,8 @@ We will reformulate the current version of the evidence integral, (\ref{eq:integ
     &= \int_0^1 \mu^{-1}(X) \; dX \nonumber
 \end{align}
 
-Note that $\left(\lim_{\lambda \rightarrow \infty} \mu(\lambda) \lambda\right) = 0$ in (\ref{eq:integral_3}) because $\mu(\lambda)$ becomes $0$ after some finite value for $\lambda$. The substitution used in (\ref{eq:integral_4}) is $X = \mu(\lambda)$.
+Note that $\left(\lim_{\lambda \rightarrow \infty} \mu(\lambda) \lambda\right) = 0$ in (\ref{eq:integral_3}) because $\mu(\lambda)$ becomes $0$ after some finite value for $\lambda$.
+The substitution used in (\ref{eq:integral_4}) is $X = \mu(\lambda)$.
 
 Following Skilling's notation, we call the inverse of the prior mass function, $\mu^{-1}$, by the name $\mathcal{L}$.
 It returns the corresponding likelihood threshold $\mathcal{L}(X)$ to a given prior mass $X \in [0,1]$.
@@ -501,7 +504,10 @@ It returns the corresponding likelihood threshold $\mathcal{L}(X)$ to a given pr
     \label{eq:integral_5}
 \end{align}
 
-With that, we have arrived at a one dimensional integral of the likelihood-threshold function $\mathcal{L}$ over the prior mass values $X$. In the next section, we will estimate this integral.
+With that, we have accomplished our goal of formulating the evidence as a one dimensional integral.
+We integrate the likelihood-threshold function $\mathcal{L}$ over the prior mass values $X$.
+The next section is about estimating this integral. 
+
 
 \FloatBarrier
 \subsection{Sampling and Sorting}
@@ -509,9 +515,12 @@ With that, we have arrived at a one dimensional integral of the likelihood-thres
 Imagine we had uniformly sampled $n$ prior mass values $X_i \in [0,1] \; \forall i \in \{1, ..., n\}$.
 We could use $\mathcal{L}$ to compute their likelihood thresholds and sort them accordingly.
 Since $\mathcal{L}$ is a decreasing function, this would also sort the $X_i$ in decreasing order of their own values.
+For simpler notation, the $X_i$'s sorting follows their indices.
+Imagine we had assigned them these indices after sorting.
+
 \begin{align}
-    X_1 & \quad &>& \quad &X_2 & \quad &>& \quad &X_3 & &...& \quad &>& \quad &X_n \nonumber\\
-    \mathcal{L}(X_1)& &<& &\mathcal{L}(X_2)& &<& &\mathcal{L}(X_3)&  &...& &<& &\mathcal{L}(X_n) \label{eq:sample_ordering}
+    \mathcal{L}(X_1)& &<& &\mathcal{L}(X_2)& &<& &\mathcal{L}(X_3) &\quad&<&   &...& &<& &\mathcal{L}(X_n) \nonumber\\
+    X_1 & \quad &>& \quad &X_2 & \quad &>& \quad &X_3 &\quad&>& &...& \quad &>& \quad &X_n \label{eq:sample_ordering}
 \end{align}
 
 In the case of there being two equal likelihood thresholds, we may randomly add a very small value to one of them to artifically create an order \cite[3]{skilling}.
@@ -575,28 +584,28 @@ In the case of there being two equal likelihood thresholds, we may randomly add 
         ]{0};
         \addplot[ 
             color=gray,
-            opacity=0.4, 
+            opacity=0.2, 
             ] fill between [
                 of=A and E,
                 soft clip={domain=0:0.1} 
         ];
         \addplot[ 
             color=gray,
-            opacity=0.4, 
+            opacity=0.2, 
             ] fill between [
                 of=B and E,
                 soft clip={domain=0.1:0.25} 
         ];
         \addplot[ 
             color=gray,
-            opacity=0.4, 
+            opacity=0.2, 
             ] fill between [
                 of=C and E,
                 soft clip={domain=0.25:0.5} 
         ];
         \addplot[ 
             color=gray,
-            opacity=0.4, 
+            opacity=0.2, 
             ] fill between [
                 of=D and E,
                 soft clip={domain=0.5:0.85}
@@ -607,7 +616,7 @@ In the case of there being two equal likelihood thresholds, we may randomly add 
     \label{fig:integral_approximate}
 \end{figure}
 
-As can be seen in Figure \ref{fig:integral_approximate}, we can approximate our target integral using the samples:
+As can be seen in Figure \ref{fig:integral_approximate}, we can approximate our target integral using the samples in the following Riemann sum \cite[p. xvi]{measure_theory}:
 \begin{equation}
     \int_0^1 \mathcal{L}(X) \, dX \approx \sum_{i=2}^n \mathcal{L}(X_i) \cdot (X_i - X_{i-1}) \label{eq:approx_evidence}
 \end{equation}
@@ -618,10 +627,11 @@ Instead of sampling prior masses directly, we may instead sample $\theta_1, ...,
 We can prove that their corresponding prior masses are uniformly distributed.
 
 \FloatBarrier
+\hrule \vspace{-0.45cm}
 \subsubsection{Proof: Prior Masses of Prior Samples are Uniformly Distributed}
 Let $\mathbb{T}$ be a random variable with the PDF $f_{\mathbb{T}}(\theta) = \pi(\theta)$; it represents samples from our prior.
 Let $\mathbb{L} = L(\mathbb{T})$ and $\mathbb{M} = \mu(\mathbb{L})$ also be random variables.
-$\mathbb{M}$ represents the prior masses; we want to prove that $\mathbb{M}$ follows a uniform distribution.
+$\mathbb{M}$ represents the prior masses we want to prove that it follows a uniform distribution.
 First, let us take a look at the distribution of the likelihoods $\mathbb{L}$.
 We can derive a nice formula for its PDF by starting with its definition as a marginal of the joint density of $\mathbb{T}$ and $\mathbb{L}$:
 \begin{align}
@@ -643,35 +653,41 @@ and plug this representation of the PDF of $\mathbb{L}$ into the formula for its
 \begin{align}
     F_\mathbb{L}(\lambda) &= \int_0^\lambda f_\mathbb{L}(\lambda') \, d\lambda' \nonumber\\
     &= \int_0^\lambda \int_\Theta \pi(\theta) \, \delta(\lambda' - L(\theta)) \, d\theta \, d\lambda' \nonumber\\
-    &= \int_\Theta \int_0^\lambda \pi(\theta) \, \delta(\lambda' - L(\theta)) \, d\lambda'\, d\theta \\
+    &= \int_\Theta \int_0^\lambda \pi(\theta) \, \delta(\lambda' - L(\theta)) \, d\lambda'\, d\theta \label{eq:tonelli2}\\
     &= \int_\Theta \pi(\theta) \int_0^\lambda \, \delta(\lambda' - L(\theta)) \, d\lambda' \, d\theta \nonumber\\
-    &= \int_\Theta \pi(\theta) \mathbbm{1}_{\{L(\theta) < \lambda\}}(\theta) \, d\theta \\
+    &= \int_\Theta \pi(\theta) \, \mathbbm{1}_{\{L(\theta) < \lambda\}}(\theta) \, d\theta \label{eq:delta_property}\\
     &= \int_{\{L(\theta) < \lambda\}} \pi(\theta) \, d\theta \nonumber\\
     &= 1 - \mu(\lambda) \label{eq:L_cdf}
 \end{align}
+In step (\ref{eq:tonelli2}), we again use Tonelli's theorem to swap the order of the integrals \cite[147]{measure_theory}.
+Step (\ref{eq:delta_property}) uses the main property of the Dirac delta function from (\ref{eq:dirac_delta_property}).
+The integral is 1 as long as the spike of the delta function (which is in this case shifted to be at $L(\theta)$) is inside the integral's bounds.
+Lastly, in step (\ref{eq:L_cdf}) we recognize the definition of $\mu$ from (\ref{eq:mu_definition}), only with a flipped inequality sign in the super level set.
+
 The probability integral transform tells us that a random variable $\mathbb{Y} = f(\mathbb{X})$ is uniform if $f$ is the CDF of $\mathbb{X}$ \cite[54]{casellaberger}.
 This, combined with (\ref{eq:L_cdf}) means that a random variable $\overline{\mathbb{M}} = 1 - \mu(\mathbb{L})$ would be uniformly distributed, since $1 - \mu(\lambda)$ is the CDF of $\mathbb{L}$.
 Finally, since $\mathbb{M}$'s values are simply the values of $\overline{\mathbb{M}}$ mirrored at $m = 0.5$, $\mathbb{M}$ is also uniformly distributed.
 \hfill $\qed$
+\vspace{0.2cm} \hrule \vspace{0.2cm}
 
-With that, we have the first part we need to approximate the evidence using (\ref{eq:approx_evidence}), the likelihood thresholds of prior mass samples.
+With that, we have the first part we need to approximate the evidence using (\ref{eq:approx_evidence}): the likelihood thresholds of prior mass samples.
 This leaves the prior mass samples themselves.
 We cannot compute the prior masses of our samples $\theta_1, ... ,\theta_n$, but we are able to estimate them using order statistics.
 
 Order statistics study the distributions of random values when they are sorted.
 The $i$-th order statistic represents the distribution of the $i$-th lowest value in a set of $n$ randomly drawn values.
 We make use of the fact that when $n$ values are drawn from a $\textrm{Uniform}(0,1)$ distribution, the $i$-th order statistic follows a $\textrm{Beta}(i, n-i+1)$ distribution \cite[63]{computational_stats}.
-As we remember from (\ref{eq:sample_ordering}), we can order our samples' prior masses by ordering them by their likelihoods.
-We know that the sample with the $i$-th lowest likelihood value will also have the $i$-th lowest prior mass, and that its prior mass follows a $\textrm{Beta}(i, n-i+1)$ distribution.
-We can thus estimate its prior mass by either sampling a value from $\textrm{Beta}(i, n-i+1)$ or by using the mean of this distribution.
+As we remember from (\ref{eq:sample_ordering}), we can indirectly order our samples' prior masses if we order them by their likelihoods.
+We know that the sample with the $i$-th lowest likelihood value will also have the $i$-th highest, or equally the $n-i+1$-th lowest, prior mass.
+The prior mass thus follows a $\textrm{Beta}(n-i+1, i)$ distribution, and we can estimate it by either sampling from the distribution or by using its mean.
 
-In $\theta_{i}$, we have thus obtained a likelihood value $L(\theta_{i})$ and an estimate for its prior mass $X_{i} \sim  \textrm{Beta}(i,n-i+1)$.
+In $\theta_{i}$, we have thus obtained a likelihood value $L(\theta_{i})$ and an estimate for its prior mass $X_{i} \sim  \textrm{Beta}(n-i+1, i)$.
 We could now simply sample $n$ values from the prior, compute their likelihoods and estimate their prior masses to get an estimate of the evidence according to (\ref{eq:approx_evidence}).
 This would generally, however, lead to horribly inaccurate estimates.
 Because the area of the sample space with high likelihood values is generally very small and away from the high prior values (where the prior samples will concentrate), finding samples with high likelihood that contribute significantly to the evidence would be difficult \cite[7]{skilling}.
-Nested sampling cleverly solves this problem, as I will show in the next section.
+The next section shows how Nested Sampling solves this problem.
 
-\subsection{Introducing a Likelihood-Constraint}
+\subsection{Introducing a Likelihood-Constraint} 
 Nested sampling generates contributions to the evidence à la (\ref{eq:approx_evidence}) iteratively.
 This allows us to modify how the contributions are sampled as the algorithm goes along.
 Specifically, we can introduce a constraint that forces new contributions to be sampled in regions of higher likelihood.
@@ -679,6 +695,7 @@ This solves the problem of prior samples missing the regions with signifant post
 
 We need an ensemble of prior samples to use our strategy for estimating prior masses from the last section, so we start by drawing $n$ prior samples $\theta_1, ..., \theta_n$; we call these the live points.
 Then we take the sample with the lowest likelihood, remove it from the live points and use it along with an estimate of its prior mass as the first contribution to the evidence.
+%TODO: FIX LAST PART ABOUT PRIOR MASS SAMPLES HERE
 Its likelihood value becomes the likelihood-constraint $L^*$, meaning all points we sample thereafter have to have a likelihood higher than it.
 Luckily, all other live points already fulfill this constraint, since we chose the one with the lowest likelihood to remove.
 This means we only have to draw one new live point according to the constraint, $\theta_{\textrm{new}} \sim \pi(\theta) \mathbbm{1}_{\{L > L*\}}(\theta)$.
@@ -1415,7 +1432,7 @@ Each configuration of example problem, algorithm and LRPS method was run 1000 ti
 \subsection*{Proof: LRPS Samples' Prior Masses are Uniformly Distributed}
 Let $\mathbb{T}$ be a random variable with $f_T(\theta) = \pi(\theta) \, \mathbbm{1}_{\{L(\theta)>L^*\}}(\theta)$.
 Let $\mathbb{L} = L(\mathbb{T})$ and $\mathbb{M} = \mu(\mathbb{L})$.
-$\mathbb{M}$ represents the prior masses; we want to prove that $\mathbb{M}$ follows a uniform distribution.
+$\mathbb{M}$ represents the prior masses, we want to prove that it follows a uniform distribution.
 Because we are dealing with a likelihood-restricted prior, the uniform distribution is not on $[0,1]$, but on $[0, \mu(L^*)]$.
 \begin{equation*}
     f_\mathbb{L}(\lambda) = \int_\Theta \delta(\lambda - L(\theta)) \, \pi(\theta) \, \mathbbm{1}_{\{L(\theta)>L^*\}}(\theta) \, d\theta,
