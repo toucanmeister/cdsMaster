@@ -403,27 +403,27 @@ In this chapter, I derive the Nested Sampling algorithm, explaining the main ide
 \subsection{From a multi- to a one-dimensional Integral}
 We start by reducing the potentially multidimensional evidence integral (Equation (\ref{eq:evidence})) to a one-dimensional integral.
 To this end, we first replace the likelihood in the evidence integral by its layer cake representation, a tool borrowed from measure theory \cite[26]{liebloss}.
-For a quick derivation of the layer cake representation, let us define the indicator function $\mathbbm{1}_S(x)$  and the super level set $\{f \, > \, t\}$:
+For a quick derivation of the layer cake representation, let us define the indicator function $\mathbbm{1}_S(x)$  and the super level set $\{f(\theta) \, > \, t\}$:
 \begin{align*}
     \mathbbm{1}_S(x) &:= \begin{cases}
         1, & \textrm{if } x \in S \\
         0, & \textrm{otherwise}
     \end{cases} \\
-    \{f \, > \, t\} &:= \{ \theta \in \Theta \, | \, f(\theta) > t \}
+    \{f(\theta) \, > \, t\} &:= \{ \theta \in \Theta \, | \, f(\theta) > t \}
 \end{align*}
 With these definitions we rewrite $L(\theta)$ as its layer cake representation:
 \begin{align*}
     L(\theta) 
     \; = \; \int_0^{L(\theta)} 1 \; d\lambda
     \; = \; \int_0^{\infty} \mathbbm{1}_{[0,L(\theta)]}(\lambda) \; d\lambda
-    \; = \; \quad \int_0^{\infty} \mathbbm{1}_{\{ L \, > \, \lambda \}}(\theta) \; d\lambda 
+    \; = \; \quad \int_0^{\infty} \mathbbm{1}_{\{ L(\theta) \, > \, \lambda \}}(\theta) \; d\lambda 
 \end{align*}
 The last equality holds because the integrand is still 1 for all values of $\lambda$ that are smaller than $L(\theta)$ and 0 for all $\lambda > L(\theta)$.
 Now we plug this layer cake representation of $L(\theta)$ into the evidence integral:
 \begin{align}
-    Z = \int_\Theta L(\theta) \, \pi(\theta) \; d\theta &= \int_{\Theta} \int_0^{\infty} \mathbbm{1}_{\{ L \, > \, \lambda \}}(\theta) \; d\lambda \; \pi(\theta) \; d\theta \nonumber\\
-    &= \int_\Theta \int_0^{\infty} \mathbbm{1}_{\{ L \, > \, \lambda \}}(\theta) \, \pi(\theta) \; d\lambda \; d\theta \nonumber\\
-    &= \int_0^{\infty} \int_\Theta \mathbbm{1}_{\{ L \, > \, \lambda \}}(\theta) \, \pi(\theta) \; d\theta \; d\lambda \label{eq:tonelli}\\
+    Z = \int_\Theta L(\theta) \, \pi(\theta) \; d\theta &= \int_{\Theta} \int_0^{\infty} \mathbbm{1}_{\{ L(\theta) \, > \, \lambda \}}(\theta) \; d\lambda \; \pi(\theta) \; d\theta \nonumber\\
+    &= \int_\Theta \int_0^{\infty} \mathbbm{1}_{\{ L(\theta) \, > \, \lambda \}}(\theta) \, \pi(\theta) \; d\lambda \; d\theta \nonumber\\
+    &= \int_0^{\infty} \int_\Theta \mathbbm{1}_{\{ L(\theta) \, > \, \lambda \}}(\theta) \, \pi(\theta) \; d\theta \; d\lambda \label{eq:tonelli}\\
     &= \int_0^{\infty} \mu(\lambda) \; d\lambda
     \label{eq:integral_2}
 \end{align}
@@ -432,8 +432,8 @@ With that, we have defined one of the key functions of Skilling's original paper
 $\mu$ returns, for a given likelihood-threshold $\lambda$, the amount of prior mass which exists above that likelihood threshold:
 \begin{align}
 \mu(\lambda) 
-= \int_\Theta \mathbbm{1}_{\{ L \, > \, \lambda \}}(\theta) \, \pi(\theta) \; d\theta
-= \int_{\{L \,>\, \lambda\}} \pi(\theta) \; d\theta \label{eq:mu_definition}
+= \int_\Theta \mathbbm{1}_{\{ L(\theta) \, > \, \lambda \}}(\theta) \, \pi(\theta) \; d\theta
+= \int_{\{L(\theta) \,>\, \lambda\}} \pi(\theta) \; d\theta \label{eq:mu_definition}
 \end{align}
 A visualization is given in Figure \ref{fig:xlambda}.
 
@@ -815,6 +815,7 @@ The Metropolis algorithm, already sketched out in Section 1.1, is an MCMC method
 The proposal distribution, often a normal distribution, creates a proposal $\theta_p$ based on the last sample $\theta$.
 This proposal is then accepted with a probability $\textrm{max}\left(\frac{P(\theta_p)}{P(\theta)}, 1\right)$.
 In LRPS, this process is repeated a given number of times to decorrelate the samples.
+The more intermediate samples are drawn, the less the first and last sample correlate.
 Proposals which do not satisfy the likelihood-constraint are never accepted.
 Details can be seen in Algorithm \ref{alg:lrpsmetropolis}.
 If the proposal distribution is not symmetric, the standard Metropolis algorithm fails, but a variant called Metropolis-Hastings can be used \cite[p. 365f.]{mckay}.
@@ -834,6 +835,13 @@ If the proposal distribution is not symmetric, the standard Metropolis algorithm
     \end{algorithmic}
 \end{algorithm}
 
+\begin{figure}
+    \centering
+    \includegraphics[scale=0.5]{figs/metropolis_example.png}
+    \caption{Visualization of the Metropolis algorithm in a two-dimensional sample space. The black line indicates the likelihood-constraint-boundary, the dot is the starting point and each cross is a sampled point.}
+    \label{fig:metropolis_example}
+\end{figure}
+
 The main advantage of the Metropolis algorithm in LRPS is its local exploration.
 Since it always starts from a valid point and explores its local surroundings, its acceptance rate can be much higher than that of Rejection Sampling.
 It does, however, have two major disadvantages.
@@ -841,7 +849,7 @@ Firstly, because the samples are dependent, we have to draw many intermediate sa
 Secondly, since the proportion of prior space within the likelihood-constraint becomes smaller with each Nested Sampling iteration, the step size (standard deviation of the proposal distribution) required to efficiently explore the space changes continually.
 This second problem can be overcome by using an adaptive step size.
 A simple approach would be to decrease the step size by some factor each time a sample lands outside the likelihood-constraint while increasing it whenever a sample lands inside the constraint.
-More nuanced methods for step size adaptation have been developed as well \cite{automala}.
+More nuanced methods for step size adaptation have been developed as well \cite{automala}, but will not be covered in this thesis.
 
 \subsection{Hamiltonian Monte Carlo}
 Hamiltonian Monte Carlo (HMC) is a widely used MCMC algorithm for Bayesian model fitting.
@@ -860,7 +868,7 @@ The path of the particle across the landscape with its given starting momentum i
 At an arbitrarily chosen point of time, the particle is stopped.
 The resulting position of the sample is then treated like a Metropolis proposal and accepted with a probability based on the ratio of probability values of the proposal and the last sample.
 A visualization of this process can be seen in Figure \ref{fig:hmc_example}.
-Betancourt provides a thorough explanation of HMC with solid theoretical foundations in \cite{hmc}.
+Betancourt \cite{hmc} provides a thorough explanation of HMC with solid theoretical foundations.
 
 \begin{figure}
     \centering
@@ -873,14 +881,14 @@ HMC can be adapted for LRPS.
 In this case, the negative logarithm of the prior provides the landscape for the particles to move around in.
 The starting spot for a particle is always chosen to satisfy the likelihood-constraint (e.g. by choosing one of the live points).
 HMC evolves the particle through the prior space to generate a new sample.
-The main adaptation made is when the particle hits the likelihood-constraint barrier.
-In this case, it is reflected off the barrier to stay inside the valid region.
-This adaptation of HMC was introduced by Betancourt in \cite{hmc_in_ns}.
+The main adaptation for LRPS concerns what happens when the particle crosses the likelihood-constraint-boundary.
+In this case, it is reflected off the boundary to stay inside the valid region.
+This version of HMC was introduced by Betancourt in \cite{hmc_in_ns}.
 
 Like the Metropolis Algorithm, HMC for LRPS requires an adaptive step size.
-Without it, the tight likelihood constraint boundary during the later iterations of Nested would lead to degenrate behavior as HMC reflects with every integration step.
-This is especially bad since the likelihood gradient used for reflection is calculated at the end of the integration step that lands outside of the likelihood constraint.
-If the step size is very large in relation to the valid sampling area, the gradient will be calculated far away from the actual constraint boundary, leading to inaccurate reflection.
+Without it, because the valid region to sample from becomes arbitrarily small, there would come a point at which the step size is so large that HMC has to reflect with every integration step.
+This is bad since the likelihood gradient used for reflection is calculated at the end of the integration step that lands outside of the likelihood constraint.
+If the step size is very large in relation to the valid sampling area, the gradient will be calculated far away from the actual constraint boundary, leading to inaccurate reflection and biased samples.
 See the visualization in Figure \ref{fig:hmc_reflection_example}.
 
 \begin{figure}
@@ -912,17 +920,22 @@ We reformulate the optimization problem from (\ref{eq:cvxproblem}) to be unconst
     &\textrm{minimize} && f(x) + \sum_{i=1}^m I(f_i(x))&& \label{eq:cvxproblem_unconstrained}
 \end{align}
 With $I(u)$ being defined as follows.
-$$
-I(u) = \begin{cases}
+\begin{equation}
+    I(u) = \begin{cases}
         0,      & \text{if }  u \leq 0\\
         \infty, & \text{if }  u > 0
-        \end{cases}
-$$
+        \end{cases} \label{eq:exact_barrier_function}
+\end{equation}
 By applying an infinitely large penalty to infeasible points, (\ref{eq:cvxproblem_unconstrained}) accurately represents the original problem.
 However, because the added terms are not differentiable, we would no longer be able to use gradient information to solve this formulation of the problem.
-This is a problem because the most fundamental solver for optimization problems, Newton's Method, requires gradient information \cite[563]{boyd}.
+This is a problem because gradients are key to solving optimization problems.
+In particular, the most fundamental solver, Newton's Method, relies on being able to differentiate the objective function \cite[563]{boyd}.
 
-To circumvent this shortcoming, we approximate $I$ using the log barrier function $\hat{I}(u)= -\frac{1}{t}\log(-u)$. $t$ is a parameter of the function, with larger $t$ leading to better approximations.
+To circumvent this shortcoming, we approximate $I$ using the differentiable log barrier function:
+\begin{align}
+    \hat{I}(u)= -\frac{1}{t}\log(-u) \label{eq:log_barrier_function}
+\end{align}
+$t$ is a parameter of the function, with larger $t$ leading to better approximations.
 This behaviour can be seen in Figure \ref{fig:logbarrier}.
 It should be noted that $\hat{I}$ is only defined for feasible points \cite[563]{boyd}.
 
@@ -947,24 +960,24 @@ It should be noted that $\hat{I}$ is only defined for feasible points \cite[563]
     \addplot[
         domain=-2:0, 
         samples=500,
-        color=purple
+        color=red
     ] { -(1/1)*ln(-x) };
     \addplot[
         domain=-2:0, 
         samples=500,
-        color=purple
+        color=red
     ] { -(1/4)*ln(-x) };
     \addplot[
         domain=-2:0, 
         samples=500,
-        color=purple
+        color=red
     ] { -(1/16)*ln(-x) };
-    \node[color=purple, anchor=west] at (axis cs: -0.7, 1.3) {t=1};
-    \node[color=purple, anchor=west] at (axis cs: 0, 0.85) {t=4};
-    \node[color=purple, anchor=west] at (axis cs: 0, 0.3) {t=16};
+    \node[color=red, anchor=west] at (axis cs: -0.7, 1.3) {t=1};
+    \node[color=red, anchor=west] at (axis cs: 0, 0.85) {t=4};
+    \node[color=red, anchor=west] at (axis cs: 0, 0.3) {t=16};
     \end{axis}
     \end{tikzpicture}
-    \caption{Visualization of the exact barrier function $I$ in blue, and three log barrier functions (with $t=1,4,16$) in purple. The log barrier becomes a better approximation as $t$ increases.}
+    \caption{Visualization of the exact barrier function $I$ in blue, and three log barrier functions (with $t=1,4,16$) in red. The log barrier becomes a better approximation as $t$ increases.}
     \label{fig:logbarrier}
 \end{figure}
 
@@ -997,13 +1010,14 @@ $x^*(t)$ is provably $\frac{m}{t}$-suboptimal, meaning that its objective functi
 However, as the log barrier function becomes a better approximation of the strict barrier with larger $t$, its derivatives become more extreme.
 This causes the standard optimization procedures, such as Newton's method, to fail \cite[564]{boyd}.
 The Barrier Method is an approach that solves this issue by applying an iterative strategy.
-In each iteration, $x^*(t_i)$ is computed using Newton's Method (called a centering step).
+In each iteration, $x^*(t_i)$ is computed using Newton's Method in what's called a centering step.
 The value of $t_i$ increases with each iteration, and the result of the last iteration is used as the starting point for the current one.
-This stabilizes the centering steps \cite[569]{boyd}. 
+This stabilizes the centering steps \cite[569]{boyd}.
+See Algorithm \ref{alg:barrier_method}.
 
 \begin{algorithm}
     \caption[The basic Barrier Method.]{BarrierMethod ($x_0$, $t_0$, $\mu$, $\epsilon$)}
-    \label{alg:product_axes}
+    \label{alg:barrier_method}
     \begin{algorithmic}
         \State $x \gets x_0$
         \State $t \gets t_0$
@@ -1039,58 +1053,75 @@ This leads us to the main idea of this thesis: incorporating the log barrier fro
 \section{Derivation}
 \subsection{Deriving the log barrier term}
 In this section we draw parallels between LRPS and convex optimization to find a way to use log barriers in a probabilistic setting.
+For the 
 
 In convex optimization, we minimize a function constrained by a set of convex functions (as can be seen in (\ref{eq:cvxproblem})).
 In LRPS, we sample from a probability distribution $\pi(\theta)$, constrained by $L(\theta) > L^*$.
-Even though this constraint is not necessarily convex (for most real-world applications it will not be), it still takes on a similar role to the constraint functions in convex optimization.
-By viewing LRPS through the lens of optimization, we are able to apply the ideas of Chapter 2 to it.
+Even though this constraint is not necessarily convex (for most real-world applications it will not be), it still constricts the space we are working on and thus takes on a similar role to the constraint functions in convex optimization.
+In the following paragraphs, we will pretend like LRPS is an optimization problem with $\pi(\theta)$ as the objective function and $L(\theta) > L^*$ as the constraint.
+This is done to apply the idea of the log-barrier from Chapter 1.5 to LRPS, which will lead us to an important term that softens our hard likelihood-constraint-boundary.
 That said, we are only doing this for inspiration.
-We will not be solving the optimization problem we set up.
+We will not actually be solving the optimization problem we set up:
 \begin{align}
-    &\textrm{maximize} \quad \pi(\theta) &&\textrm{subject to} \quad L(\theta) > L^* \nonumber\\
-    \iff &\textrm{minimize} \quad -\log(\pi(\theta)) &&\textrm{subject to} \quad L(\theta) > L^* \nonumber\\
-    \iff &\textrm{minimize} \quad -\log(\pi(\theta)) &&\textrm{subject to} \quad l^* - l(\theta) < 0 \label{eq:log_barrier_derivation_1}\\
-    \iff &\textrm{minimize} \quad -\log(\pi(\theta)) + I(l^* - l(\theta)) \nonumber
+    \textrm{maximize} \quad \pi(\theta) &&\textrm{subject to} \quad L(\theta) > L^* \nonumber
 \end{align}
 Optimization problems over probabilities are usually solved in logarithmic space rather than probability space for reasons like easier differentiation and numerical stability.
-We do the same, taking the logarithm of both the objective function and both sides of the likelihood constraint.
-Note that $l(\theta) = \log(L(\theta))$ and $l^* = \log(L^*)$ in (\ref{eq:log_barrier_derivation_1}).
-Next, we generate the associated approximate problem using log barriers (see (\ref{eq:barrierproblem})).
+We do the same, taking the logarithm of both the objective function and both sides of the likelihood constraint.    %TODO: Figure out whether to end on a colon or a full stop before an equation
+This does not change the solution of the optimization problem because the logarithm is a monotonic function and thus preserves order in both the objective function and the constraint.
+We also multiply the objective function by $-1$ so we can minimize instead of maximizing, to match the optimization problems from Chapter 1.5: %TODO: Figure out when to say Chapter and when to say Section
+\begin{align}
+    &\textrm{maximize} \quad \pi(\theta) &&\textrm{subject to} \quad L(\theta) > L^* \nonumber \nonumber \\
+    \iff \; &\textrm{minimize} \quad -\log(\pi(\theta)) &&\textrm{subject to} \quad L(\theta) > L^* \nonumber\\
+    \iff \; &\textrm{minimize} \quad -\log(\pi(\theta)) &&\textrm{subject to} \quad \log(L(\theta)) > \log(L^*) \nonumber\\
+    \iff \; &\textrm{minimize} \quad -\log(\pi(\theta)) &&\textrm{subject to} \quad l^* - l(\theta) < 0 \nonumber
+\end{align}
+We use the exact barrier function from (\ref{eq:exact_barrier_function}) to incorporate the constraints into the objective function:
+\begin{align}
+    \textrm{minimize} \quad -\log(\pi(\theta)) + I(l^* - l(\theta)) \nonumber
+\end{align}
+Next, we generate the associated approximate problem using log barriers (see (\ref{eq:log_barrier_function}) and (\ref{eq:barrierproblem})):
 \begin{align*}
     &\textrm{minimize} \quad -\log(\pi(\theta)) + \hat{I}(l^* - l(\theta)) \\
-    \iff &\textrm{minimize} \quad -\log(\pi(\theta)) - \frac{1}{t}\log(l(\theta) - l^*)
+    \iff \; &\textrm{minimize} \quad -\log(\pi(\theta)) - \frac{1}{t}\log(l(\theta) - l^*)
 \end{align*}
-By moving the resulting objective function back into probability space, we obtain a term that will be important for the rest of this thesis.
+Then we negate and exponentiate the objective function to return to a maximization problem in probability space:
 \begin{align}
-    &\exp(-(-\log(\pi(\theta)) - \frac{1}{t}\log(l(\theta) - l^*))) \nonumber\\
-    = \, &\pi(\theta) \, (l(\theta) - l^*)^{\frac{1}{t}} \label{eq:log_barrier_term}
+    &\textrm{minimize} \quad -\log(\pi(\theta)) - \frac{1}{t}\log(l(\theta) - l^*) \nonumber\\
+    \iff \; &\textrm{maximize} \quad \exp(-(-\log(\pi(\theta)) - \frac{1}{t}\log(l(\theta) - l^*))) \nonumber\\
+    \iff \; &\textrm{maximize} \quad \pi(\theta) \, (l(\theta) - l^*)^{\frac{1}{t}} \label{eq:last_optimization_problem}
 \end{align}
-We call $(l(\theta) - l^*)^\frac{1}{t}$ the log barrier term.
-For valid $\theta$, as the (log-)likelihood of $\theta$ approaches the minimum (log-)likelihood, the log barrier term decreases, making values of $\theta$ close to the likelihood-restriction boundary less likely.
+And obtain a term that will be important for the rest of this thesis, the log barrier term:
+\begin{equation}
+    (l(\theta) - l^*)^\frac{1}{t} \label{eq:log_barrier_term}
+\end{equation}
+For valid $\theta$, the log barrier term decreases as the (log-)likelihood of $\theta$ approaches the minimum (log-)likelihood.
+When used as a factor to the prior as in (\ref{eq:last_optimization_problem}), this discourages the sampling of $\theta$ closer to the likelihood-constraint-boundary, effectively letting the sampler feel the boundary before crossing it.
 In the next section we integrate this term into Nested Sampling.
 
 \subsection{Incorporating the log barrier term}
-Having derived a way to represent log barriers for probabilities, we are now looking for a way to use them during LRPS without introducing a bias into our sampler.
+Having derived a term that represents a log barrier in probability space, we are now looking for a way to use it during LRPS without introducing a bias into our sampler.
 
-To this end, we expand the sampling space by adding a one-dimensional real variable $q$, taking values in $(q_{\textrm{min}}, q_{\textrm{max}})$.
+To this end, we expand the sampling space by adding a one-dimensional real variable $q$, taking values in $(q_{\textrm{min}}, q_{\textrm{max}})$:
 $$
 \theta \rightarrow (\theta, q)
 $$
-We define $q$ to be independent of $\theta$.
+Because we have full control over how $q$ is distributed, we can design it so that it affects the sampling of $\theta$ in just the way we want.
+First, we define $q$ to be independent of $\theta$:
 $$
 P(\theta, q) = P(\theta) \; P(q)
 $$
-By considering Bayes' rule (see (\ref{eq:bayes})), we can see that the independence follows through to the likelihood:
-\begin{align*}
-    P(\theta, q | D) &= P(\theta | D) \; P(q | D) \\
-    &= \frac{P(D | \theta) \; P(\theta)}{\int_\Theta P(D | \theta) \; P(\theta) \; d\theta} \; \frac{P(D | q) \; P(q)}{\int_Q P(D | q) \; P(q) \; dq} \\
-    &= \frac{P(D | \theta) \; P(\theta) \; P(D | q) \; P(q)}{\int_\Theta P(D | \theta) \; P(\theta) \; d\theta \; \int_Q P(D | q) \; P(q) \; dq} \\
-    &= \frac{P(D | \theta) \; P(D | q) \;\; P(\theta) \; P(q)}{\int_\Theta P(D | \theta) \; P(\theta) \; d\theta \; \int_Q P(D | q) \; P(q) \; dq} \\
-    &= \frac{L(\theta) \; L(q) \;\; \pi(\theta) \; \pi(q)}{Z_\theta \; Z_q} \\
-    &= \frac{L(\theta, q) \; \pi(\theta, q)}{Z_{\theta, q}}
-\end{align*}
+By applying Bayes' rule to the marginal distributions of $\theta$ and $q$, we can see that the independence follows through to the likelihood:
+\begin{align}
+    P(\theta, q \,|\, D) &= P(\theta | D) \; P(q \,|\, D) \nonumber\\
+    &= \frac{P(D \,|\, \theta) \, P(\theta)}{\int_\Theta P(D \,|\, \theta) \, P(\theta) \, d\theta} \, \frac{P(D \,|\, q) \, P(q)}{\int_Q P(D \,|\, q) \, P(q) \, dq} \nonumber\\
+    &= \frac{P(D \,|\, \theta) \, P(\theta) \, P(D \,|\, q) \, P(q)}{\int_\Theta P(D | \theta) \, P(\theta) \, d\theta \, \int_Q P(D \,|\, q) \, P(q) \, dq} \nonumber\\
+    &= \frac{P(D \,|\, \theta) \, P(D \,|\, q) \; P(\theta) \, P(q)}{\int_\Theta P(D | \theta) \, P(\theta) \, d\theta \, \int_Q P(D \,|\, q) \, P(q) \, dq} \nonumber\\
+    &= \frac{L(\theta) \, L(q) \; \pi(\theta) \, \pi(q)}{Z_\theta \, Z_q} \label{eq:recognize_bayes}\\
+    &= \frac{L(\theta, q) \; \pi(\theta, q)}{Z_{\theta, q}} \nonumber
+\end{align}
+In (\ref{eq:recognize_bayes}), we recognize Bayes' rule on the combined space $(\theta, q)$ and define $L(\theta, q) = L(\theta) \, L(q)$, $\pi(\theta, q) = \pi(\theta) \, \pi(q)$ and $Z_{\theta, q} = Z_\theta \, Z_q$ accordingly.
 This lets us freely choose the likelihood and prior of our new variable $q$.
-It also shows that we can perform Nested Sampling on the $(\theta, q)$-space and recover the original evidence $Z_\theta$ by dividing $Z_{\theta, q}$ by $Z_q$.
+It also shows that we can perform Nested Sampling on the $(\theta, q)$-space and recover the original evidence as $Z_\theta = \frac{Z_{\theta, q}}{Z_q}$.
 
 Now, let us take a look at LRPS on this expanded space.
 We will call the likelihood-restricted prior $\bar{\pi}$.
@@ -1098,10 +1129,8 @@ We will call the likelihood-restricted prior $\bar{\pi}$.
     (\theta,q) \sim \; &\bar{\pi}(\theta, q \,|\, L^*) \\
     &\bar{\pi}(\theta, q \,|\, L^*) = \pi(\theta, q) \, \mathbbm{1}_{\{L(\theta, q) \, > \, L^*\}}
 \end{align*}
-$\mathbbm{1}_{\{f(x)\}}$ with a predicate $f$ is short for the indicator function $\mathbbm{1}_{\{x \,|\, f(x)\}}(x)$ and is $1$ whenever the predicate is fulfilled and $0$ otherwise.
-
 We employ a technique called collapsed Gibbs sampling \cite{collapsed_gibbs} to sample from the likelihood-restricted prior.
-By first sampling from the marginal distribution of $\theta$, we can then use the obtained value to sample from the conditional distribution of $q$.
+By first sampling from the marginal distribution of $\theta$, we can then use the obtained value to sample from the conditional distribution of $q$:
 \begin{align*}
     \theta &\sim  \bar{\pi}(\theta \,|\, L^*) \\
     q &\sim  \bar{\pi}(q \,|\, L^*, \theta)
@@ -1372,7 +1401,7 @@ An adaptive step size is still worth implementing with this method, since the la
     \centering
     \includegraphics[scale=0.8]{figs/barrier_sampling_hmc.png}
     \caption{A run of HMC for LRPS with a chain of five samples on a standard-normal-likelihood-restricted uniform prior space.
-    The black dot is the starting spot, each blue cross is a generated sample.
+    The black dot is the starting spot, each black cross is a generated sample.
     The background color shows the negative log density the particles move on, with lighter colors representing higher values.}
     \label{fig:barrier_sampling_hmc}
 \end{figure}
@@ -1382,62 +1411,28 @@ An adaptive step size is still worth implementing with this method, since the la
 \FloatBarrier
 \section{Results}
 This chapter contains the results of a number of experiments on Nested Sampling with Barriers.
-First, I show how Nested Sampling with Barriers compares to standard Nested Sampling using multiple example problems.
-I then demonstrate the influence of the parameters $t$ and $q_{\textrm{max}}$ on Nested Sampling with Barriers on one example problem.
+First, I show how Nested Sampling with Barriers compares to standard Nested Sampling using two example problems.
+Then, I demonstrate the influence of the parameters $t$ and $q_{\textrm{max}}$ on Nested Sampling with Barriers on one example problem.
 
 \subsection{Nested Sampling with and without Barriers}
-Both standard Nested Sampling and the Barriers variant were tested on four example problems with the following likelihood functions:
+Both standard Nested Sampling and the Barriers variant were tested on two example problems with the following likelihoods:
 \begin{itemize}
-    \item a 2D slab and spike
-    \item a 20D slab and spike
-    \item a 2D mixture of 5 nonconcentric Gaussians
-    \item a 20D mixture of 5 nonconcentric Gaussians 
+    \item $L_1(\theta) = 100 \, \mathcal{N}(\theta \,|\, \mu=0, \Sigma= u I_{20}) + \mathcal{N}(\theta \,|\, \mu=0, \Sigma= v I_{20})$
+    \item $L_2(\theta) = 100 \, \mathcal{N}(\theta \,|\, \mu=(0.2, 0.2, ..., 0.2), \Sigma= u I_{20}) + \mathcal{N}(\theta \,|\, \mu=0, \Sigma= v I_{20})$
 \end{itemize}
-The slab-and-spike problems are taken from Skilling's introductory paper on Nested Sampling \cite{skilling}, where it serves as an example of a type of problem Nested Sampling is well-suited for.
-The nonconcentric Gaussians are example problems with multimodality, which remains difficult for MCMC methods to do well with.
-The examples' likelihoods are defined in the following piece of Python code:
-\vspace{0.4cm}
+Where $I_{20}$ is the 20-dimensional identity matrix, $u = 0.01$ and $v = 0.1$.
+Both likelihoods are two-component Gaussian mixtures consisting of a flat slab ($v$-component) and a thin spike with a much larger factor ($u$-component), and both are considered with a uniform prior on the 20-dimensional cube $[-\frac{1}{2}, \frac{1}{2}]^{20}$.
+The two examples are taken from Skilling's introductory paper on Nested Sampling, where the $L_1$-example is presented as being a type of problem Nested Sampling is well-suited for, while the $L_2$-example is said to be difficult even for Nested Sampling \cite[21]{skilling}.
 
-\hrule
-\begin{lstlisting}[language=Python]
-def spike_likelihood(x, dim):
-    slab = 100 * multivariate_normal.pdf(x, mean=np.zeros(dim), cov=np.eye(dim)*0.01)
-    spike = multivariate_normal.pdf(x, mean=np.zeros(dim), cov=np.eye(dim)*0.1)
-    return slab + spike
-
-gauss_2d_mus = [np.array([-2,-2]), np.array([-2,2]), np.array([0,0]), np.array([2,-2]), np.array([2, 2])]
-gauss_20d_mus = [np.array([-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2]),
-                 np.array([ 2, 2, 2, 2, 2, 2, 2, 2, 2, 2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2]),
-                 np.array([ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]),
-                 np.array([-2,-2,-2,-2,-2,-2,-2,-2,-2,-2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2]),
-                 np.array([ 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2])]
-sigmas = [0.2, 0.4, 1, 0.4, 0.2]
-def concentric_gauss_likelihood(x, dim, mus, sigmas):
-    result = 0
-    for i in range(len(mus)):
-        result += multivariate_normal.pdf(x, mean=mus[i], cov=np.eye(len(mus[i]))*sigmas[i])
-    return result
-\end{lstlisting}
-\hrule
-
-\begin{figure}
-    \centering
-    \includegraphics[scale=0.5, trim={1cm 1cm 1cm 1cm},clip]{figs/spike_example.png}
-    \includegraphics[scale=0.5, trim={1cm 1cm 1cm 1cm},clip]{figs/gauss_example.png}
-    \label{fig:benchmark_examples}
-    \caption{Plot of the 2D example problem likelihoods with the slab-and-spike on the left and the nonconcentric Gaussians on the right.}
-\end{figure}
-
-The spike-and-slab examples use a uniform prior on $[-0.5, 0.5]$ over all dimensions, while the nonconcentric Gaussians use a uniform prior on $[-5, 5]$.
 Since the behaviour of Nested Sampling is heavily dependent on the method for LRPS used, I applied both standard Nested Sampling and the Barriers variant to each example problem with different LRPS methods.
 The following LRPS approaches were used:
 \begin{itemize}
     \item Metropolis Algorithm (with simple adaptive step size)
     \item HMC with reflection (only for standard Nested Sampling, with simple adaptive step size)
     \item HMC (only for Nested Sampling with Barriers, with simple adaptive step size)
-    \item an optimal method for sampling inside an n-sphere (only for slab-and-spike examples)
+    \item an optimal method for sampling inside an n-sphere (only for the $L_1$-problem)
 \end{itemize}
-Each configuration of example problem, algorithm and LRPS method was run 1000 times, with each run using 1000 live points and a stopping criterion of $\epsilon = 10^{-16}$.
+Each configuration of example problem, algorithm and LRPS method was run 200 times, with each run using 200 live points and a stopping criterion of $\epsilon = 10^{-16}$.
 
 
 \subsection{Influence of $t$ and $q_{\textrm{max}}$}
@@ -1498,7 +1493,7 @@ And since $\mathbb{M}$'s values are simply the values of $\overline{\mathbb{M}}$
             name path=B,
             domain=0:6, 
             samples=200,
-            color=purple
+            color=red
         ] { 1/6 };
         \addplot[
             name path=C,

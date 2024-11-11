@@ -140,53 +140,58 @@
 \newlabel{alg:lrpsmetropolis}{{2}{23}}
 \abx@aux@cite{0}{hmc}
 \abx@aux@segm{0}{0}{hmc}
+\@writefile{lof}{\contentsline {figure}{\numberline {1.5}{\ignorespaces Visualization of the Metropolis algorithm in a two-dimensional sample space. The black line indicates the likelihood-constraint-boundary, the dot is the starting point and each cross is a sampled point.\relax }}{24}{}\protected@file@percent }
+\newlabel{fig:metropolis_example}{{1.5}{24}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {1.4.4}Hamiltonian Monte Carlo}{24}{}\protected@file@percent }
 \abx@aux@cite{0}{hmc_in_ns}
 \abx@aux@segm{0}{0}{hmc_in_ns}
-\@writefile{toc}{\contentsline {subsection}{\numberline {1.4.4}Hamiltonian Monte Carlo}{24}{}\protected@file@percent }
-\@writefile{lof}{\contentsline {figure}{\numberline {1.5}{\ignorespaces Visualization of HMC in a two-dimensional sample space. Contour lines and shading indicate the negative log probability of the target distribution (a mixture of two Gaussians). The dot is the starting point and each cross is a sampled point.\relax }}{25}{}\protected@file@percent }
-\newlabel{fig:hmc_example}{{1.5}{25}}
+\@writefile{lof}{\contentsline {figure}{\numberline {1.6}{\ignorespaces Visualization of HMC in a two-dimensional sample space. Contour lines and shading indicate the negative log probability of the target distribution (a mixture of two Gaussians). The dot is the starting point and each cross is a sampled point.\relax }}{25}{}\protected@file@percent }
+\newlabel{fig:hmc_example}{{1.6}{25}}
 \abx@aux@cite{0}{boyd}
 \abx@aux@segm{0}{0}{boyd}
-\@writefile{lof}{\contentsline {figure}{\numberline {1.6}{\ignorespaces Left: An iteration of HMC for LRPS with reflection and a chain of five samples on a standard-normal-likelihood-restricted uniform prior space. The black dot is the starting spot, each blue cross is a generated sample. Right: A later iteration of the same example. Note how every integration step contains a reflection and how far away the reflection points are from the actual boundary.\relax }}{26}{}\protected@file@percent }
-\newlabel{fig:hmc_reflection_example}{{1.6}{26}}
+\@writefile{lof}{\contentsline {figure}{\numberline {1.7}{\ignorespaces Left: An iteration of HMC for LRPS with reflection and a chain of five samples on a standard-normal-likelihood-restricted uniform prior space. The black dot is the starting spot, each blue cross is a generated sample. Right: A later iteration of the same example. Note how every integration step contains a reflection and how far away the reflection points are from the actual boundary.\relax }}{26}{}\protected@file@percent }
+\newlabel{fig:hmc_reflection_example}{{1.7}{26}}
 \@writefile{toc}{\contentsline {section}{\numberline {1.5}The Barrier Method}{26}{}\protected@file@percent }
 \newlabel{eq:cvxproblem}{{1.16}{26}}
-\newlabel{eq:cvxproblem_unconstrained}{{1.17}{26}}
 \abx@aux@cite{0}{boyd}
 \abx@aux@segm{0}{0}{boyd}
 \abx@aux@cite{0}{boyd}
 \abx@aux@segm{0}{0}{boyd}
 \abx@aux@cite{0}{boyd}
 \abx@aux@segm{0}{0}{boyd}
-\@writefile{lof}{\contentsline {figure}{\numberline {1.7}{\ignorespaces Visualization of the exact barrier function $I$ in blue, and three log barrier functions (with $t=1,4,16$) in purple. The log barrier becomes a better approximation as $t$ increases.\relax }}{27}{}\protected@file@percent }
-\newlabel{fig:logbarrier}{{1.7}{27}}
-\newlabel{eq:barrierproblem}{{1.18}{27}}
-\newlabel{eq:objective}{{1.19}{27}}
+\newlabel{eq:cvxproblem_unconstrained}{{1.17}{27}}
+\newlabel{eq:exact_barrier_function}{{1.18}{27}}
+\newlabel{eq:log_barrier_function}{{1.19}{27}}
+\newlabel{eq:barrierproblem}{{1.20}{27}}
+\newlabel{eq:objective}{{1.21}{27}}
 \abx@aux@cite{0}{boyd}
 \abx@aux@segm{0}{0}{boyd}
 \abx@aux@cite{0}{boyd}
 \abx@aux@segm{0}{0}{boyd}
 \abx@aux@cite{0}{boyd}
 \abx@aux@segm{0}{0}{boyd}
-\@writefile{lof}{\contentsline {figure}{\numberline {1.8}{\ignorespaces Central path of an example optimization problem. The shaded area is the feasible region, given by the constraint functions in black. The grey lines indicate contours of the objective function, with the unconstrained optimum at the grey dot. The central path of the problem is shown in red. $x^*(1)$ is marked by a red cross.\relax }}{28}{}\protected@file@percent }
-\newlabel{fig:barrier_method_example}{{1.8}{28}}
+\@writefile{lof}{\contentsline {figure}{\numberline {1.8}{\ignorespaces Visualization of the exact barrier function $I$ in blue, and three log barrier functions (with $t=1,4,16$) in red. The log barrier becomes a better approximation as $t$ increases.\relax }}{28}{}\protected@file@percent }
+\newlabel{fig:logbarrier}{{1.8}{28}}
+\@writefile{lof}{\contentsline {figure}{\numberline {1.9}{\ignorespaces Central path of an example optimization problem. The shaded area is the feasible region, given by the constraint functions in black. The grey lines indicate contours of the objective function, with the unconstrained optimum at the grey dot. The central path of the problem is shown in red. $x^*(1)$ is marked by a red cross.\relax }}{29}{}\protected@file@percent }
+\newlabel{fig:barrier_method_example}{{1.9}{29}}
 \@writefile{loa}{\contentsline {algorithm}{\numberline {3}{\ignorespaces The basic Barrier Method.}}{29}{}\protected@file@percent }
-\newlabel{alg:product_axes}{{3}{29}}
+\newlabel{alg:barrier_method}{{3}{29}}
 \@writefile{toc}{\contentsline {chapter}{\numberline {2}Nested Sampling with Barriers}{30}{}\protected@file@percent }
 \@writefile{lof}{\addvspace {10\p@ }}
 \@writefile{lot}{\addvspace {10\p@ }}
 \@writefile{toc}{\contentsline {section}{\numberline {2.1}Motivation}{30}{}\protected@file@percent }
 \@writefile{toc}{\contentsline {section}{\numberline {2.2}Derivation}{31}{}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsection}{\numberline {2.2.1}Deriving the log barrier term}{31}{}\protected@file@percent }
-\newlabel{eq:log_barrier_derivation_1}{{2.1}{31}}
+\newlabel{eq:last_optimization_problem}{{2.1}{32}}
 \newlabel{eq:log_barrier_term}{{2.2}{32}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {2.2.2}Incorporating the log barrier term}{32}{}\protected@file@percent }
 \abx@aux@cite{0}{collapsed_gibbs}
 \abx@aux@segm{0}{0}{collapsed_gibbs}
+\newlabel{eq:recognize_bayes}{{2.3}{33}}
 \@writefile{lof}{\contentsline {figure}{\numberline {2.1}{\ignorespaces Visualization of the unnormalized CDF $\Pi _q$ of $q$ for different values of $t$ and $q_{\textrm  {max}}=5$.\relax }}{35}{}\protected@file@percent }
 \newlabel{fig:unnormalized}{{2.1}{35}}
-\newlabel{eq:sub_zq_1}{{2.3}{36}}
-\newlabel{eq:gamma_diff}{{2.4}{36}}
+\newlabel{eq:sub_zq_1}{{2.4}{36}}
+\newlabel{eq:gamma_diff}{{2.5}{36}}
 \@writefile{loa}{\contentsline {algorithm}{\numberline {4}{\ignorespaces Nested Sampling with the log barrier term.}}{37}{}\protected@file@percent }
 \newlabel{alg:barriersampling}{{4}{37}}
 \@writefile{toc}{\contentsline {section}{\numberline {2.3}Interpretation}{38}{}\protected@file@percent }
@@ -197,26 +202,24 @@
 \@writefile{toc}{\contentsline {section}{\numberline {2.4}Implementation of LRPS}{39}{}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsection}{\numberline {2.4.1}Rejection Sampling and Discretized LRPS}{39}{}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsection}{\numberline {2.4.2}Metropolis Algorithm}{39}{}\protected@file@percent }
-\@writefile{lof}{\contentsline {figure}{\numberline {2.3}{\ignorespaces A run of HMC for LRPS with a chain of five samples on a standard-normal-likelihood-restricted uniform prior space. The black dot is the starting spot, each blue cross is a generated sample. The background color shows the negative log density the particles move on, with lighter colors representing higher values.\relax }}{40}{}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {2.3}{\ignorespaces A run of HMC for LRPS with a chain of five samples on a standard-normal-likelihood-restricted uniform prior space. The black dot is the starting spot, each black cross is a generated sample. The background color shows the negative log density the particles move on, with lighter colors representing higher values.\relax }}{40}{}\protected@file@percent }
 \newlabel{fig:barrier_sampling_hmc}{{2.3}{40}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {2.4.3}Hamiltonian Monte Carlo}{40}{}\protected@file@percent }
 \abx@aux@cite{0}{skilling}
 \abx@aux@segm{0}{0}{skilling}
 \@writefile{toc}{\contentsline {section}{\numberline {2.5}Results}{41}{}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsection}{\numberline {2.5.1}Nested Sampling with and without Barriers}{41}{}\protected@file@percent }
-\newlabel{fig:benchmark_examples}{{\caption@xref {fig:benchmark_examples}{ on input line 1427}}{42}}
-\@writefile{lof}{\contentsline {figure}{\numberline {2.4}{\ignorespaces Plot of the 2D example problem likelihoods with the slab-and-spike on the left and the nonconcentric Gaussians on the right.\relax }}{42}{}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {2.5.2}Influence of $t$ and $q_{\textrm  {max}}$}{42}{}\protected@file@percent }
-\@writefile{toc}{\contentsline {chapter}{\numberline {3}Summary}{43}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.5.2}Influence of $t$ and $q_{\textrm  {max}}$}{41}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {chapter}{\numberline {3}Summary}{42}{}\protected@file@percent }
 \@writefile{lof}{\addvspace {10\p@ }}
 \@writefile{lot}{\addvspace {10\p@ }}
-\@writefile{toc}{\contentsline {chapter}{Bibliography}{45}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {chapter}{Bibliography}{44}{}\protected@file@percent }
 \abx@aux@cite{0}{casellaberger}
 \abx@aux@segm{0}{0}{casellaberger}
-\@writefile{toc}{\contentsline {chapter}{Appendix}{46}{}\protected@file@percent }
-\newlabel{eq:prior_mass_integral_appendix}{{3.1}{46}}
-\@writefile{lof}{\contentsline {figure}{\numberline {3.1}{\ignorespaces Visualization of the integral in (3.1\hbox {}). The shaded region is the integral, equivalent to $\mu (L^*) - \mu (\lambda )$.\relax }}{47}{}\protected@file@percent }
-\newlabel{fig:vis_prior_masses_lrps_appendix}{{3.1}{47}}
+\@writefile{toc}{\contentsline {chapter}{Appendix}{45}{}\protected@file@percent }
+\newlabel{eq:prior_mass_integral_appendix}{{3.1}{45}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3.1}{\ignorespaces Visualization of the integral in (3.1\hbox {}). The shaded region is the integral, equivalent to $\mu (L^*) - \mu (\lambda )$.\relax }}{46}{}\protected@file@percent }
+\newlabel{fig:vis_prior_masses_lrps_appendix}{{3.1}{46}}
 \abx@aux@read@bbl@mdfivesum{B2A975A361E16D2B45045E0503623064}
 \abx@aux@defaultrefcontext{0}{gibbs}{none/global//global/global}
 \abx@aux@defaultrefcontext{0}{metropolishastings}{none/global//global/global}
@@ -240,4 +243,4 @@
 \abx@aux@defaultrefcontext{0}{automala}{none/global//global/global}
 \abx@aux@defaultrefcontext{0}{boyd}{none/global//global/global}
 \abx@aux@defaultrefcontext{0}{collapsed_gibbs}{none/global//global/global}
-\gdef \@abspage@last{51}
+\gdef \@abspage@last{50}

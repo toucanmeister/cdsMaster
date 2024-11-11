@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022) (preloaded format=pdflatex 2022.4.8)  7 NOV 2024 13:35
+This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022) (preloaded format=pdflatex 2022.4.8)  11 NOV 2024 12:00
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -1044,87 +1044,79 @@ File: figs/ns_eggcrate_example_2.png Graphic file (type png)
 <use figs/ns_eggcrate_example_2.png>
 Package pdftex.def Info: figs/ns_eggcrate_example_2.png  used on input line 784.
 (pdftex.def)             Requested size: 200.77176pt x 188.4916pt.
- [21] [22 <./figs/ns_eggcrate_example_1.png> <./figs/ns_eggcrate_example_2.png>] [23]
-<figs/hmc_example.png, id=115, 278.60085pt x 278.60085pt>
+ [21] [22 <./figs/ns_eggcrate_example_1.png> <./figs/ns_eggcrate_example_2.png>]
+<figs/metropolis_example.png, id=111, 361.35pt x 361.35pt>
+File: figs/metropolis_example.png Graphic file (type png)
+<use figs/metropolis_example.png>
+Package pdftex.def Info: figs/metropolis_example.png  used on input line 840.
+(pdftex.def)             Requested size: 180.67456pt x 180.67456pt.
+ [23] [24 <./figs/metropolis_example.png>]
+<figs/hmc_example.png, id=120, 278.60085pt x 278.60085pt>
 File: figs/hmc_example.png Graphic file (type png)
 <use figs/hmc_example.png>
-Package pdftex.def Info: figs/hmc_example.png  used on input line 867.
+Package pdftex.def Info: figs/hmc_example.png  used on input line 875.
 (pdftex.def)             Requested size: 222.88095pt x 222.88095pt.
- [24]
-<figs/hmc_reflection_example.png, id=119, 361.35pt x 361.35pt>
+ [25 <./figs/hmc_example.png>]
+<figs/hmc_reflection_example.png, id=124, 361.35pt x 361.35pt>
 File: figs/hmc_reflection_example.png Graphic file (type png)
 <use figs/hmc_reflection_example.png>
-Package pdftex.def Info: figs/hmc_reflection_example.png  used on input line 888.
+Package pdftex.def Info: figs/hmc_reflection_example.png  used on input line 896.
 (pdftex.def)             Requested size: 162.60599pt x 162.60599pt.
-<figs/hmc_reflection_degenerate_example.png, id=120, 361.35pt x 361.35pt>
+<figs/hmc_reflection_degenerate_example.png, id=125, 361.35pt x 361.35pt>
 File: figs/hmc_reflection_degenerate_example.png Graphic file (type png)
 <use figs/hmc_reflection_degenerate_example.png>
-Package pdftex.def Info: figs/hmc_reflection_degenerate_example.png  used on input line 889.
+Package pdftex.def Info: figs/hmc_reflection_degenerate_example.png  used on input line 897.
 (pdftex.def)             Requested size: 162.60599pt x 162.60599pt.
- [25 <./figs/hmc_example.png>] [26 <./figs/hmc_reflection_example.png> <./figs/hmc_reflection_degenerate_example.png>] [27]
-<figs/barrier_method_example.png, id=132, 462.528pt x 346.896pt>
+ [26 <./figs/hmc_reflection_example.png> <./figs/hmc_reflection_degenerate_example.png>] [27]
+<figs/barrier_method_example.png, id=134, 462.528pt x 346.896pt>
 File: figs/barrier_method_example.png Graphic file (type png)
 <use figs/barrier_method_example.png>
-Package pdftex.def Info: figs/barrier_method_example.png  used on input line 989.
+Package pdftex.def Info: figs/barrier_method_example.png  used on input line 1002.
 (pdftex.def)             Requested size: 277.51894pt x 208.13919pt.
- [28 <./figs/barrier_method_example.png>] [29]
+ [28] [29 <./figs/barrier_method_example.png>]
 Chapter 2.
 [30
 
 ] [31] [32] [33] [34] [35] [36] [37]
-Overfull \hbox (2.46553pt too wide) in paragraph at lines 1304--1305
+Overfull \hbox (2.46553pt too wide) in paragraph at lines 1333--1334
 [][] 
  []
 
 
-Overfull \hbox (5.72939pt too wide) in paragraph at lines 1334--1335
+Overfull \hbox (5.72939pt too wide) in paragraph at lines 1363--1364
 [][] 
  []
 
 [38] [39]
-<figs/barrier_sampling_hmc.png, id=173, 462.528pt x 346.896pt>
+<figs/barrier_sampling_hmc.png, id=175, 462.528pt x 346.896pt>
 File: figs/barrier_sampling_hmc.png Graphic file (type png)
 <use figs/barrier_sampling_hmc.png>
-Package pdftex.def Info: figs/barrier_sampling_hmc.png  used on input line 1373.
+Package pdftex.def Info: figs/barrier_sampling_hmc.png  used on input line 1402.
 (pdftex.def)             Requested size: 370.02289pt x 277.51717pt.
- [40 <./figs/barrier_sampling_hmc.png>] (e:/Program Files (x86)/texlive/2022/texmf-dist/tex/latex/listings/lstlang1.sty
-File: lstlang1.sty 2020/03/24 1.8d listings language file
-)
+ [40 <./figs/barrier_sampling_hmc.png>] [41]
+Chapter 3.
+[42
+
+]
 Package microtype Info: Loading generic protrusion settings for font family
 (microtype)             `cmtt' (encoding: OT1).
 (microtype)             For optimal results, create family-specific settings.
 (microtype)             See the microtype manual for details.
-LaTeX Font Info:    Font shape `OT1/cmtt/bx/n' in size <6> not available
-(Font)              Font shape `OT1/cmtt/m/n' tried instead on input line 1403.
-<figs/spike_example.png, id=179, 462.528pt x 346.896pt>
-File: figs/spike_example.png Graphic file (type png)
-<use figs/spike_example.png>
-Package pdftex.def Info: figs/spike_example.png  used on input line 1425.
-(pdftex.def)             Requested size: 202.81076pt x 144.9949pt.
-<figs/gauss_example.png, id=181, 462.528pt x 346.896pt>
-File: figs/gauss_example.png Graphic file (type png)
-<use figs/gauss_example.png>
-Package pdftex.def Info: figs/gauss_example.png  used on input line 1426.
-(pdftex.def)             Requested size: 202.81076pt x 144.9949pt.
- [41] [42 <./figs/spike_example.png> <./figs/gauss_example.png>]
-Chapter 3.
-[43
 
-]
-Overfull \hbox (2.13239pt too wide) in paragraph at lines 1449--1449
+Overfull \hbox (2.13239pt too wide) in paragraph at lines 1444--1444
 []\OT1/cmr/m/n/12 (-20) John Skilling. ``Nested sam-pling for gen-eral Bayesian com-pu-ta-tion''. In: \OT1/cmr/m/it/12 (-20) Bayesian
  []
 
-[44
+[43
 
 
-] [45] [46
+] [44] [45
 
 
 ]
-Package pgfplots info on input line 1542: fill between: activating layered graphics
-Package pgfplots info on input line 1542: Setting layers 'axis background,axis grid,axis ticks,axis lines,axis tick labels,pre main,main,axis descriptions,axis foreground'...
- [47] [1
+Package pgfplots info on input line 1537: fill between: activating layered graphics
+Package pgfplots info on input line 1537: Setting layers 'axis background,axis grid,axis ticks,axis lines,axis tick labels,pre main,main,axis descriptions,axis foreground'...
+ [46] [1
 
 ] (./main.aux)
 Package logreq Info: Writing requests to 'main.run.xml'.
@@ -1132,18 +1124,18 @@ Package logreq Info: Writing requests to 'main.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 39391 strings out of 478268
- 924294 string characters out of 5840332
- 2073836 words of memory out of 5000000
- 56808 multiletter control sequences out of 15000+600000
- 487734 words of font info for 178 fonts, out of 8000000 for 9000
+ 38940 strings out of 478268
+ 920076 string characters out of 5840332
+ 1890879 words of memory out of 5000000
+ 56363 multiletter control sequences out of 15000+600000
+ 487566 words of font info for 177 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  84i,16n,89p,1217b,2175s stack positions out of 10000i,1000n,20000p,200000b,200000s
-{e:/Program Files (x86)/texlive/2022/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc} <c:/Users/Farin/.texlive2022/texmf-var/fonts/pk/ljfour/public/bbm/bbm12.600pk><e:/Program Files (x86)/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb><e:/Program Files (x86)/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb><e:/Program Files (x86)/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx8.pfb><e:/Program Files (x86)/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmcsc10.pfb><e:/Program Files (x86)/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb><e:/Program Files (x86)/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb><e:/Program Files (x86)/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb><e:/Program Files (x86)/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb><e:/Program Files (x86)/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb><e:/Program Files (x86)/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb><e:/Program Files (x86)/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb><e:/Program Files (x86)/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb><e:/Program Files (x86)/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb><e:/Program Files (x86)/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb><e:/Program Files (x86)/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb><e:/Program Files (x86)/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb><e:/Program Files (x86)/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmti12.pfb><e:/Program Files (x86)/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt12.pfb><e:/Program Files (x86)/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt8.pfb><e:/Program Files (x86)/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb><e:/Program Files (x86)/texlive/2022/texmf-dist/fonts/type1/public/cm-super/sfrm1200.pfb>
-Output written on main.pdf (51 pages, 4505854 bytes).
+{e:/Program Files (x86)/texlive/2022/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc} <c:/Users/Farin/.texlive2022/texmf-var/fonts/pk/ljfour/public/bbm/bbm12.600pk><e:/Program Files (x86)/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb><e:/Program Files (x86)/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb><e:/Program Files (x86)/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx8.pfb><e:/Program Files (x86)/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmcsc10.pfb><e:/Program Files (x86)/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb><e:/Program Files (x86)/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb><e:/Program Files (x86)/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb><e:/Program Files (x86)/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb><e:/Program Files (x86)/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb><e:/Program Files (x86)/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb><e:/Program Files (x86)/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb><e:/Program Files (x86)/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb><e:/Program Files (x86)/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb><e:/Program Files (x86)/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb><e:/Program Files (x86)/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb><e:/Program Files (x86)/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb><e:/Program Files (x86)/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmti12.pfb><e:/Program Files (x86)/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt12.pfb><e:/Program Files (x86)/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb><e:/Program Files (x86)/texlive/2022/texmf-dist/fonts/type1/public/cm-super/sfrm1200.pfb>
+Output written on main.pdf (50 pages, 3181374 bytes).
 PDF statistics:
- 312 PDF objects out of 1000 (max. 8388607)
- 191 compressed objects within 2 object streams
+ 298 PDF objects out of 1000 (max. 8388607)
+ 184 compressed objects within 2 object streams
  0 named destinations out of 1000 (max. 500000)
- 42071 words of extra memory for PDF output out of 42996 (max. 10000000)
+ 41542 words of extra memory for PDF output out of 42996 (max. 10000000)
 

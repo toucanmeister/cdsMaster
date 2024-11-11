@@ -1016,6 +1016,11 @@ INPUT ./figs/ns_eggcrate_example_2.png
 INPUT figs/ns_eggcrate_example_2.png
 INPUT ./figs/ns_eggcrate_example_2.png
 INPUT ./figs/ns_eggcrate_example_2.png
+INPUT ./figs/metropolis_example.png
+INPUT ./figs/metropolis_example.png
+INPUT figs/metropolis_example.png
+INPUT ./figs/metropolis_example.png
+INPUT ./figs/metropolis_example.png
 INPUT ./figs/hmc_example.png
 INPUT ./figs/hmc_example.png
 INPUT figs/hmc_example.png
@@ -1046,24 +1051,9 @@ INPUT ./figs/barrier_sampling_hmc.png
 INPUT figs/barrier_sampling_hmc.png
 INPUT ./figs/barrier_sampling_hmc.png
 INPUT ./figs/barrier_sampling_hmc.png
-INPUT e:/Program Files (x86)/texlive/2022/texmf-dist/tex/latex/listings/lstlang1.sty
-INPUT e:/Program Files (x86)/texlive/2022/texmf-dist/tex/latex/listings/lstlang1.sty
-INPUT e:/Program Files (x86)/texlive/2022/texmf-dist/tex/latex/listings/lstlang1.sty
-INPUT e:/Program Files (x86)/texlive/2022/texmf-dist/tex/latex/listings/lstlang1.sty
-INPUT e:/Program Files (x86)/texlive/2022/texmf-dist/fonts/tfm/public/cm/cmtt12.tfm
-INPUT e:/Program Files (x86)/texlive/2022/texmf-dist/fonts/tfm/public/cm/cmtt8.tfm
-INPUT ./figs/spike_example.png
-INPUT ./figs/spike_example.png
-INPUT figs/spike_example.png
-INPUT ./figs/spike_example.png
-INPUT ./figs/spike_example.png
-INPUT ./figs/gauss_example.png
-INPUT ./figs/gauss_example.png
-INPUT figs/gauss_example.png
-INPUT ./figs/gauss_example.png
-INPUT ./figs/gauss_example.png
 INPUT e:/Program Files (x86)/texlive/2022/texmf-dist/fonts/tfm/public/cm/cmti12.tfm
 INPUT e:/Program Files (x86)/texlive/2022/texmf-dist/fonts/tfm/public/cm/cmcsc10.tfm
+INPUT e:/Program Files (x86)/texlive/2022/texmf-dist/fonts/tfm/public/cm/cmtt12.tfm
 INPUT main.aux
 INPUT main.run.xml
 OUTPUT main.run.xml
@@ -1087,6 +1077,5 @@ INPUT e:/Program Files (x86)/texlive/2022/texmf-dist/fonts/type1/public/amsfonts
 INPUT e:/Program Files (x86)/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb
 INPUT e:/Program Files (x86)/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmti12.pfb
 INPUT e:/Program Files (x86)/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt12.pfb
-INPUT e:/Program Files (x86)/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt8.pfb
 INPUT e:/Program Files (x86)/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb
 INPUT e:/Program Files (x86)/texlive/2022/texmf-dist/fonts/type1/public/cm-super/sfrm1200.pfb

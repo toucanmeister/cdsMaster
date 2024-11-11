@@ -30,7 +30,7 @@
 \contentsline {subsection}{\numberline {2.4.3}Hamiltonian Monte Carlo}{40}{}%
 \contentsline {section}{\numberline {2.5}Results}{41}{}%
 \contentsline {subsection}{\numberline {2.5.1}Nested Sampling with and without Barriers}{41}{}%
-\contentsline {subsection}{\numberline {2.5.2}Influence of $t$ and $q_{\textrm {max}}$}{42}{}%
-\contentsline {chapter}{\numberline {3}Summary}{43}{}%
-\contentsline {chapter}{Bibliography}{45}{}%
-\contentsline {chapter}{Appendix}{46}{}%
+\contentsline {subsection}{\numberline {2.5.2}Influence of $t$ and $q_{\textrm {max}}$}{41}{}%
+\contentsline {chapter}{\numberline {3}Summary}{42}{}%
+\contentsline {chapter}{Bibliography}{44}{}%
+\contentsline {chapter}{Appendix}{45}{}%
