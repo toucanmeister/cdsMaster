@@ -1,13 +1,13 @@
 # Fdb version 3
-["biber main"] 1731322709 "main.bcf" "main.bbl" "main" 1731322823
-  "bib.bib" 1730982110 5838 44cff6267a7d4db1f5cd8e5eb59e684b ""
-  "main.bcf" 1731322822 110291 1fb7f34980f7641d3ce4ee4c9159ddda "pdflatex"
+["biber main"] 1731429362 "main.bcf" "main.bbl" "main" 1731429649
+  "bib.bib" 1731429183 6358 363a2e6d31fee5af9accc76b90f0972b ""
+  "main.bcf" 1731429649 110537 8144229d004685c0e82a892cf28dbfbe "pdflatex"
   (generated)
   "main.bbl"
   "main.blg"
-["pdflatex"] 1731322812 "d:/Uni/cdsMaster/Thesis/main.tex" "main.pdf" "main" 1731322823
+["pdflatex"] 1731429634 "d:/Uni/cdsMaster/Thesis/main.tex" "main.pdf" "main" 1731429649
   "c:/Users/Farin/.texlive2022/texmf-var/fonts/pk/ljfour/public/bbm/bbm12.600pk" 1720172913 8424 7581c47eb8cd920e4d90403cd0b157f9 ""
-  "d:/Uni/cdsMaster/Thesis/main.tex" 1731322800 103929 577e8b93066b1450bd83c43a8db4d141 ""
+  "d:/Uni/cdsMaster/Thesis/main.tex" 1731429617 112931 04119b32571e8b3ed6b22f63eb9be60c ""
   "e:/Program Files (x86)/texlive/2022/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc" 1649398513 2900 1537cc8184ad1792082cd229ecc269f4 ""
   "e:/Program Files (x86)/texlive/2022/texmf-dist/fonts/map/fontname/texfonts.map" 1649399096 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "e:/Program Files (x86)/texlive/2022/texmf-dist/fonts/tfm/jknappen/ec/tcrm1200.tfm" 1649398839 1536 74b7293ec3713bb7fdca8dd1bd1f469c ""
@@ -260,11 +260,22 @@
   "figs/metropolis_example.png" 1730991371 253151 21c34928ca802ff4d20095648a5fafe4 ""
   "figs/ns_eggcrate_example_1.png" 1730718323 356677 6f0214712cf0682be4bfde8d53a5a3c2 ""
   "figs/ns_eggcrate_example_2.png" 1730718323 373311 660e6947f5c5d36974b63afc982f41d4 ""
-  "main.aux" 1731322822 16630 cc69579b52c219a59300ff04d71ea128 "pdflatex"
-  "main.bbl" 1731322711 28033 4279af530bae553b2f94e40dae2fea50 "biber main"
-  "main.run.xml" 1731322822 2332 83e05f0b52c9fa4cfbd2ea6cf1c82ad4 "pdflatex"
-  "main.tex" 1731322800 103929 577e8b93066b1450bd83c43a8db4d141 ""
-  "main.toc" 1731322822 2676 c36ef137141089e54deea24c016e8659 "pdflatex"
+  "figs/results/KLDS_spike_offcenter_20d.png" 1731407977 163904 b7d27ee46fd79b2ec88b4381bcfe3558 ""
+  "figs/results/KLD_spike_20d_reflection.png" 1731407976 54557 1604d0211508dda2168abb038a9aa770 ""
+  "figs/results/KLDs_spike_20d.png" 1731407975 126716 b7de5d467c2de5ad3ed6f5cbf3ab748d ""
+  "figs/results/acceptance_rates_spike_20d.png" 1731407987 142106 c6648f1c25dd7e2592a8649a6645ad43 ""
+  "figs/results/acceptance_rates_spike_offcenter_20d.png" 1731407986 147124 0e693ac7f98f7a2daad3faa903fbd635 ""
+  "figs/results/iterations_spike_20d.png" 1731420197 141857 27fec7a294f54c5a62faa0a316410f7e ""
+  "figs/results/iterations_spike_offcenter_20d.png" 1731419867 149261 bbff886248edde79990252ebb986c45f ""
+  "figs/results/logZ_diffs_spike_20d.png" 1731407967 124852 5c806cb2d1adceda590c13a9cb8336d8 ""
+  "figs/results/logZ_diffs_spike_offcenter_20d.png" 1731407968 120586 76934c1de68e8a7dbeaa97af672d37d6 ""
+  "figs/results/modes_found_spike_20d.png" 1731407974 131978 a706bcd7f009a9141c4b2d3cdb1207e3 ""
+  "figs/results/modes_found_spike_offcenter_20d.png" 1731407974 134225 242afdbf4858251f6a447ea14121cf0c ""
+  "main.aux" 1731429649 19181 eac89007d647d348548e9c64a153bc19 "pdflatex"
+  "main.bbl" 1731429363 31418 1bbb9b2f9f60727a470067c96ee7b2e3 "biber main"
+  "main.run.xml" 1731429649 2332 83e05f0b52c9fa4cfbd2ea6cf1c82ad4 "pdflatex"
+  "main.tex" 1731429617 112931 04119b32571e8b3ed6b22f63eb9be60c ""
+  "main.toc" 1731429649 2906 b32d1fdb8dbd90427bc10b8a9b904d9d "pdflatex"
   (generated)
   "main.aux"
   "main.bcf"

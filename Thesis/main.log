@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022) (preloaded format=pdflatex 2022.4.8)  11 NOV 2024 12:00
+This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022) (preloaded format=pdflatex 2022.4.8)  12 NOV 2024 17:40
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -1078,12 +1078,12 @@ Chapter 2.
 [30
 
 ] [31] [32] [33] [34] [35] [36] [37]
-Overfull \hbox (2.46553pt too wide) in paragraph at lines 1333--1334
+Overfull \hbox (2.46553pt too wide) in paragraph at lines 1338--1339
 [][] 
  []
 
 
-Overfull \hbox (5.72939pt too wide) in paragraph at lines 1363--1364
+Overfull \hbox (5.72939pt too wide) in paragraph at lines 1368--1369
 [][] 
  []
 
@@ -1091,11 +1091,71 @@ Overfull \hbox (5.72939pt too wide) in paragraph at lines 1363--1364
 <figs/barrier_sampling_hmc.png, id=175, 462.528pt x 346.896pt>
 File: figs/barrier_sampling_hmc.png Graphic file (type png)
 <use figs/barrier_sampling_hmc.png>
-Package pdftex.def Info: figs/barrier_sampling_hmc.png  used on input line 1402.
+Package pdftex.def Info: figs/barrier_sampling_hmc.png  used on input line 1407.
 (pdftex.def)             Requested size: 370.02289pt x 277.51717pt.
  [40 <./figs/barrier_sampling_hmc.png>] [41]
+<figs/results/logZ_diffs_spike_20d.png, id=184, 578.16pt x 216.81pt>
+File: figs/results/logZ_diffs_spike_20d.png Graphic file (type png)
+<use figs/results/logZ_diffs_spike_20d.png>
+Package pdftex.def Info: figs/results/logZ_diffs_spike_20d.png  used on input line 1471.
+(pdftex.def)             Requested size: 289.07928pt x 108.40472pt.
+<figs/results/logZ_diffs_spike_offcenter_20d.png, id=185, 578.16pt x 216.81pt>
+File: figs/results/logZ_diffs_spike_offcenter_20d.png Graphic file (type png)
+<use figs/results/logZ_diffs_spike_offcenter_20d.png>
+Package pdftex.def Info: figs/results/logZ_diffs_spike_offcenter_20d.png  used on input line 1472.
+(pdftex.def)             Requested size: 289.07928pt x 108.40472pt.
+ [42]
+<figs/results/modes_found_spike_20d.png, id=189, 578.16pt x 216.81pt>
+File: figs/results/modes_found_spike_20d.png Graphic file (type png)
+<use figs/results/modes_found_spike_20d.png>
+Package pdftex.def Info: figs/results/modes_found_spike_20d.png  used on input line 1486.
+(pdftex.def)             Requested size: 231.2599pt x 86.72246pt.
+<figs/results/modes_found_spike_offcenter_20d.png, id=190, 578.16pt x 216.81pt>
+File: figs/results/modes_found_spike_offcenter_20d.png Graphic file (type png)
+<use figs/results/modes_found_spike_offcenter_20d.png>
+Package pdftex.def Info: figs/results/modes_found_spike_offcenter_20d.png  used on input line 1487.
+(pdftex.def)             Requested size: 231.2599pt x 86.72246pt.
+ [43 <./figs/results/logZ_diffs_spike_20d.png> <./figs/results/logZ_diffs_spike_offcenter_20d.png>]
+<figs/results/KLDs_spike_20d.png, id=196, 578.16pt x 216.81pt>
+File: figs/results/KLDs_spike_20d.png Graphic file (type png)
+<use figs/results/KLDs_spike_20d.png>
+Package pdftex.def Info: figs/results/KLDs_spike_20d.png  used on input line 1507.
+(pdftex.def)             Requested size: 208.4981pt x 86.72246pt.
+<figs/results/KLD_spike_20d_reflection.png, id=198, 216.81pt x 216.81pt>
+File: figs/results/KLD_spike_20d_reflection.png Graphic file (type png)
+<use figs/results/KLD_spike_20d_reflection.png>
+Package pdftex.def Info: figs/results/KLD_spike_20d_reflection.png  used on input line 1508.
+(pdftex.def)             Requested size: 86.72246pt x 86.72246pt.
+<figs/results/KLDs_spike_offcenter_20d.png, id=199, 578.16pt x 216.81pt>
+File: figs/results/KLDs_spike_offcenter_20d.png Graphic file (type png)
+<use figs/results/KLDs_spike_offcenter_20d.png>
+Package pdftex.def Info: figs/results/KLDs_spike_offcenter_20d.png  used on input line 1509.
+(pdftex.def)             Requested size: 231.2599pt x 86.72246pt.
+ [44 <./figs/results/modes_found_spike_20d.png> <./figs/results/modes_found_spike_offcenter_20d.png>]
+<figs/results/iterations_spike_20d.png, id=205, 578.16pt x 216.81pt>
+File: figs/results/iterations_spike_20d.png Graphic file (type png)
+<use figs/results/iterations_spike_20d.png>
+Package pdftex.def Info: figs/results/iterations_spike_20d.png  used on input line 1521.
+(pdftex.def)             Requested size: 231.2599pt x 86.72246pt.
+<figs/results/iterations_spike_offcenter_20d.png, id=206, 578.16pt x 216.81pt>
+File: figs/results/iterations_spike_offcenter_20d.png Graphic file (type png)
+<use figs/results/iterations_spike_offcenter_20d.png>
+Package pdftex.def Info: figs/results/iterations_spike_offcenter_20d.png  used on input line 1522.
+(pdftex.def)             Requested size: 231.2599pt x 86.72246pt.
+ [45 <./figs/results/KLDs_spike_20d.png> <./figs/results/KLD_spike_20d_reflection.png> <./figs/results/KLDS_spike_offcenter_20d.png>]
+<figs/results/acceptance_rates_spike_20d.png, id=214, 578.16pt x 216.81pt>
+File: figs/results/acceptance_rates_spike_20d.png Graphic file (type png)
+<use figs/results/acceptance_rates_spike_20d.png>
+Package pdftex.def Info: figs/results/acceptance_rates_spike_20d.png  used on input line 1537.
+(pdftex.def)             Requested size: 231.2599pt x 86.72246pt.
+<figs/results/acceptance_rates_spike_offcenter_20d.png, id=215, 578.16pt x 216.81pt>
+File: figs/results/acceptance_rates_spike_offcenter_20d.png Graphic file (type png)
+<use figs/results/acceptance_rates_spike_offcenter_20d.png>
+Package pdftex.def Info: figs/results/acceptance_rates_spike_offcenter_20d.png  used on input line 1538.
+(pdftex.def)             Requested size: 231.2599pt x 86.72246pt.
+ [46 <./figs/results/iterations_spike_20d.png> <./figs/results/iterations_spike_offcenter_20d.png>] [47 <./figs/results/acceptance_rates_spike_20d.png> <./figs/results/acceptance_rates_spike_offcenter_20d.png>]
 Chapter 3.
-[42
+[48
 
 ]
 Package microtype Info: Loading generic protrusion settings for font family
@@ -1103,20 +1163,20 @@ Package microtype Info: Loading generic protrusion settings for font family
 (microtype)             For optimal results, create family-specific settings.
 (microtype)             See the microtype manual for details.
 
-Overfull \hbox (2.13239pt too wide) in paragraph at lines 1444--1444
+Overfull \hbox (2.13239pt too wide) in paragraph at lines 1550--1550
 []\OT1/cmr/m/n/12 (-20) John Skilling. ``Nested sam-pling for gen-eral Bayesian com-pu-ta-tion''. In: \OT1/cmr/m/it/12 (-20) Bayesian
  []
 
-[43
+[49
 
 
-] [44] [45
+] [50] [51
 
 
 ]
-Package pgfplots info on input line 1537: fill between: activating layered graphics
-Package pgfplots info on input line 1537: Setting layers 'axis background,axis grid,axis ticks,axis lines,axis tick labels,pre main,main,axis descriptions,axis foreground'...
- [46] [1
+Package pgfplots info on input line 1643: fill between: activating layered graphics
+Package pgfplots info on input line 1643: Setting layers 'axis background,axis grid,axis ticks,axis lines,axis tick labels,pre main,main,axis descriptions,axis foreground'...
+ [52] [1
 
 ] (./main.aux)
 Package logreq Info: Writing requests to 'main.run.xml'.
@@ -1124,18 +1184,18 @@ Package logreq Info: Writing requests to 'main.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 38940 strings out of 478268
- 920076 string characters out of 5840332
- 1890879 words of memory out of 5000000
- 56363 multiletter control sequences out of 15000+600000
+ 39029 strings out of 478268
+ 923956 string characters out of 5840332
+ 1893910 words of memory out of 5000000
+ 56440 multiletter control sequences out of 15000+600000
  487566 words of font info for 177 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  84i,16n,89p,1217b,2175s stack positions out of 10000i,1000n,20000p,200000b,200000s
 {e:/Program Files (x86)/texlive/2022/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc} <c:/Users/Farin/.texlive2022/texmf-var/fonts/pk/ljfour/public/bbm/bbm12.600pk><e:/Program Files (x86)/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb><e:/Program Files (x86)/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb><e:/Program Files (x86)/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx8.pfb><e:/Program Files (x86)/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmcsc10.pfb><e:/Program Files (x86)/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb><e:/Program Files (x86)/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb><e:/Program Files (x86)/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb><e:/Program Files (x86)/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb><e:/Program Files (x86)/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb><e:/Program Files (x86)/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb><e:/Program Files (x86)/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb><e:/Program Files (x86)/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb><e:/Program Files (x86)/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb><e:/Program Files (x86)/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb><e:/Program Files (x86)/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb><e:/Program Files (x86)/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb><e:/Program Files (x86)/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmti12.pfb><e:/Program Files (x86)/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt12.pfb><e:/Program Files (x86)/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb><e:/Program Files (x86)/texlive/2022/texmf-dist/fonts/type1/public/cm-super/sfrm1200.pfb>
-Output written on main.pdf (50 pages, 3181374 bytes).
+Output written on main.pdf (56 pages, 4455693 bytes).
 PDF statistics:
- 298 PDF objects out of 1000 (max. 8388607)
- 184 compressed objects within 2 object streams
+ 341 PDF objects out of 1000 (max. 8388607)
+ 198 compressed objects within 2 object streams
  0 named destinations out of 1000 (max. 500000)
- 41542 words of extra memory for PDF output out of 42996 (max. 10000000)
+ 41603 words of extra memory for PDF output out of 42996 (max. 10000000)
 

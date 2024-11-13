@@ -190,37 +190,55 @@
 \newlabel{eq:recognize_bayes}{{2.3}{33}}
 \@writefile{lof}{\contentsline {figure}{\numberline {2.1}{\ignorespaces Visualization of the unnormalized CDF $\Pi _q$ of $q$ for different values of $t$ and $q_{\textrm  {max}}=5$.\relax }}{35}{}\protected@file@percent }
 \newlabel{fig:unnormalized}{{2.1}{35}}
+\abx@aux@cite{0}{bayesian_data_analysis}
+\abx@aux@segm{0}{0}{bayesian_data_analysis}
 \newlabel{eq:sub_zq_1}{{2.4}{36}}
 \newlabel{eq:gamma_diff}{{2.5}{36}}
 \@writefile{loa}{\contentsline {algorithm}{\numberline {4}{\ignorespaces Nested Sampling with the log barrier term.}}{37}{}\protected@file@percent }
 \newlabel{alg:barriersampling}{{4}{37}}
-\@writefile{toc}{\contentsline {section}{\numberline {2.3}Interpretation}{38}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {2.3}Interpretation}{37}{}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {2.2}{\ignorespaces Visualization of the normalized PDF (left) and normalized CDF (right) of $q$ for different values of $t$ and $q_{\textrm  {max}}=2$.\relax }}{38}{}\protected@file@percent }
+\newlabel{fig:q_normalized}{{2.2}{38}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {2.3.1}Interpreting $q$}{38}{}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsection}{\numberline {2.3.2}Influence of $t$ and $q_{\textrm  {max}}$}{38}{}\protected@file@percent }
-\@writefile{lof}{\contentsline {figure}{\numberline {2.2}{\ignorespaces Visualization of the normalized PDF (left) and normalized CDF (right) of $q$ for different values of $t$ and $q_{\textrm  {max}}=2$.\relax }}{39}{}\protected@file@percent }
-\newlabel{fig:q_normalized}{{2.2}{39}}
 \@writefile{toc}{\contentsline {section}{\numberline {2.4}Implementation of LRPS}{39}{}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsection}{\numberline {2.4.1}Rejection Sampling and Discretized LRPS}{39}{}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsection}{\numberline {2.4.2}Metropolis Algorithm}{39}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.4.3}Hamiltonian Monte Carlo}{39}{}\protected@file@percent }
 \@writefile{lof}{\contentsline {figure}{\numberline {2.3}{\ignorespaces A run of HMC for LRPS with a chain of five samples on a standard-normal-likelihood-restricted uniform prior space. The black dot is the starting spot, each black cross is a generated sample. The background color shows the negative log density the particles move on, with lighter colors representing higher values.\relax }}{40}{}\protected@file@percent }
 \newlabel{fig:barrier_sampling_hmc}{{2.3}{40}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {2.4.3}Hamiltonian Monte Carlo}{40}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {2.5}Results}{40}{}\protected@file@percent }
 \abx@aux@cite{0}{skilling}
 \abx@aux@segm{0}{0}{skilling}
-\@writefile{toc}{\contentsline {section}{\numberline {2.5}Results}{41}{}\protected@file@percent }
+\abx@aux@cite{0}{sphere_sampling}
+\abx@aux@segm{0}{0}{sphere_sampling}
 \@writefile{toc}{\contentsline {subsection}{\numberline {2.5.1}Nested Sampling with and without Barriers}{41}{}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {2.5.2}Influence of $t$ and $q_{\textrm  {max}}$}{41}{}\protected@file@percent }
-\@writefile{toc}{\contentsline {chapter}{\numberline {3}Summary}{42}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{Estimated Evidence}{42}{}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {2.4}{\ignorespaces Box plot of each method's evidence estimate's deviation from the true value. Top: $L_1$-example, Bottom: $L_2$-example. Orange lines are the median values, gray crosses are the mean values.\relax }}{43}{}\protected@file@percent }
+\newlabel{fig:results_logZ_diffs}{{2.4}{43}}
+\@writefile{toc}{\contentsline {subsubsection}{Posterior Modes Found}{43}{}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {2.5}{\ignorespaces Box plots of how many of the two modes were found by each method. Top: $L_1$-example, Bottom: $L_2$-example. Orange lines are the median values, gray crosses are the mean values.\relax }}{44}{}\protected@file@percent }
+\newlabel{fig:results_modes_found}{{2.5}{44}}
+\@writefile{lof}{\contentsline {figure}{\numberline {2.6}{\ignorespaces Box plots of the KLD of estimated and true mode weights. Top: $L_1$-example, Bottom: $L_2$-example. The results for HMC with reflection is presented on a separate scale to allow better comparison between the others. Orange lines are the median values, gray crosses are the mean values.\relax }}{45}{}\protected@file@percent }
+\newlabel{fig:results_KLDs}{{2.6}{45}}
+\@writefile{toc}{\contentsline {subsubsection}{Number of Iterations}{45}{}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {2.7}{\ignorespaces Box plots of how many iterations each method took to reach the stopping point. Top: $L_1$-example, Bottom: $L_2$-example. Orange lines are the median values, gray crosses are the mean values.\relax }}{46}{}\protected@file@percent }
+\newlabel{fig:results_iterations}{{2.7}{46}}
+\@writefile{toc}{\contentsline {subsubsection}{Acceptance Rate}{46}{}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {2.8}{\ignorespaces Box plots of the ratio of accepted proposals to total proposals made during LRPS for each method. Top: $L_1$-example, Bottom: $L_2$-example. Orange lines are the median values, gray crosses are the mean values.\relax }}{47}{}\protected@file@percent }
+\newlabel{fig:results_acceptance_rates}{{2.8}{47}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.5.2}Influence of $t$ and $q_{\textrm  {max}}$}{47}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {chapter}{\numberline {3}Summary}{48}{}\protected@file@percent }
 \@writefile{lof}{\addvspace {10\p@ }}
 \@writefile{lot}{\addvspace {10\p@ }}
-\@writefile{toc}{\contentsline {chapter}{Bibliography}{44}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {chapter}{Bibliography}{50}{}\protected@file@percent }
 \abx@aux@cite{0}{casellaberger}
 \abx@aux@segm{0}{0}{casellaberger}
-\@writefile{toc}{\contentsline {chapter}{Appendix}{45}{}\protected@file@percent }
-\newlabel{eq:prior_mass_integral_appendix}{{3.1}{45}}
-\@writefile{lof}{\contentsline {figure}{\numberline {3.1}{\ignorespaces Visualization of the integral in (3.1\hbox {}). The shaded region is the integral, equivalent to $\mu (L^*) - \mu (\lambda )$.\relax }}{46}{}\protected@file@percent }
-\newlabel{fig:vis_prior_masses_lrps_appendix}{{3.1}{46}}
-\abx@aux@read@bbl@mdfivesum{B2A975A361E16D2B45045E0503623064}
+\@writefile{toc}{\contentsline {chapter}{Appendix}{51}{}\protected@file@percent }
+\newlabel{eq:prior_mass_integral_appendix}{{3.1}{51}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3.1}{\ignorespaces Visualization of the integral in (3.1\hbox {}). The shaded region is the integral, equivalent to $\mu (L^*) - \mu (\lambda )$.\relax }}{52}{}\protected@file@percent }
+\newlabel{fig:vis_prior_masses_lrps_appendix}{{3.1}{52}}
+\abx@aux@read@bbl@mdfivesum{BE3A1039CBA28AA1ADD3F193468B9133}
 \abx@aux@defaultrefcontext{0}{gibbs}{none/global//global/global}
 \abx@aux@defaultrefcontext{0}{metropolishastings}{none/global//global/global}
 \abx@aux@defaultrefcontext{0}{hmc}{none/global//global/global}
@@ -243,4 +261,6 @@
 \abx@aux@defaultrefcontext{0}{automala}{none/global//global/global}
 \abx@aux@defaultrefcontext{0}{boyd}{none/global//global/global}
 \abx@aux@defaultrefcontext{0}{collapsed_gibbs}{none/global//global/global}
-\gdef \@abspage@last{50}
+\abx@aux@defaultrefcontext{0}{bayesian_data_analysis}{none/global//global/global}
+\abx@aux@defaultrefcontext{0}{sphere_sampling}{none/global//global/global}
+\gdef \@abspage@last{56}

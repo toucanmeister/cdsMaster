@@ -693,6 +693,88 @@
       \verb 10.1080/01621459.1994.10476829
       \endverb
     \endentry
+    \entry{bayesian_data_analysis}{book}{}
+      \name{author}{6}{}{%
+        {{hash=1e1eb60e3b6e222217bf8e9b24070b28}{%
+           family={Gelman},
+           familyi={G\bibinitperiod},
+           given={Andrew},
+           giveni={A\bibinitperiod}}}%
+        {{hash=f34f8d7beadb3b443b64e32d7bfe9421}{%
+           family={Carlin},
+           familyi={C\bibinitperiod},
+           given={John},
+           giveni={J\bibinitperiod}}}%
+        {{hash=933c8ba3d8b6c1fb6a5269a8476355ca}{%
+           family={Stern},
+           familyi={S\bibinitperiod},
+           given={Hal},
+           giveni={H\bibinitperiod}}}%
+        {{hash=39a7db9b46f7d09bf73ea233779d88a5}{%
+           family={Rubin},
+           familyi={R\bibinitperiod},
+           given={Donald},
+           giveni={D\bibinitperiod}}}%
+        {{hash=d1f0fc81dc0af9d488d71669115fff82}{%
+           family={Dunson},
+           familyi={D\bibinitperiod},
+           given={David},
+           giveni={D\bibinitperiod}}}%
+        {{hash=5d36e97683cbc9d6ef06fc2ec40becb0}{%
+           family={Vehtari},
+           familyi={V\bibinitperiod},
+           given={Aki},
+           giveni={A\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {CRC Press}%
+      }
+      \strng{namehash}{7b511f44eded88e08c98470ecd75568d}
+      \strng{fullhash}{e8ae3b1cc8ae254c68d46d3cba982746}
+      \strng{bibnamehash}{7b511f44eded88e08c98470ecd75568d}
+      \strng{authorbibnamehash}{7b511f44eded88e08c98470ecd75568d}
+      \strng{authornamehash}{7b511f44eded88e08c98470ecd75568d}
+      \strng{authorfullhash}{e8ae3b1cc8ae254c68d46d3cba982746}
+      \field{sortinit}{5}
+      \field{sortinithash}{20e9b4b0b173788c5dace24730f47d8c}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{edition}{3}
+      \field{title}{Bayesian Data Analysis}
+      \field{year}{2021}
+    \endentry
+    \entry{sphere_sampling}{article}{}
+      \name{author}{3}{}{%
+        {{hash=8684b940ef48e876e4aa3bd75d232cfd}{%
+           family={Voelker},
+           familyi={V\bibinitperiod},
+           given={Aaron\bibnamedelima R.},
+           giveni={A\bibinitperiod\bibinitdelim R\bibinitperiod}}}%
+        {{hash=e6be0ba01c1454d20b30101d9d892cf1}{%
+           family={Gosmann},
+           familyi={G\bibinitperiod},
+           given={Jan},
+           giveni={J\bibinitperiod}}}%
+        {{hash=41cae379a303824dc80595c0c9d2c0f6}{%
+           family={Stewart},
+           familyi={S\bibinitperiod},
+           given={Terrence\bibnamedelima C.},
+           giveni={T\bibinitperiod\bibinitdelim C\bibinitperiod}}}%
+      }
+      \strng{namehash}{7ebc61021090e6bde4669af0e9a6d9dc}
+      \strng{fullhash}{7ebc61021090e6bde4669af0e9a6d9dc}
+      \strng{bibnamehash}{7ebc61021090e6bde4669af0e9a6d9dc}
+      \strng{authorbibnamehash}{7ebc61021090e6bde4669af0e9a6d9dc}
+      \strng{authornamehash}{7ebc61021090e6bde4669af0e9a6d9dc}
+      \strng{authorfullhash}{7ebc61021090e6bde4669af0e9a6d9dc}
+      \field{sortinit}{5}
+      \field{sortinithash}{20e9b4b0b173788c5dace24730f47d8c}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Centre for Theoretical Neuroscience}
+      \field{title}{Efficiently sampling vectors and coordinates from the n-sphere and n-ball}
+      \field{year}{2017}
+    \endentry
   \enddatalist
 \endrefsection
 \endinput

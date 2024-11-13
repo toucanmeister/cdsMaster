@@ -1232,6 +1232,11 @@ The changes from the original are the following:
 \end{enumerate}
 \vspace{0.25cm}
 
+Sampling $q$ from $\pi_q(q) \, \mathbbm{1}_{\{q < L(\theta_{\textrm{new}}) / L^*\}}$ is simple.
+We can generate samples from $\pi_q(q)$ using inverse transform sampling \cite[23]{bayesian_data_analysis} as $q = \hat{\Pi}^{-1}_q(u)$ for $u \sim \textrm{Uniform}(0,1)$.
+Using this we can generate samples until one satisfies the constraint of $q < L(\theta_{\textrm{new}}) / L^*$.
+Because $q$ is one-dimensional, we can generate millions of samples in milliseconds and need not worry about performance issues.
+
 The $q$-evidence $Z_q$ is a function of $t$ and $q_{\textrm{max}}$, and can be computed analytically:
 \begin{align}
     Z_q(t, q_{\textrm{max}}) &= \int_1^{q_{\textrm{max}}} L(q) \, \pi(q) \, dq \nonumber\\
@@ -1422,7 +1427,7 @@ Both standard Nested Sampling and the Barriers variant were tested on two exampl
 \end{itemize}
 Where $I_{20}$ is the 20-dimensional identity matrix, $u = 0.01$ and $v = 0.1$.
 Both likelihoods are two-component Gaussian mixtures consisting of a flat slab ($v$-component) and a thin spike with a much larger factor ($u$-component), and both are considered with a uniform prior on the 20-dimensional cube $[-\frac{1}{2}, \frac{1}{2}]^{20}$.
-The two examples are taken from Skilling's introductory paper on Nested Sampling, where the $L_1$-example is presented as being a type of problem Nested Sampling is well-suited for, while the $L_2$-example is said to be difficult even for Nested Sampling \cite[21]{skilling}.
+The two examples are taken from Skilling's introductory paper on Nested Sampling, where the $L_1$-example is presented as a type of problem Nested Sampling is well-suited for, while the $L_2$-example is said to be difficult even for Nested Sampling \cite[21]{skilling}.
 
 Since the behaviour of Nested Sampling is heavily dependent on the method for LRPS used, I applied both standard Nested Sampling and the Barriers variant to each example problem with different LRPS methods.
 The following LRPS approaches were used:
@@ -1430,11 +1435,112 @@ The following LRPS approaches were used:
     \item Metropolis Algorithm (with simple adaptive step size)
     \item HMC with reflection (only for standard Nested Sampling, with simple adaptive step size)
     \item HMC (only for Nested Sampling with Barriers, with simple adaptive step size)
-    \item an optimal method for sampling inside an n-sphere (only for the $L_1$-problem)
+    \item an optimal method for sampling inside an $d$-ball (only for the $L_1$-problem with Standard Nested Sampling; labeled ``Ball'' in the figures)  
 \end{itemize}
+We can use the optimal $d$-ball sampler because the valid region in the $L_1$-problem is always a sphere.
+The used sampler is taken from a paper on the topic of sphere- and ball-sampling by Voelker, Gosmann and Stewart \cite[2]{sphere_sampling}.
+
+The simple adaptive step size Algorithm adjusts the Metropolis or HMC step size after each proposal.
+If the proposal is accepted, the step size is multiplied by a factor of $1.01$; if it is rejected, the step size is multiplied by $0.99$.
 Each configuration of example problem, algorithm and LRPS method was run 200 times, with each run using 200 live points and a stopping criterion of $\epsilon = 10^{-16}$.
+The configurations are compared by how their estimate of the evidence, how many posterior modes they find (measured in two ways), how many iterations they take and how many proposals they accept.
 
+\FloatBarrier
+\subsubsection{Estimated Evidence}
+In Figure \ref{fig:results_logZ_diffs}, we compare how close each test run's estimate of the evidence comes to the true value.
+In the concentric $L_1$ problem, all methods except HMC with reflection find a good estimate of the evidence.
+A possible explanation for the failure of HMC with reflection is as follows.
 
+The sphere-shaped valid region of the $L_1$-example causes many reflected particles to land back in the valid region, even with relatively large step sizes.
+This causes the adaptive step size algorithm to increase the step size even further.
+Eventually, the step size becomes so large that particles are always reflected back into the valid region; this occurs because
+\begin{itemize}
+    \item the particles are reflected not at the boundary, but at the point they would have landed at outside the valid region
+    \item the gradient of $L_1$ always points into the valid region
+\end{itemize}
+These factors work together to cause highly acute angles of reflection.
+The behavior is similar to the one that occurs when no adaptive step size is used, seen in Figure \ref{fig:hmc_reflection_example} of Chapter 1.4.
+This explanation of why HMC with reflection fails is backed by the fact that the runs of HMC with reflection on this example problem exhibit extremely high step sizes, up to 300 times larger than the valid region ever spans.
+
+On the $L_2$-example, none of the methods are as convincing as on the $L_1$-example.
+The Metropolis methods are the most accurate, with the HMC methods having higher bias and higher variance.
+The poor performance can be explained with the next criteria, concerning how well the posterior distribution was explored.
+
+\begin{figure}
+    \centering
+    \includegraphics[scale=0.5]{figs/results/logZ_diffs_spike_20d.png}
+    \includegraphics[scale=0.5]{figs/results/logZ_diffs_spike_offcenter_20d.png}
+    \caption{Box plot of each method's evidence estimate's deviation from the true value. Top: $L_1$-example, Bottom: $L_2$-example. Orange lines are the median values, gray crosses are the mean values.}
+    \label{fig:results_logZ_diffs}
+\end{figure}
+
+\FloatBarrier
+\subsubsection{Posterior Modes Found}
+This criterion measures how many of the posterior modes each configuration was able to find and explore, where the main challenge is finding the small spike.
+The criterion checks, for each mode, if there is a dead point within the 95th percentile of cumulative probability of the mode.
+In the upper part of Figure \ref{fig:results_modes_found} on the $L_1$-example, we see all methods except HMC with reflection always finding the spike.
+On the $L_2$-example, HMC with reflection never finds the spike, with all other methods finding less than half of the time.
+This may explain part of the bias we see in the evidence estimates.
+\begin{figure}
+    \centering
+    \includegraphics[scale=0.4]{figs/results/modes_found_spike_20d.png}
+    \includegraphics[scale=0.4]{figs/results/modes_found_spike_offcenter_20d.png}
+    \caption{Box plots of how many of the two modes were found by each method. Top: $L_1$-example, Bottom: $L_2$-example. Orange lines are the median values, gray crosses are the mean values.}
+    \label{fig:results_modes_found}
+\end{figure}
+
+There is a second criterion pertaining to posterior modes, which is the Kullback-Leibler divergence (KLD) of estimated and true mode weights.
+Here, we create an estimate of the mode weights ($100$ and $1$), by evaluating the PDF of each posterior mode (only possible because both $L_1$ and $L_2$ are Gaussian mixtures) on every dead point, multiplying this by the dead points' weights and summing over all dead points.
+The resulting vector of mode weight estimates is normalized and compared using the KLD to the true normalized mode weights.
+\begin{align*}
+    &\textrm{KLD}(\hat{m}, m) \\
+    \textrm{where} \quad &\hat{m} = \sum_i^n \frac{p(\theta_i)}{\sum_j p(\theta_i)_j} \cdot w_i \\
+    \textrm{where} \quad &p(\theta) = (\mathcal{N}_1(\theta), \, \mathcal{N}_2(\theta))
+\end{align*}
+With $\mathcal{N}_1$ and $\mathcal{N}_2$ being the weighted mode PDFs, $\theta_1, ..., \theta_n$ being the dead points and $w_1, ..., w_n$ being the dead points' estimated prior mass shells.
+
+The results in Figure \ref{fig:results_KLDs} show a similar pattern to the evidence estimate results.
+In the $L_1$-example, all methods but HMC with reflection are nearly equal and, in relation to the optimal ball sampler's performance, almost perfect.
+In the $L_2$-example, the Metropolis methods tend to be worse than the HMC methods, but the HMC methods have higher variance.
+\begin{figure}
+    \centering
+    \includegraphics[trim={0cm 0cm 2cm 0cm}, clip, scale=0.4]{figs/results/KLDs_spike_20d.png}
+    \includegraphics[scale=0.4]{figs/results/KLD_spike_20d_reflection.png}
+    \includegraphics[scale=0.4]{figs/results/KLDs_spike_offcenter_20d.png}
+    \caption{Box plots of the KLD of estimated and true mode weights. Top: $L_1$-example, Bottom: $L_2$-example. The results for HMC with reflection is presented on a separate scale to allow better comparison between the others. Orange lines are the median values, gray crosses are the mean values.}
+    \label{fig:results_KLDs}
+\end{figure}
+
+\FloatBarrier
+\subsubsection{Number of Iterations}
+Figure \ref{fig:results_iterations} shows how many iterations each configuration took to accumulate enough of the evidence to satisfy the stopping criterion of $\epsilon = 10^{-16}$.
+For the $L_1$-example, HMC with reflection is again the outlier, showing drastically more variance than the other methods.
+For both $L_1$ and $L_2$, the non-barrier methods take slightly fewer iterations than the barrier methods, and the Metropolis approach has lower variance than the HMC approaches.
+\begin{figure}
+    \centering
+    \includegraphics[scale=0.4]{figs/results/iterations_spike_20d.png}
+    \includegraphics[scale=0.4]{figs/results/iterations_spike_offcenter_20d.png}
+    \caption{Box plots of how many iterations each method took to reach the stopping point. Top: $L_1$-example, Bottom: $L_2$-example. Orange lines are the median values, gray crosses are the mean values.}
+    \label{fig:results_iterations}
+\end{figure}
+
+\FloatBarrier
+\subsubsection{Acceptance Rate}
+In this section, we examine what ratio of the total proposals made during LRPS are accepted.
+Lower acceptance rates lead to slower overall execution time as more proposals have to be made until an acceptable one is found.
+This is where the main advantage of Nested Sampling with barriers lies.
+In both example problems, Nested Sampling with barriers reaches significantly higher acceptance rates than standard Nested Sampling when both use the Metropolis algorithm.
+The HMC methods are completely even, and, as one would expect, the optimal sampler reaches the highest proposal acceptance rate.
+The reason the optimal sampler does not reach an acceptance rate of $1$ is that in the early iterations, the likelihood-constraint-boundary is further outwards from the origin than the prior reaches, causing a significant number of early proposals to be rejected because they do not land in the prior.
+\begin{figure}
+    \centering
+    \includegraphics[scale=0.4]{figs/results/acceptance_rates_spike_20d.png}
+    \includegraphics[scale=0.4]{figs/results/acceptance_rates_spike_offcenter_20d.png}
+    \caption{Box plots of the ratio of accepted proposals to total proposals made during LRPS for each method. Top: $L_1$-example, Bottom: $L_2$-example. Orange lines are the median values, gray crosses are the mean values.}
+    \label{fig:results_acceptance_rates}
+\end{figure}
+
+\FloatBarrier
 \subsection{Influence of $t$ and $q_{\textrm{max}}$}
 
 \chapter{Summary}
