@@ -27,9 +27,9 @@
 \usepackage{tocloft}
 \usepackage{setspace}
 \usepackage{multicol}
-\usepackage{pgfplots} % Du brauchst dieses Package,
-\pgfplotsset{compat=1.10} % diese,
-\usepgfplotslibrary{fillbetween} % und diese Einstellung.
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.10}
+\usepgfplotslibrary{fillbetween}
 
 \addbibresource{bib.bib}
 \titleformat{\chapter}[hang]{\Huge\bfseries}{\thechapter}{20pt}{\Huge\bfseries}
@@ -99,14 +99,14 @@ Der aufwändigste Schritt im Nested Sampling ist das likelihoodbeschränkte Samp
 Hier wird zufällig von dem Teil des Priors gezogen, der oberhalb eines bestimmten Likelihoodwerts liegt.
 Standardmethoden wie Markow-Chain-Monte-Carlo-Verfahren sind hier dadurch limitiert, dass sie die Likelihood-Grenze erst dann bemerken, wenn sie bereits überschritten wurde.
 In dieser Arbeit stelle ich Nested Sampling mit Barrieren vor; eine Methode, welche die Idee einer logarithmischen Barrierefunktion aus der konvexen Optimierung in Nested Sampling integriert, um das likelihoodbeschränkte Sampling des Priors gezielt zu lenken.
-Dieser Ansatz erreicht %TODO: results
+Dieser Ansatz erreicht in durchgeführten Tests im likelihoodbeschränkten Sampling des Priors Akzeptanzraten die bis zu einem Faktor von 1,23 über der von Standard-Nested-Samping liegen.
 
 \chapter*{Abstract}
 Nested Sampling is an algorithm for fitting Bayesian statistical models.
 The most computationally expensive step in Nested Sampling involves sampling from the part of a prior distribution that lies above a certain likelihood value, called likelihood-restricted prior sampling.
 Standard methods like Markov Chain Monte Carlo can be used for this step, but are limited by not noticing the likelihood-constraint-boundary until they have crossed it, causing low acceptance rates of proposals.
 In this thesis, I propose Nested Sampling with Barriers, a method that incorporates the idea of a log barrier from convex optimization into Nested Sampling to guide the likelihood-restricted prior sampler.
-This approach achieves %TODO: results
+In a conducted benchmark, this approach achieves acceptance rates during likelihood-restricted prior sampling that are up to a factor of $1.23$ higher than those of standard Nested Sampling.
 
 
 \clearpage
@@ -134,7 +134,7 @@ Nested Sampling is a Monte Carlo method for Bayesian inference whose main object
 Nested sampling contains a step where samples have to be generated from a likelihood-restricted prior (likelihood-restricted prior sampling or LRPS).
 This step is challenging \cite[9]{hmc_in_ns}, with standard Markov Chain Monte Carlo (MCMC) methods struggling to achieve high acceptance rates of proposals, because they only notice the likelihood-constraint-boundary once they have crossed it.
 In this thesis, I propose a modified version of Nested Sampling which uses the idea of a log barrier from convex optimization to guide the crucial LRPS step of Nested Sampling.
-This allows %TODO: results
+This log barrier softens the hard likelihood-constraint-boundary and lets the LRPS-sampler feel it earlier, which results in acceptance rates that are up to a factor of $1.23$ higher than those of standard Nested Sampling.
 
 I begin by recapping important background information about the methods and ideas this thesis is based on, including Bayesian statistics in general, the Nested Sampling algorithm and the Barrier Method for solving convex optimization problems.
 Following that, using inspiration from the Barrier Method, I derive Nested Sampling with Barriers as an alternative to the standard Nested Sampling algorithm.
@@ -399,7 +399,7 @@ However, this thesis focuses on a method whose main objective, from the start, i
 Nested sampling, introduced by Skilling \cite{skilling}, is an algorithm that computes the evidence of a Bayesian model while also generating samples from the posterior distribution.
 In this chapter, I derive the Nested Sampling algorithm, explaining the main ideas along the way.
 
-\FloatBarrier %TODO: READ ABOUT SEQUENTIAL MONTE CARLO IN NESTED SAMPLING FOR PHYSICAL SCIENTISTS
+\FloatBarrier
 \subsection{From a multi- to a one-dimensional Integral}
 We start by reducing the potentially multidimensional evidence integral (Equation (\ref{eq:evidence})) to a one-dimensional integral.
 To this end, we first replace the likelihood in the evidence integral by its layer cake representation, a tool borrowed from measure theory \cite[26]{liebloss}.
@@ -736,7 +736,6 @@ Once the algorithm terminates, the evidence is computed according to (\ref{eq:ap
 
 Posterior samples can also be generated easily.
 One randomly draws from the dead points, where each dead point's probability to be sampled is proportional to the product of its likelihood and its corresponding prior mass \cite[9]{nested_sampling_talk}.
-In this aspect, Nested Sampling is similar to a technique called Sequential Monte Carlo, which also samples from previously generated points using weights.
 
 Inputs to the algorithm are the prior and likelihood functions as well as the stopping threshold (or number of iterations) and the number of live points.
 The stopping threshold determines how much of the evidence to accumulate, while the number of live points works like a resolution parameter.
@@ -1066,7 +1065,7 @@ We will not actually be solving the optimization problem we set up:
     \textrm{maximize} \quad \pi(\theta) &&\textrm{subject to} \quad L(\theta) > L^* \nonumber
 \end{align}
 Optimization problems over probabilities are usually solved in logarithmic space rather than probability space for reasons like easier differentiation and numerical stability.
-We do the same, taking the logarithm of both the objective function and both sides of the likelihood constraint.    %TODO: Figure out whether to end on a colon or a full stop before an equation
+We do the same, taking the logarithm of both the objective function and both sides of the likelihood constraint.
 This does not change the solution of the optimization problem because the logarithm is a monotonic function and thus preserves order in both the objective function and the constraint.
 We also multiply the objective function by $-1$ so we can minimize instead of maximizing, to match the optimization problems from Chapter 1.5: %TODO: Figure out when to say Chapter and when to say Section
 \begin{align}
@@ -1439,13 +1438,13 @@ The following LRPS approaches were used:
 \end{itemize}
 We can use the optimal $d$-ball sampler because the valid region in the $L_1$-problem is always a sphere.
 The used sampler is taken from a paper on the topic of sphere- and ball-sampling by Voelker, Gosmann and Stewart \cite[2]{sphere_sampling}.
-
 The simple adaptive step size Algorithm adjusts the Metropolis or HMC step size after each proposal.
 If the proposal is accepted, the step size is multiplied by a factor of $1.01$; if it is rejected, the step size is multiplied by $0.99$.
+The Nested Sampling configurations with Barriers use values of $t=1$ and $q_{\textrm{max}} = 2$ for their hyperparameters.
+
 Each configuration of example problem, algorithm and LRPS method was run 200 times, with each run using 200 live points and a stopping criterion of $\epsilon = 10^{-16}$.
 The configurations are compared by how their estimate of the evidence, how many posterior modes they find (measured in two ways), how many iterations they take and how many proposals they accept.
 
-\FloatBarrier
 \subsubsection{Estimated Evidence}
 In Figure \ref{fig:results_logZ_diffs}, we compare how close each test run's estimate of the evidence comes to the true value.
 In the concentric $L_1$ problem, all methods except HMC with reflection find a good estimate of the evidence.
@@ -1468,13 +1467,12 @@ The poor performance can be explained with the next criteria, concerning how wel
 
 \begin{figure}
     \centering
-    \includegraphics[scale=0.5]{figs/results/logZ_diffs_spike_20d.png}
-    \includegraphics[scale=0.5]{figs/results/logZ_diffs_spike_offcenter_20d.png}
+    \includegraphics[scale=0.4]{figs/results/logZ_diffs_spike_20d.png}
+    \includegraphics[scale=0.4]{figs/results/logZ_diffs_spike_offcenter_20d.png}
     \caption{Box plot of each method's evidence estimate's deviation from the true value. Top: $L_1$-example, Bottom: $L_2$-example. Orange lines are the median values, gray crosses are the mean values.}
     \label{fig:results_logZ_diffs}
 \end{figure}
 
-\FloatBarrier
 \subsubsection{Posterior Modes Found}
 This criterion measures how many of the posterior modes each configuration was able to find and explore, where the main challenge is finding the small spike.
 The criterion checks, for each mode, if there is a dead point within the 95th percentile of cumulative probability of the mode.
@@ -1485,7 +1483,7 @@ This may explain part of the bias we see in the evidence estimates.
     \centering
     \includegraphics[scale=0.4]{figs/results/modes_found_spike_20d.png}
     \includegraphics[scale=0.4]{figs/results/modes_found_spike_offcenter_20d.png}
-    \caption{Box plots of how many of the two modes were found by each method. Top: $L_1$-example, Bottom: $L_2$-example. Orange lines are the median values, gray crosses are the mean values.}
+    \caption{Box plots of how many of the two modes were found by each method. The values represent $\frac{m}{2}$, where $m$ is the number of modes found. Top: $L_1$-example, Bottom: $L_2$-example. Orange lines are the median values, gray crosses are the mean values.}
     \label{fig:results_modes_found}
 \end{figure}
 
@@ -1511,7 +1509,6 @@ In the $L_2$-example, the Metropolis methods tend to be worse than the HMC metho
     \label{fig:results_KLDs}
 \end{figure}
 
-\FloatBarrier
 \subsubsection{Number of Iterations}
 Figure \ref{fig:results_iterations} shows how many iterations each configuration took to accumulate enough of the evidence to satisfy the stopping criterion of $\epsilon = 10^{-16}$.
 For the $L_1$-example, HMC with reflection is again the outlier, showing drastically more variance than the other methods.
@@ -1524,12 +1521,13 @@ For both $L_1$ and $L_2$, the non-barrier methods take slightly fewer iterations
     \label{fig:results_iterations}
 \end{figure}
 
-\FloatBarrier
 \subsubsection{Acceptance Rate}
 In this section, we examine what ratio of the total proposals made during LRPS are accepted.
 Lower acceptance rates lead to slower overall execution time as more proposals have to be made until an acceptable one is found.
 This is where the main advantage of Nested Sampling with barriers lies.
 In both example problems, Nested Sampling with barriers reaches significantly higher acceptance rates than standard Nested Sampling when both use the Metropolis algorithm.
+For the $L_1$-example, the version with barriers achieves an acceptance rate that is a factor of $1.62$ higher than the standard version's acceptance rate.
+In the $L_2$-example, the improvement is by a factor of $1.23$.
 The HMC methods are completely even, and, as one would expect, the optimal sampler reaches the highest proposal acceptance rate.
 The reason the optimal sampler does not reach an acceptance rate of $1$ is that in the early iterations, the likelihood-constraint-boundary is further outwards from the origin than the prior reaches, causing a significant number of early proposals to be rejected because they do not land in the prior.
 \begin{figure}
@@ -1542,6 +1540,66 @@ The reason the optimal sampler does not reach an acceptance rate of $1$ is that 
 
 \FloatBarrier
 \subsection{Influence of $t$ and $q_{\textrm{max}}$}
+In this section, we examine the influence of the hyperparameters $t$ and $q_{\textrm{max}}$ which Nested Sampling with barriers introduces.
+We used $0.5$, $1$, $2$, and $5$ as values for $t$ and $1$, $1.1$, $2$ and $5$ as values for $q_{\textrm{max}}$.
+Each combination of $t$- and $q_{\textrm{max}}$-values was used in two configuration of Nested Sampling with barriers, one using Metropolis for LRPS and one using HMC.
+These configurations, each using 200 live points and a stopping criterion of $\epsilon=10^{-16}$, were applied to the $L_2$-problem introduced in the previous section.
+The results of 200 runs per configuration are compiled in the following paragraphs.
+
+\subsubsection{Estimated Evidence}
+As is visible in Figure \ref{fig:results_params_logZ}, the evidence estimates are barely affected by the choice of $t$ and $q_{\textrm{max}}$.
+For the Metropolis version, $t=0.5$ causes slightly lower variance, while for the HMC version, $t=1$ and $t=2$ cause lower variance.
+In both cases, the value of $q_{\textrm{max}}$ has no discernible impact.
+\begin{figure}
+    \centering
+    \includegraphics[trim={3cm 0cm 3cm 0cm}, clip, width=\textwidth]{figs/results/params/logZ_diffs_metropolis.png}
+    \includegraphics[trim={3cm 0cm 3cm 0cm}, clip, width=\textwidth]{figs/results/params/logZ_diffs_hmc.png}
+    \caption{Box plot of each configuration's evidence estimate's deviation from the true value. Top: Using Metropolis for LPRS, Bottom: Using HMC for LRPS. Orange lines are the median values, gray crosses are the mean values.}
+    \label{fig:results_params_logZ}
+\end{figure}
+
+\subsubsection{Posterior Modes Found}
+Figure \ref{fig:results_params_modes_found} shows the number of modes found by each configuration, while Figure \ref{fig:results_params_KLDs} shows the KLD of the estimated and true mode weights.
+For both the Metropolis and the HMC version, $t=0.5$ and $t=5$ have a slightly higher mean number of modes found than the other values, while the mean and median of the KLDs is stable across configurations.
+The configurations with $t=0.5$ and $t=1$ for the Metropolis version, and the configurations with $t=1$ for the HMC version have lower variance than the others.
+Again, $q_{\textrm{max}}$ has no discernible impact.
+\begin{figure}
+    \centering
+    \includegraphics[trim={3cm 0cm 3cm 0cm}, clip, width=\textwidth]{figs/results/params/modes_found_metropolis.png}
+    \includegraphics[trim={3cm 0cm 3cm 0cm}, clip, width=\textwidth]{figs/results/params/modes_found_hmc.png}
+    \caption{Box plots of how many of the two modes were found by each method. The values represent $\frac{m}{2}$, where $m$ is the number of modes found. Top: Using Metropolis for LPRS, Bottom: Using HMC for LRPS. Orange lines are the median values, gray crosses are the mean values.}
+    \label{fig:results_params_modes_found}
+\end{figure}
+\begin{figure}
+    \centering
+    \includegraphics[trim={3cm 0cm 3cm 0cm}, clip, width=\textwidth]{figs/results/params/KLDs_metropolis.png}
+    \includegraphics[trim={3cm 0cm 3cm 0cm}, clip, width=\textwidth]{figs/results/params/KLDs_hmc.png}
+    \caption{Box plots of the KLD of estimated and true mode weights. Top: Using Metropolis for LPRS, Bottom: Using HMC for LRPS. Orange lines are the median values, gray crosses are the mean values.}
+    \label{fig:results_params_KLDs}
+\end{figure}
+
+\subsubsection{Number of Iterations} %TODO: REPLACE THESE WITH THE NEWER VERSIONS AFTER PULLING THE NEW t5q11 DATA FROM ARA
+The mean and median number of iterations of the configurations, seen in Figure \ref{fig:results_params_iterations}, is stable across the different values for $t$ and $q_{\textrm{max}}$.
+The variance in the number of iterations is slightly lower for $t=1$ in the Metropolis version and slightly higher than the other configurations for $t=5$ in the HMC version.
+\begin{figure}
+    \centering
+    \includegraphics[trim={3cm 0cm 3cm 0cm}, clip, width=\textwidth]{figs/results/params/iterations_metropolis.png}
+    \includegraphics[trim={3cm 0cm 3cm 0cm}, clip, width=\textwidth]{figs/results/params/iterations_hmc.png}
+    \caption{Box plots of how many iterations each configuration took to reach the stopping point. Top: Using Metropolis for LPRS, Bottom: Using HMC for LRPS. Orange lines are the median values, gray crosses are the mean values.}
+    \label{fig:results_params_iterations}
+\end{figure}
+
+\subsubsection{Acceptance Rate}
+The acceptance rates, visible in Figure \ref{fig:results_params_acceptance_rates}, are the only measurement where the hyperparameters' influences show consistent trends.
+For the Metropolis version, higher values of $t$ lead to significantly higher mean acceptance rates, with an increase by a factor of $1.46$ from the configuration with $t=0.5$ to the configuration with $t=5$.
+In the HMC version, this trend is reversed, with higher values of $t$ causing lower acceptance rates, although at a much lower scale, with the $t=0.5$ configuration beating the $t=5$ configuration by a factor of only $1.002$.
+\begin{figure}
+    \centering
+    \includegraphics[trim={3cm 0cm 3cm 0cm}, clip, width=\textwidth]{figs/results/params/acceptance_rates_metropolis.png}
+    \includegraphics[trim={3cm 0cm 3cm 0cm}, clip, width=\textwidth]{figs/results/params/acceptance_rates_hmc.png}
+    \caption{Box plots of the ratio of accepted proposals to total proposals made during LRPS for each configuration. Top: Using Metropolis for LPRS, Bottom: Using HMC for LRPS. Orange lines are the median values, gray crosses are the mean values.}
+    \label{fig:results_params_acceptance_rates}
+\end{figure}
 
 \chapter{Summary}
 
