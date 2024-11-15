@@ -39,6 +39,6 @@
 \contentsline {subsubsection}{Posterior Modes Found}{46}{}%
 \contentsline {subsubsection}{Number of Iterations}{47}{}%
 \contentsline {subsubsection}{Acceptance Rate}{47}{}%
-\contentsline {chapter}{\numberline {3}Summary}{50}{}%
+\contentsline {chapter}{\numberline {3}Conclusions}{50}{}%
 \contentsline {chapter}{Bibliography}{52}{}%
 \contentsline {chapter}{Appendix}{53}{}%

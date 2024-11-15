@@ -1,14 +1,14 @@
 # Fdb version 3
-["biber main"] 1731506648 "main.bcf" "main.bbl" "main" 1731512483
-  "main.bcf" 1731512483 110537 8144229d004685c0e82a892cf28dbfbe "pdflatex"
+["biber main"] 1731506648 "main.bcf" "main.bbl" "main" 1731594580
+  "main.bcf" 1731594579 110537 8144229d004685c0e82a892cf28dbfbe "pdflatex"
   (generated)
   "main.bbl"
   "main.blg"
-["pdflatex"] 1731512448 "/home/farin/Uni/cdsMaster/Thesis/main.tex" "main.pdf" "main" 1731512483
+["pdflatex"] 1731594548 "/home/farin/Uni/cdsMaster/Thesis/main.tex" "main.pdf" "main" 1731594580
   "/etc/texmf/web2c/texmf.cnf" 1658047265 475 c0e671620eb5563b2130f56340a5fde8 ""
   "/home/farin/.texlive2021/texmf-var/fonts/pk/ljfour/jknappen/ec/tcrm1200.600pk" 1725270417 14040 9b941c72db418bfa435939e3623c6d58 ""
   "/home/farin/.texlive2021/texmf-var/fonts/pk/ljfour/public/bbm/bbm12.600pk" 1725270419 8424 1bef56721cc635b56347a42eb606836d ""
-  "/home/farin/Uni/cdsMaster/Thesis/main.tex" 1731512448 117305 ef4394d4f55e10a294944b635d922466 ""
+  "/home/farin/Uni/cdsMaster/Thesis/main.tex" 1731594513 118120 4360fa2e9b0eee41cff84ea25fd7dfa6 ""
   "/usr/share/texlive/texmf-dist/fonts/map/fontname/texfonts.map" 1577235249 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "/usr/share/texlive/texmf-dist/fonts/tfm/jknappen/ec/tcrm1200.tfm" 1136768653 1536 74b7293ec3713bb7fdca8dd1bd1f469c ""
   "/usr/share/texlive/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmex7.tfm" 1246382020 1004 54797486969f23fa377b128694d548df ""
@@ -280,11 +280,11 @@
   "figs/results/params/logZ_diffs_metropolis.png" 1731506402 191475 95b1b0117812463c79fbc3776ee90e76 ""
   "figs/results/params/modes_found_hmc.png" 1731506402 191102 ddd5e24109a600d930425f081935d2e3 ""
   "figs/results/params/modes_found_metropolis.png" 1731506402 191061 a96d6d875fa9b70c3aab836b4ac779fc ""
-  "main.aux" 1731512483 21602 1a762733e2f09efedd80d71935fa7cf8 "pdflatex"
+  "main.aux" 1731594579 21606 2a90649e06eaaf6b00e4fa92f034f57a "pdflatex"
   "main.bbl" 1731506402 31418 be3a1039cba28aa1add3f193468b9133 "biber main"
-  "main.run.xml" 1731512483 2332 83e05f0b52c9fa4cfbd2ea6cf1c82ad4 "pdflatex"
-  "main.tex" 1731512448 117305 ef4394d4f55e10a294944b635d922466 ""
-  "main.toc" 1731512483 3136 532545262842329e3a9374a45838b60b "pdflatex"
+  "main.run.xml" 1731594579 2332 83e05f0b52c9fa4cfbd2ea6cf1c82ad4 "pdflatex"
+  "main.tex" 1731594513 118120 4360fa2e9b0eee41cff84ea25fd7dfa6 ""
+  "main.toc" 1731594579 3140 3f55b4f12e244cc0e0a6d5421733c8c9 "pdflatex"
   (generated)
   "main.aux"
   "main.bcf"

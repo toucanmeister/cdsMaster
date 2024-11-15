@@ -1524,8 +1524,8 @@ For both $L_1$ and $L_2$, the non-barrier methods take slightly fewer iterations
 \subsubsection{Acceptance Rate}
 In this section, we examine what ratio of the total proposals made during LRPS are accepted.
 Lower acceptance rates lead to slower overall execution time as more proposals have to be made until an acceptable one is found.
-This is where the main advantage of Nested Sampling with barriers lies.
-In both example problems, Nested Sampling with barriers reaches significantly higher acceptance rates than standard Nested Sampling when both use the Metropolis algorithm.
+This is where the main advantage of Nested Sampling with Barriers lies.
+In both example problems, Nested Sampling with Barriers reaches significantly higher acceptance rates than standard Nested Sampling when both use the Metropolis algorithm.
 For the $L_1$-example, the version with barriers achieves an acceptance rate that is a factor of $1.62$ higher than the standard version's acceptance rate.
 In the $L_2$-example, the improvement is by a factor of $1.23$.
 The HMC methods are completely even, and, as one would expect, the optimal sampler reaches the highest proposal acceptance rate.
@@ -1540,9 +1540,9 @@ The reason the optimal sampler does not reach an acceptance rate of $1$ is that 
 
 \FloatBarrier
 \subsection{Influence of $t$ and $q_{\textrm{max}}$}
-In this section, we examine the influence of the hyperparameters $t$ and $q_{\textrm{max}}$ which Nested Sampling with barriers introduces.
+In this section, we examine the influence of the hyperparameters $t$ and $q_{\textrm{max}}$ which Nested Sampling with Barriers introduces.
 We used $0.5$, $1$, $2$, and $5$ as values for $t$ and $1$, $1.1$, $2$ and $5$ as values for $q_{\textrm{max}}$.
-Each combination of $t$- and $q_{\textrm{max}}$-values was used in two configuration of Nested Sampling with barriers, one using Metropolis for LRPS and one using HMC.
+Each combination of $t$- and $q_{\textrm{max}}$-values was used in two configuration of Nested Sampling with Barriers, one using Metropolis for LRPS and one using HMC.
 These configurations, each using 200 live points and a stopping criterion of $\epsilon=10^{-16}$, were applied to the $L_2$-problem introduced in the previous section.
 The results of 200 runs per configuration are compiled in the following paragraphs.
 
@@ -1601,7 +1601,17 @@ In the HMC version, this trend is reversed, with higher values of $t$ causing lo
     \label{fig:results_params_acceptance_rates}
 \end{figure}
 
-\chapter{Summary}
+\chapter{Conclusions}
+This thesis introduced Nested Sampling with Barriers as a modification of the standard Nested Sampling algorithm that softens the hard likelihood-constraint-boundary and guides MCMC samplers during the LRPS step.
+Using the Metropolis algorithm for LRPS, it achieves mean acceptance rates that are up to a factor of $1.23$ higher than standard Nested Sampling.
+Using HMC for LRPS, it %TODO: step size results
+Other criteria such as correctness of evidence estimates, number of posterior modes found and number of iterations taken stay largely the same as with standard Nested Sampling.
+These results indicate that Nested Sampling with Barriers is able to effectively guide the LRPS sampler to explore the posterior more efficiently.
+
+% TODO:
+% - what have i achieved
+% - limitations
+% - possible future research
 
 \clearpage
 \printbibliography
