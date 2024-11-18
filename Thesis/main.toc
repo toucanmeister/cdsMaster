@@ -32,13 +32,13 @@
 \contentsline {subsection}{\numberline {2.5.1}Nested Sampling with and without Barriers}{41}{}%
 \contentsline {subsubsection}{Estimated Evidence}{42}{}%
 \contentsline {subsubsection}{Posterior Modes Found}{42}{}%
-\contentsline {subsubsection}{Number of Iterations}{45}{}%
-\contentsline {subsubsection}{Acceptance Rate}{45}{}%
+\contentsline {subsubsection}{Number of Iterations}{44}{}%
+\contentsline {subsubsection}{Acceptance Rate}{44}{}%
 \contentsline {subsection}{\numberline {2.5.2}Influence of $t$ and $q_{\textrm {max}}$}{46}{}%
-\contentsline {subsubsection}{Estimated Evidence}{46}{}%
-\contentsline {subsubsection}{Posterior Modes Found}{46}{}%
-\contentsline {subsubsection}{Number of Iterations}{47}{}%
-\contentsline {subsubsection}{Acceptance Rate}{47}{}%
-\contentsline {chapter}{\numberline {3}Conclusions}{50}{}%
-\contentsline {chapter}{Bibliography}{52}{}%
-\contentsline {chapter}{Appendix}{53}{}%
+\contentsline {subsubsection}{Estimated Evidence}{47}{}%
+\contentsline {subsubsection}{Posterior Modes Found}{47}{}%
+\contentsline {subsubsection}{Number of Iterations}{49}{}%
+\contentsline {subsubsection}{Acceptance Rate}{49}{}%
+\contentsline {chapter}{\numberline {3}Conclusions}{51}{}%
+\contentsline {chapter}{Bibliography}{54}{}%
+\contentsline {chapter}{Appendix}{55}{}%

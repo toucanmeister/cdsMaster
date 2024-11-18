@@ -775,6 +775,160 @@
       \field{title}{Efficiently sampling vectors and coordinates from the n-sphere and n-ball}
       \field{year}{2017}
     \endentry
+    \entry{ultranest}{misc}{}
+      \name{author}{1}{}{%
+        {{hash=4a66cc2c3e7389d3fe45a0517beadeb0}{%
+           family={Buchner},
+           familyi={B\bibinitperiod},
+           given={Johannes},
+           giveni={J\bibinitperiod}}}%
+      }
+      \strng{namehash}{4a66cc2c3e7389d3fe45a0517beadeb0}
+      \strng{fullhash}{4a66cc2c3e7389d3fe45a0517beadeb0}
+      \strng{bibnamehash}{4a66cc2c3e7389d3fe45a0517beadeb0}
+      \strng{authorbibnamehash}{4a66cc2c3e7389d3fe45a0517beadeb0}
+      \strng{authornamehash}{4a66cc2c3e7389d3fe45a0517beadeb0}
+      \strng{authorfullhash}{4a66cc2c3e7389d3fe45a0517beadeb0}
+      \field{sortinit}{6}
+      \field{sortinithash}{b33bc299efb3c36abec520a4c896a66d}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{eprintclass}{stat.CO}
+      \field{eprinttype}{arXiv}
+      \field{title}{UltraNest -- a robust, general purpose Bayesian inference engine}
+      \field{year}{2021}
+      \verb{eprint}
+      \verb 2101.09604
+      \endverb
+      \verb{urlraw}
+      \verb https://arxiv.org/abs/2101.09604
+      \endverb
+      \verb{url}
+      \verb https://arxiv.org/abs/2101.09604
+      \endverb
+    \endentry
+    \entry{dynesty}{article}{}
+      \name{author}{1}{}{%
+        {{hash=663acfd81f7e9f294f30c7a4bb39ec96}{%
+           family={Speagle},
+           familyi={S\bibinitperiod},
+           given={Joshua\bibnamedelima S},
+           giveni={J\bibinitperiod\bibinitdelim S\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {Oxford University Press (OUP)}%
+      }
+      \strng{namehash}{663acfd81f7e9f294f30c7a4bb39ec96}
+      \strng{fullhash}{663acfd81f7e9f294f30c7a4bb39ec96}
+      \strng{bibnamehash}{663acfd81f7e9f294f30c7a4bb39ec96}
+      \strng{authorbibnamehash}{663acfd81f7e9f294f30c7a4bb39ec96}
+      \strng{authornamehash}{663acfd81f7e9f294f30c7a4bb39ec96}
+      \strng{authorfullhash}{663acfd81f7e9f294f30c7a4bb39ec96}
+      \field{sortinit}{6}
+      \field{sortinithash}{b33bc299efb3c36abec520a4c896a66d}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{issn}{1365-2966}
+      \field{journaltitle}{Monthly Notices of the Royal Astronomical Society}
+      \field{month}{2}
+      \field{number}{3}
+      \field{title}{dynesty: a dynamic nested sampling package for estimating Bayesian posteriors and evidences}
+      \field{volume}{493}
+      \field{year}{2020}
+      \field{pages}{3132\bibrangedash 3158}
+      \range{pages}{27}
+      \verb{doi}
+      \verb 10.1093/mnras/staa278
+      \endverb
+      \verb{urlraw}
+      \verb http://dx.doi.org/10.1093/mnras/staa278
+      \endverb
+      \verb{url}
+      \verb http://dx.doi.org/10.1093/mnras/staa278
+      \endverb
+    \endentry
+    \entry{jaxns}{misc}{}
+      \name{author}{1}{}{%
+        {{hash=7ee8e0aecd575df25ec2340f8fcb358b}{%
+           family={Albert},
+           familyi={A\bibinitperiod},
+           given={Joshua\bibnamedelima G.},
+           giveni={J\bibinitperiod\bibinitdelim G\bibinitperiod}}}%
+      }
+      \strng{namehash}{7ee8e0aecd575df25ec2340f8fcb358b}
+      \strng{fullhash}{7ee8e0aecd575df25ec2340f8fcb358b}
+      \strng{bibnamehash}{7ee8e0aecd575df25ec2340f8fcb358b}
+      \strng{authorbibnamehash}{7ee8e0aecd575df25ec2340f8fcb358b}
+      \strng{authornamehash}{7ee8e0aecd575df25ec2340f8fcb358b}
+      \strng{authorfullhash}{7ee8e0aecd575df25ec2340f8fcb358b}
+      \field{sortinit}{6}
+      \field{sortinithash}{b33bc299efb3c36abec520a4c896a66d}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{eprintclass}{astro-ph.IM}
+      \field{eprinttype}{arXiv}
+      \field{title}{JAXNS: a high-performance nested sampling package based on JAX}
+      \field{year}{2020}
+      \verb{eprint}
+      \verb 2012.15286
+      \endverb
+      \verb{urlraw}
+      \verb https://arxiv.org/abs/2012.15286
+      \endverb
+      \verb{url}
+      \verb https://arxiv.org/abs/2012.15286
+      \endverb
+    \endentry
+    \entry{polychord}{article}{}
+      \name{author}{3}{}{%
+        {{hash=b614a4ae73269a4030f667823a7ca4b5}{%
+           family={Handley},
+           familyi={H\bibinitperiod},
+           given={W.\bibnamedelimi J.},
+           giveni={W\bibinitperiod\bibinitdelim J\bibinitperiod}}}%
+        {{hash=f81ebfc218ed573f729122c9112ee997}{%
+           family={Hobson},
+           familyi={H\bibinitperiod},
+           given={M.\bibnamedelimi P.},
+           giveni={M\bibinitperiod\bibinitdelim P\bibinitperiod}}}%
+        {{hash=7b0880553e1507c6b2b906c7cbe57b8b}{%
+           family={Lasenby},
+           familyi={L\bibinitperiod},
+           given={A.\bibnamedelimi N.},
+           giveni={A\bibinitperiod\bibinitdelim N\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {Oxford University Press (OUP)}%
+      }
+      \strng{namehash}{116eedd8f62aae173dbb47fa84503198}
+      \strng{fullhash}{116eedd8f62aae173dbb47fa84503198}
+      \strng{bibnamehash}{116eedd8f62aae173dbb47fa84503198}
+      \strng{authorbibnamehash}{116eedd8f62aae173dbb47fa84503198}
+      \strng{authornamehash}{116eedd8f62aae173dbb47fa84503198}
+      \strng{authorfullhash}{116eedd8f62aae173dbb47fa84503198}
+      \field{sortinit}{6}
+      \field{sortinithash}{b33bc299efb3c36abec520a4c896a66d}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{issn}{1365-2966}
+      \field{journaltitle}{Monthly Notices of the Royal Astronomical Society}
+      \field{month}{9}
+      \field{number}{4}
+      \field{title}{polychord: next-generation nested sampling}
+      \field{volume}{453}
+      \field{year}{2015}
+      \field{pages}{4385\bibrangedash 4399}
+      \range{pages}{15}
+      \verb{doi}
+      \verb 10.1093/mnras/stv1911
+      \endverb
+      \verb{urlraw}
+      \verb http://dx.doi.org/10.1093/mnras/stv1911
+      \endverb
+      \verb{url}
+      \verb http://dx.doi.org/10.1093/mnras/stv1911
+      \endverb
+    \endentry
   \enddatalist
 \endrefsection
 \endinput

@@ -1488,14 +1488,14 @@ This may explain part of the bias we see in the evidence estimates.
 \end{figure}
 
 There is a second criterion pertaining to posterior modes, which is the Kullback-Leibler divergence (KLD) of estimated and true mode weights.
-Here, we create an estimate of the mode weights ($100$ and $1$), by evaluating the PDF of each posterior mode (only possible because both $L_1$ and $L_2$ are Gaussian mixtures) on every dead point, multiplying this by the dead points' weights and summing over all dead points.
-The resulting vector of mode weight estimates is normalized and compared using the KLD to the true normalized mode weights.
+Here, we create an estimate of the normalized mode weights ($\frac{100}{101}$ and $\frac{1}{101}$), by evaluating the PDF of each posterior mode (only possible because both $L_1$ and $L_2$ are Gaussian mixtures) on every dead point, normalizing, multiplying by the dead points' weights and summing over all dead points.
+The resulting vector of mode weight estimates is again normalized and compared using the KLD to the true normalized mode weights.
 \begin{align*}
-    &\textrm{KLD}(\hat{m}, m) \\
+    &\textrm{KLD}(\frac{\hat{m}}{||\hat{m}||_1}, \frac{m}{||m||_1}) \\
     \textrm{where} \quad &\hat{m} = \sum_i^n \frac{p(\theta_i)}{\sum_j p(\theta_i)_j} \cdot w_i \\
     \textrm{where} \quad &p(\theta) = (\mathcal{N}_1(\theta), \, \mathcal{N}_2(\theta))
 \end{align*}
-With $\mathcal{N}_1$ and $\mathcal{N}_2$ being the weighted mode PDFs, $\theta_1, ..., \theta_n$ being the dead points and $w_1, ..., w_n$ being the dead points' estimated prior mass shells.
+With $\mathcal{N}_1$ and $\mathcal{N}_2$ being the weighted mode PDFs, $\theta_1, ..., \theta_n$ being the dead points, $w_1, ..., w_n$ being the dead points' estimated prior mass shells, m being the vector of true mode weights, $(100, 1)$ and $||\cdot||_1$ being the $L^1$-Norm: $||x||_1 = \sum_i |x_i|$.
 
 The results in Figure \ref{fig:results_KLDs} show a similar pattern to the evidence estimate results.
 In the $L_1$-example, all methods but HMC with reflection are nearly equal and, in relation to the optimal ball sampler's performance, almost perfect.
@@ -1606,7 +1606,22 @@ This thesis introduced Nested Sampling with Barriers as a modification of the st
 Using the Metropolis algorithm for LRPS, it achieves mean acceptance rates that are up to a factor of $1.23$ higher than standard Nested Sampling.
 Using HMC for LRPS, it %TODO: step size results
 Other criteria such as correctness of evidence estimates, number of posterior modes found and number of iterations taken stay largely the same as with standard Nested Sampling.
-These results indicate that Nested Sampling with Barriers is able to effectively guide the LRPS sampler to explore the posterior more efficiently.
+These results indicate that Nested Sampling with Barriers is able to effectively guide the LRPS sampler to explore the posterior more efficiently without sacrificing performance in other ways.
+
+Even though these results show promise, the example problems they were achieved on are quite simple.
+The performance of Nested Sampling with Barriers on problems with
+\begin{itemize}
+    \item more than two modes,
+    \item more than twenty parameters,
+    \item likelihoods of higher complexity than isometric Gaussians, and
+    \item non-uniform priors
+\end{itemize}
+is yet to be determined, which leaves its practical use cases uncertain.
+Future research could benchmark Nested Sampling with Barriers on such problems, comparing it to state-of-the-art implementations of Nested Sampling like UltraNest \cite{ultranest}, dynesty \cite{dynesty}, JAXNS \cite{jaxns}, and PolyChord \cite{polychord}.
+Many of the ideas used by these implementations, like the dynamic number of live points from dynesty or the complex adaptive step size of UltraNest could also be applied to Nested Sampling.
+Furthermore, the convergence rate of Nested Sampling with Barriers warrants thorough theoretical investigation.
+The derivation of Nested Sampling itself, especially the reformulation of the evidence as a one-dimensional integral, also shows room for more research.
+The theory could be formalized and put on rigorous foundations using measure theory.
 
 % TODO:
 % - what have i achieved
