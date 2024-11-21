@@ -1,1 +1,3 @@
 {"rule":"MORFOLOGIK_RULE_EN_US","sentence":"^\\QTo ensure efficient exploration of the \\E(?:Dummy|Ina|Jimmy-)[0-9]+\\Q-space for the whole nested sampling procedure, during which the explorable space\\E$"}
+{"rule":"UPPERCASE_SENTENCE_START","sentence":"^\\Qcompat=1.10 fillbetween\\E$"}
+{"rule":"MORFOLOGIK_RULE_EN_US","sentence":"^\\QFor each value of \\E(?:Dummy|Ina|Jimmy-)[0-9]+\\Q, we compute the unnormalized posterior probability \\E(?:Dummy|Ina|Jimmy-)[0-9]+\\Q.\\E$"}

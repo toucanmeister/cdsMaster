@@ -1106,6 +1106,22 @@ INPUT ./figs/results/acceptance_rates_spike_offcenter_20d.png
 INPUT figs/results/acceptance_rates_spike_offcenter_20d.png
 INPUT ./figs/results/acceptance_rates_spike_offcenter_20d.png
 INPUT ./figs/results/acceptance_rates_spike_offcenter_20d.png
+INPUT ./figs/results/mean_jump_distances_spike_20d.png
+INPUT ./figs/results/mean_jump_distances_spike_20d.png
+INPUT figs/results/mean_jump_distances_spike_20d.png
+INPUT ./figs/results/mean_jump_distances_spike_20d.png
+INPUT ./figs/results/mean_jump_distances_spike_20d.png
+INPUT ./figs/results/mean_jump_distances_spike_offcenter_20d.png
+INPUT ./figs/results/mean_jump_distances_spike_offcenter_20d.png
+INPUT figs/results/mean_jump_distances_spike_offcenter_20d.png
+INPUT ./figs/results/mean_jump_distances_spike_offcenter_20d.png
+INPUT ./figs/results/mean_jump_distances_spike_offcenter_20d.png
+INPUT e:/Program Files (x86)/texlive/2022/texmf-dist/fonts/tfm/public/cm/cmmi12.tfm
+INPUT e:/Program Files (x86)/texlive/2022/texmf-dist/fonts/tfm/public/cm/cmsy10.tfm
+INPUT e:/Program Files (x86)/texlive/2022/texmf-dist/fonts/tfm/public/cm/cmex10.tfm
+INPUT e:/Program Files (x86)/texlive/2022/texmf-dist/fonts/tfm/public/amsfonts/symbols/msam10.tfm
+INPUT e:/Program Files (x86)/texlive/2022/texmf-dist/fonts/tfm/public/amsfonts/symbols/msbm10.tfm
+INPUT e:/Program Files (x86)/texlive/2022/texmf-dist/fonts/tfm/public/bbm/bbm17.tfm
 INPUT ./figs/results/params/logZ_diffs_metropolis.png
 INPUT ./figs/results/params/logZ_diffs_metropolis.png
 INPUT figs/results/params/logZ_diffs_metropolis.png
@@ -1156,6 +1172,38 @@ INPUT ./figs/results/params/acceptance_rates_hmc.png
 INPUT figs/results/params/acceptance_rates_hmc.png
 INPUT ./figs/results/params/acceptance_rates_hmc.png
 INPUT ./figs/results/params/acceptance_rates_hmc.png
+INPUT ./figs/results/params/jump_distances_metropolis_t_05.png
+INPUT figs/results/params/jump_distances_metropolis_t_05.png
+INPUT ./figs/results/params/jump_distances_metropolis_t_05.png
+INPUT ./figs/results/params/jump_distances_metropolis_t_05.png
+INPUT ./figs/results/params/jump_distances_metropolis_t_1.png
+INPUT figs/results/params/jump_distances_metropolis_t_1.png
+INPUT ./figs/results/params/jump_distances_metropolis_t_1.png
+INPUT ./figs/results/params/jump_distances_metropolis_t_1.png
+INPUT ./figs/results/params/jump_distances_metropolis_t_2.png
+INPUT figs/results/params/jump_distances_metropolis_t_2.png
+INPUT ./figs/results/params/jump_distances_metropolis_t_2.png
+INPUT ./figs/results/params/jump_distances_metropolis_t_2.png
+INPUT ./figs/results/params/jump_distances_metropolis_t_5.png
+INPUT figs/results/params/jump_distances_metropolis_t_5.png
+INPUT ./figs/results/params/jump_distances_metropolis_t_5.png
+INPUT ./figs/results/params/jump_distances_metropolis_t_5.png
+INPUT ./figs/results/params/jump_distances_hmc_t_05.png
+INPUT figs/results/params/jump_distances_hmc_t_05.png
+INPUT ./figs/results/params/jump_distances_hmc_t_05.png
+INPUT ./figs/results/params/jump_distances_hmc_t_05.png
+INPUT ./figs/results/params/jump_distances_hmc_t_1.png
+INPUT figs/results/params/jump_distances_hmc_t_1.png
+INPUT ./figs/results/params/jump_distances_hmc_t_1.png
+INPUT ./figs/results/params/jump_distances_hmc_t_1.png
+INPUT ./figs/results/params/jump_distances_hmc_t_2.png
+INPUT figs/results/params/jump_distances_hmc_t_2.png
+INPUT ./figs/results/params/jump_distances_hmc_t_2.png
+INPUT ./figs/results/params/jump_distances_hmc_t_2.png
+INPUT ./figs/results/params/jump_distances_hmc_t_5.png
+INPUT figs/results/params/jump_distances_hmc_t_5.png
+INPUT ./figs/results/params/jump_distances_hmc_t_5.png
+INPUT ./figs/results/params/jump_distances_hmc_t_5.png
 INPUT e:/Program Files (x86)/texlive/2022/texmf-dist/fonts/tfm/public/cm/cmti12.tfm
 INPUT e:/Program Files (x86)/texlive/2022/texmf-dist/fonts/tfm/public/cm/cmcsc10.tfm
 INPUT e:/Program Files (x86)/texlive/2022/texmf-dist/fonts/tfm/public/cm/cmtt12.tfm

@@ -9,7 +9,7 @@
 \contentsline {subsection}{\numberline {1.3.1}From a multi- to a one-dimensional Integral}{13}{}%
 \contentsline {subsection}{\numberline {1.3.2}Sampling and Sorting}{15}{}%
 \contentsline {subsubsection}{Proof: Prior Masses of Prior Samples are Uniformly Distributed}{17}{}%
-\contentsline {subsection}{\numberline {1.3.3}Introducing a Likelihood-Constraint}{19}{}%
+\contentsline {subsection}{\numberline {1.3.3}Introducing a likelihood constraint}{19}{}%
 \contentsline {section}{\numberline {1.4}Likelihood-restricted prior sampling}{22}{}%
 \contentsline {subsection}{\numberline {1.4.1}Rejection Sampling}{22}{}%
 \contentsline {subsection}{\numberline {1.4.2}Discretized LRPS}{23}{}%
@@ -28,17 +28,19 @@
 \contentsline {subsection}{\numberline {2.4.1}Rejection Sampling and Discretized LRPS}{39}{}%
 \contentsline {subsection}{\numberline {2.4.2}Metropolis Algorithm}{39}{}%
 \contentsline {subsection}{\numberline {2.4.3}Hamiltonian Monte Carlo}{39}{}%
-\contentsline {section}{\numberline {2.5}Results}{40}{}%
-\contentsline {subsection}{\numberline {2.5.1}Nested Sampling with and without Barriers}{41}{}%
-\contentsline {subsubsection}{Estimated Evidence}{42}{}%
-\contentsline {subsubsection}{Posterior Modes Found}{42}{}%
-\contentsline {subsubsection}{Number of Iterations}{44}{}%
-\contentsline {subsubsection}{Acceptance Rate}{44}{}%
-\contentsline {subsection}{\numberline {2.5.2}Influence of $t$ and $q_{\textrm {max}}$}{46}{}%
-\contentsline {subsubsection}{Estimated Evidence}{47}{}%
-\contentsline {subsubsection}{Posterior Modes Found}{47}{}%
-\contentsline {subsubsection}{Number of Iterations}{49}{}%
-\contentsline {subsubsection}{Acceptance Rate}{49}{}%
-\contentsline {chapter}{\numberline {3}Conclusions}{51}{}%
-\contentsline {chapter}{Bibliography}{54}{}%
-\contentsline {chapter}{Appendix}{55}{}%
+\contentsline {chapter}{\numberline {3}Results}{41}{}%
+\contentsline {section}{\numberline {3.1}Nested Sampling with and without Barriers}{41}{}%
+\contentsline {subsection}{\numberline {3.1.1}Estimated Evidence}{42}{}%
+\contentsline {subsection}{\numberline {3.1.2}Posterior Modes Found}{43}{}%
+\contentsline {subsection}{\numberline {3.1.3}Number of Iterations}{44}{}%
+\contentsline {subsection}{\numberline {3.1.4}Acceptance Rate}{45}{}%
+\contentsline {subsection}{\numberline {3.1.5}Jump Distance}{47}{}%
+\contentsline {section}{\numberline {3.2}Influence of $t$ and $q_{\textrm {max}}$}{48}{}%
+\contentsline {subsection}{\numberline {3.2.1}Estimated Evidence}{48}{}%
+\contentsline {subsection}{\numberline {3.2.2}Posterior Modes Found}{49}{}%
+\contentsline {subsection}{\numberline {3.2.3}Number of Iterations}{49}{}%
+\contentsline {subsection}{\numberline {3.2.4}Acceptance Rate}{51}{}%
+\contentsline {subsection}{\numberline {3.2.5}Jump Distance}{51}{}%
+\contentsline {chapter}{\numberline {4}Conclusions}{54}{}%
+\contentsline {chapter}{Bibliography}{56}{}%
+\contentsline {chapter}{Appendix}{58}{}%
