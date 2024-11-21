@@ -338,8 +338,8 @@ Because we only know the likelihood and prior, but not the evidence (see (\ref{e
 All Monte Carlo methods for Bayesian inference have to solve this problem of sampling from a distribution while only being able to evaluate an unnormalized version of its density function.
 
 To concretize the idea of Monte Carlo, I give a brief overview of one of the simplest Monte Carlo algorithms, Rejection Sampling, in the following paragraphs.
-Like most other Monte Carlo methods, Rejection Sampling makes use of a proposal distribution.
-Given an unnormalized density function $\mathbf{P}(\theta)$ of the target distribution, Rejection Sampling requires a so-called proposal distribution that we can easily sample from and whose density $\mathbf{Q}(\theta)$ we can scale up using a constant $c$ to fully envelop the target density:
+Like most other Monte Carlo methods, Rejection Sampling makes use of a proposal distribution, a distribution we can easily sample from and which fulfills the following requirement:
+For a given unnormalized density function $\mathbf{P}(\theta)$ of the target distribution, the proposal distribution's density $\mathbf{Q}(\theta)$ can be scaled up using a constant $c$ to fully envelop the target density:
 \begin{equation}
     c \cdot \mathbf{Q}(\theta) > \mathbf{P}(\theta) \quad \forall \, \theta \in \Theta \nonumber
 \end{equation}
@@ -353,19 +353,20 @@ While the simplicity of Rejection sampling is appealing, it fails in practice be
 \end{enumerate}
 
 \subsection{Markov Chain Monte Carlo Methods}
-The most used algorithms in Bayesian statistics overcome these problems by choosing a proposal distribution with dependent samples.
+The most used algorithms in Bayesian statistics overcome the flaws present in simple Monte Carlo methods like Rejection Sampling by choosing a proposal distribution with dependent samples.
 They are a subcategory of Monte Carlo methods called Markov chain Monte Carlo (MCMC) methods.
 Each MCMC sample is dependent on its predecessor and often lands in the vicinity of it.
 This allows more efficient exploration of the posterior, because once a region of high posterior density is found, its local surroundings often also carry high posterior density. 
 
 Again, to illustrate, let us take a look at one relatively simple example algorithm, the Metropolis algorithm.
 The Metropolis algorithm uses a symmetrical proposal distribution $\mathbf{Q}(\theta_{\textrm{new}} \,|\, \theta_{\textrm{old}})$.
-Often, a simple normal distribution around the last sample is used.
-The proposal is then accepted with probability $\frac{\mathbf{P}(\theta_{\textrm{new}})}{\mathbf{P}(\theta_{\textrm{old}})}$ \cite[p. 365f.]{mckay}.
+Often, a normal distribution around the last sample is used.
+The proposal is then accepted with probability $\textrm{max}\left(\frac{\mathbf{P}(\theta_{\textrm{new}})}{\mathbf{P}(\theta_{\textrm{old}})}, 1\right)$ \cite[p. 365f.]{mckay}.
 
 I will not go into detail on why the Metropolis algorithm works, but I do want to at least mention the fundamentals of Markov chain Monte Carlo.
 Markov chain Monte Carlo methods get their name from the fact that their samples form a Markov chain.
-Markov chains are defined as a set of states $\Theta$ (in the case of Bayesian Inference these are all possible parameter values) with an initial probability distribution $P_0(\theta)$ over these states, along with a transition probability function $T: \Theta \times \Theta \rightarrow [0,1]$ assigning a probability to every transition from one state to another.
+Markov chains are defined as a set of states $\Theta$ (in the case of Bayesian Inference these are all possible parameter values) with an initial probability distribution $P_0(\theta)$ over these states, along with a transition probability function $T: \Theta \times \Theta \rightarrow [0,1]$ assigning a probability $T(\theta^* \,|\, \theta)$ to every transition from one state $\theta$ to another $\theta^*$.
+This transition probability function satisfies $\int_\Theta T(\theta^* \,|\, \theta) \, d\theta^* = 1$.
 We can simulate a Markov chain by sampling an initial state $\theta_0 \sim P_0(\theta)$, then sampling the next state from the transition probability distribution $\theta_k \sim T(\theta_k \,|\, \theta_{k-1})$.
 We can also analyze the probability of being in a certain state after $k$ steps \cite[372]{mckay}: 
 $$
@@ -373,16 +374,16 @@ $$
 $$
 This also lets us define stationary distributions of Markov chains.
 These are the key to using Markov chains for sampling, because once a Markov chain finds its way into a stationary distribution, it stays there.
-We call $\mathcal{P}(\theta)$ a stationary distribution of a Markov chain if the probability of being in a state $\theta^*$ can be computed by integrating over the probabilities of being in any other state and transitioning to $theta^*$ \cite[372]{mckay}:
+We call $\mathcal{P}(\theta)$ a stationary distribution of a Markov chain if the probability of being in a state $\theta^*$ can be computed by integrating over the probabilities of being in any other state and transitioning to $\theta^*$ \cite[372]{mckay}:
 $$
     \mathcal{P}(\theta^*) = \int_{\Theta} \mathcal{P}(\theta) \, T(\theta^* \,|\, \theta) \, d\theta \quad \forall \, \theta^* \in \Theta
 $$
 MCMC methods focus on cleverly defining their transition probabilities in such a way that the target distribution is the only stationary distribution of the Markov chain.
 That way, when the chain is sampled for long enough, it eventually produces samples from the target distribution \cite[372]{mckay}.
 
-Now that I've touched on how Bayesian inference is normally done, I want to explain why there is room for improvement.
+Now that I've touched on the classical methods for Bayesian inference, I want to explain why there is room for improvement.
 As covered in Section 1.1, the evidence is an immensely useful part of Bayes' formula (Equation (\ref{eq:bayes})) because it allows model comparison that accounts for overfitting.
-Most MCMC methods only generate samples from the posterior, they do not compute the evidence.
+Most MCMC methods only generate samples from the posterior, they do not compute the evidence and thus lose out on its positives.
 Computing the evidence integral is generally a difficult task \cite[221]{mcelreath}.
 Since the parameter space for real-world models is high-dimensional, with only a small fraction of this space containing meaningful posterior probability mass, numerical quadrature methods that discretize the space evenly fail.
 One might think to use the modes of the posterior as a guide, since posterior density concentrates around them, but the evidence is an integral, and integration accumulates not densities, but density times volume, or mass.
@@ -401,7 +402,7 @@ In this section, I derive the Nested Sampling algorithm, explaining the main ide
 
 \FloatBarrier
 \subsection{From a multi- to a one-dimensional Integral}
-We start by reducing the potentially multidimensional evidence integral (Equation (\ref{eq:evidence})) to a one-dimensional integral.
+We start by reducing the potentially multidimensional evidence integral from (\ref{eq:evidence}) to a one-dimensional integral.
 To this end, we first replace the likelihood in the evidence integral by its layer cake representation, a tool borrowed from measure theory \cite[26]{liebloss}.
 For a quick derivation of the layer cake representation, let us define the indicator function $\mathbbm{1}_S(x)$  and the super level set $\{f(\theta) \, > \, t\}$:
 \begin{align*}
@@ -506,12 +507,10 @@ The substitution used in (\ref{eq:integral_4}) is $X = \mu(\lambda)$.
 
 Following Skilling's notation, we call the inverse of the prior mass function, $\mu^{-1}$, by the name $\mathcal{L}$.
 It returns the corresponding likelihood threshold $\mathcal{L}(X)$ to a given prior mass $X \in [0,1]$.
-
 \begin{align}
     Z = \int_0^1 \mu^{-1}(X) \; dX = \int_0^1 \mathcal{L}(X) \; dX
     \label{eq:integral_5}
 \end{align}
-
 With that, we have accomplished our goal of formulating the evidence as a one dimensional integral.
 We integrate the likelihood-threshold function $\mathcal{L}$ over the prior mass values $X$.
 The next section is about estimating this integral. 
@@ -521,16 +520,14 @@ The next section is about estimating this integral.
 \subsection{Sampling and Sorting}
 
 Imagine we had uniformly sampled $n$ prior mass values $X_i \in [0,1] \; \forall i \in \{1, ..., n\}$.
-We could use $\mathcal{L}$ to compute their likelihood thresholds and sort them accordingly.
+We could use $\mathcal{L}$ to compute their likelihood thresholds and sort them from lowest to highest.
 Since $\mathcal{L}$ is a decreasing function, this would also sort the $X_i$ in decreasing order of their own values.
 For simpler notation, the $X_i$'s sorting follows their indices.
 Imagine we had assigned them these indices after sorting.
-
 \begin{align}
     \mathcal{L}(X_1)& &<& &\mathcal{L}(X_2)& &<& &\mathcal{L}(X_3) &\quad&<&   &...& &<& &\mathcal{L}(X_n) \nonumber\\
     X_1 & \quad &>& \quad &X_2 & \quad &>& \quad &X_3 &\quad&>& &...& \quad &>& \quad &X_n \label{eq:sample_ordering}
 \end{align}
-
 In the case of there being two equal likelihood thresholds, we may randomly add a very small value to one of them to artificially create an order \cite[3]{skilling}.
 
 \begin{figure}
@@ -641,11 +638,13 @@ Instead of sampling prior masses directly, we may instead sample $\theta_1, ...,
 We can prove that their corresponding prior masses are uniformly distributed.
 
 \FloatBarrier
+\vspace{0.45cm}
 \hrule \vspace{-0.45cm} %TODO: CHECK THAT THERE IS NO PAGE BREAK HERE
 \subsubsection{Proof: Prior Masses of Prior Samples are Uniformly Distributed}
 Let $\mathbb{T}$ be a random variable with the PDF $f_{\mathbb{T}}(\theta) = \pi(\theta)$; it represents samples from our prior.
 Let $\mathbb{L} = L(\mathbb{T})$ and $\mathbb{M} = \mu(\mathbb{L})$ also be random variables.
-$\mathbb{M}$ represents the prior masses we want to prove that it follows a uniform distribution.
+$\mathbb{M}$ represents the prior masses.
+We want to prove that $\mathbb{M}$ follows a uniform distribution.
 First, let us take a look at the distribution of the likelihoods $\mathbb{L}$.
 We can derive a nice formula for its PDF by starting with its definition as a marginal of the joint density of $\mathbb{T}$ and $\mathbb{L}$:
 \begin{align}
@@ -692,7 +691,7 @@ Order statistics study the distributions of random values when they are sorted.
 The $i$-th order statistic represents the distribution of the $i$-th lowest value in a set of $n$ randomly drawn values.
 We make use of the fact that when $n$ values are drawn from a $\textrm{Uniform}(0,1)$ distribution, the $i$-th order statistic follows a $\textrm{Beta}(i, n-i+1)$ distribution \cite[63]{computational_stats}.
 As we remember from (\ref{eq:sample_ordering}), we can indirectly order our samples' prior masses if we order them by their likelihoods.
-We know that the sample with the $i$-th lowest likelihood value will also have the $i$-th highest, or equally the $n-i+1$-th lowest, prior mass.
+We know that the sample with the $i$-th lowest likelihood value will also have the $i$-th highest, or equally the $(n-i+1)$-th lowest, prior mass.
 The prior mass thus follows a $\textrm{Beta}(n-i+1, i)$ distribution, and we can estimate it by either sampling from the distribution or by using its mean.
 
 In $\theta_{i}$, we have thus obtained a likelihood value $L(\theta_{i})$ and an estimate for its prior mass $X_{i} \sim  \textrm{Beta}(n-i+1, i)$.
@@ -707,7 +706,7 @@ This allows us to modify how the contributions are sampled as the algorithm goes
 Specifically, we can introduce a constraint that forces new contributions to be sampled in regions of higher likelihood.
 This solves the problem of prior samples missing the regions with significant posterior mass.
 
-We need an ensemble of prior samples to use our strategy for estimating prior masses from the last section, so we start by drawing $n$ prior samples $\theta_1, ..., \theta_n$, we call these the live points.
+We need an ensemble of prior samples to use our strategy for estimating prior masses from the last section, so we start by drawing $n$ prior samples $\theta_1, ..., \theta_n$, which we call the live points.
 Then we take the sample with the lowest likelihood, $\theta_{\textrm{min}}$ remove it from the live points and save it as a dead point.
 We also use it to compute the first contribution to the evidence as in (\ref{eq:approx_evidence}), which is the product of its likelihood and an estimate of its prior mass shell.
 Because $\theta_{min}$ has the smallest likelihood of all live points, it will also have the largest associated prior mass, $X_1$. 
@@ -715,27 +714,27 @@ This lets us simplify the estimate of its prior mass shell:
 $$
     \Delta X_1 = X_0 - X_1 = 1 - X_1
 $$
-$X_1$ follows a $\textrm{Beta}(n,1)$ distribution and one of the properties of the Beta distribution is that if $\mathbb{X} = 1 - \mathbb{Y}$ and $Y \sim \textrm{Beta}(a,b)$, then $X \sim \textrm{Beta}(b,a)$ \cite[5.17.2.]{beta_dist}.
+$X_1$ follows a $\textrm{Beta}(n,1)$ distribution and, one of the properties of the Beta distribution is that if $\mathbb{X} = 1 - \mathbb{Y}$ and $\mathbb{Y} \sim \textrm{Beta}(a,b)$, then $\mathbb{X} \sim \textrm{Beta}(b,a)$ \cite[5.17.2.]{beta_dist}.
 So $\Delta X_1$ follows a $\textrm{Beta}(1,n)$ distribution, and we can again estimate it either by sampling or by using the mean.
 
 The likelihood of $\theta_{min}$ becomes the likelihood constraint $L^*$, meaning all points we sample thereafter have to have a likelihood higher than it.
 Luckily, all other live points already fulfill this constraint, since we chose the one with the lowest likelihood to remove.
-This means we only have to draw one new live point according to the constraint, $\theta_{\textrm{new}} \sim \pi(\theta) \, \mathbbm{1}_{\{L > L*\}}(\theta)$.
+This means we only have to draw one new live point according to the constraint, $\theta_{\textrm{new}} \sim \pi(\theta) \, \mathbbm{1}_{\{L(\theta) > L*\}}(\theta)$.
 We call this step likelihood-restricted prior sampling (LRPS).
 Having sampled a new live point, we again take the sample with the lowest likelihood, remove it from the live points, add its contribution to the evidence and set its likelihood as the new likelihood constraint, etc.
 
 To be sure that this strategy is correct, we have to show that the prior masses of these samples from the likelihood-restricted prior are still uniformly distributed; a proof of this can be found in the Appendix.
 Also, the prior masses of $\theta_1, ..., \theta_n$ cannot follow a $\textrm{Beta}(i, n-i+1)$ distribution anymore, since the prior masses are now distributed uniformly on $[0,\mu(L^*)]$ instead of $[0,1]$.
 However, if we call $\mu(L^*)$ the remaining prior mass, then the fraction of this mass that each drawn sample is connected to, $\frac{\mu(L(\theta))}{\mu(L^*)}$, is still uniformly distributed on $[0,1]$.
-So we can get our estimate of the prior mass of a sample $\theta$ by sampling a mass fraction $f \sim \textrm{Beta}(0,1)$ and multiplying it by the remaining prior mass $\mu(L^*)$.
+So we can get our estimate of the prior mass shell of the lowest-likelihood sample by sampling a mass fraction $f \sim \textrm{Beta}(1, n)$ and multiplying it by the remaining prior mass $\mu(L^*)$.
 
-As the likelihood constraint increases, the LRPS-samples will naturally come from regions of higher and higher likelihood.
+As the likelihood constraint increases, the LRPS-samples will come from regions of higher and higher likelihood.
 This process is carried out for a given number of iterations or, more sophisticatedly, until an estimate of the remaining evidence in relation to the accumulated evidence becomes smaller than some chosen $\epsilon$.
 A simple estimate of an upper bound of the remaining evidence can be made by taking the highest likelihood present in the live points and multiplying it by the remaining prior mass.
-Once the algorithm terminates, the evidence is computed according to (\ref{eq:approx_evidence}), by multiplying each dead point's likelihood and estimated prior mass shell and summing over all of them.
+Over the course of the algorithm, the evidence is computed according to (\ref{eq:approx_evidence}), by multiplying each dead point's likelihood and estimated prior mass shell and summing over all of them.
 
 Posterior samples can also be generated easily.
-One randomly draws from the dead points, where each dead point's probability to be sampled is proportional to the product of its likelihood and its corresponding prior mass \cite[9]{nested_sampling_talk}.
+One randomly draws from the dead points, where each dead point's probability to be sampled is proportional to the product of its likelihood and its corresponding prior mass shell \cite[9]{nested_sampling_talk}.
 
 Inputs to the algorithm are the prior and likelihood functions as well as the stopping threshold (or number of iterations) and the number of live points.
 The stopping threshold determines how much of the evidence to accumulate, while the number of live points works like a resolution parameter.
@@ -744,10 +743,10 @@ More live points also cause the algorithm to take longer, since each evidence co
 The number of iterations required to fulfill the same stopping threshold scales linearly with the number of live points.
 Specifically, the run time of nested sampling can be described as $T \sim T_L \cdot n_{\textrm{live}} \cdot f_{\textrm{sampler}} \cdot \mathcal{D}_{\textrm{KL}}$, where
 \begin{itemize}
-    \item $T_L$ is the time required to evaluate the likelihood once
-    \item $n_{\textrm{live}}$ is the number of live points
-    \item $T_{\textrm{LRPS}}$ is the mean time required for the LRPS step over the course of the run
-    \item $\mathcal{D}_{\textrm{KL}}$ is the Kullback-Leibler Divergence \cite[6]{kld} between prior and posterior \cite[1]{nested_sampling_talk}
+    \item $T_L$ is the time required to evaluate the likelihood once,
+    \item $n_{\textrm{live}}$ is the number of live points,
+    \item $T_{\textrm{LRPS}}$ is the mean time required for the LRPS step over the course of the run,
+    \item and $\mathcal{D}_{\textrm{KL}}$ is the Kullback-Leibler Divergence \cite[6]{kld} between prior and posterior \cite[1]{nested_sampling_talk}.
 \end{itemize}
 See Algorithm \ref{alg:nested_sampling} for an overview of the Nested Sampling procedure and see a visualization in Figure \ref{fig:ns_eggcrate_example}.
 
@@ -798,7 +797,7 @@ Rejection sampling is the simplest way to sample from the constrained prior.
 We generate a sample from the prior, compute its likelihood and check if it satisfies the likelihood constraint.
 If it does, we accept the sample; otherwise, we reject it.
 
-Rejection sampling is infeasible larger models due to it being terribly inefficient in higher dimensions.
+Rejection sampling is infeasible for larger models due to it being terribly inefficient in higher dimensions.
 The acceptance rate of the generated samples is proportional to how much of the prior mass is inside the likelihood constraint.
 Since the prior mass inside the likelihood constraint is expected to shrink by a factor of $\frac{1}{1+n}$ (mean of the $\textrm{Beta}(1, n)$ distribution) each iteration, the acceptance rate quickly plummets, leading to most proposals being rejected.
 
@@ -837,7 +836,7 @@ If the proposal distribution is not symmetric, the standard Metropolis algorithm
 \begin{figure}
     \centering
     \includegraphics[scale=0.5]{figs/metropolis_example.png}
-    \caption{Visualization of the Metropolis algorithm in a two-dimensional sample space. The black line indicates the likelihood constraint boundary, the dot is the starting point and each cross is a sampled point.}
+    \caption{Visualization of the Metropolis algorithm in a two-dimensional sample space. The dotted line indicates the likelihood constraint boundary, the dot is the starting point and each cross is a sampled point.}
     \label{fig:metropolis_example}
 \end{figure}
 
@@ -847,7 +846,7 @@ It does, however, have two major disadvantages.
 Firstly, because the samples are dependent, we have to draw many intermediate samples before returning an actual sample, to allow them to decorrelate.
 Secondly, since the proportion of prior space within the likelihood constraint becomes smaller with each Nested Sampling iteration, the step size (standard deviation of the proposal distribution) required to efficiently explore the space changes continually.
 This second problem can be overcome by using an adaptive step size.
-A simple approach would be to decrease the step size by some factor each time a sample lands outside the likelihood constraint while increasing it whenever a sample lands inside the constraint.
+A simple approach is to decrease the step size by some factor each time a sample lands outside the likelihood constraint while increasing it whenever a sample lands inside it.
 More nuanced methods for step size adaptation have been developed as well \cite{automala}, but will not be covered in this thesis.
 
 \subsection{Hamiltonian Monte Carlo}
@@ -858,14 +857,14 @@ As the theory behind HMC is quite involved, I will only give an overview of the 
 As HMC is an MCMC method, it generates dependent samples like the Metropolis algorithm does.
 However, it uses a physical analogy to find samples that are much further away from the starting point, thus decorrelating and exploring the target distribution faster.
 
-The negative logarithm of the target distribution is viewed as representing potential energy.
+The negative logarithm of the target distribution is interpreted as potential energy.
 One can imagine this as a hills-and-valleys landscape.
 Each sample is viewed as a movable particle in this space.
 Starting with a sample, a random, normally distributed vector is drawn.
 This vector represents a momentum that the sample particle has.
 The path of the particle across the landscape with its given starting momentum is then simulated using a special type of solver for partial differential equations called a symplectic integrator.
 At an arbitrarily chosen point of time, the particle is stopped.
-The resulting position of the sample is then treated like a Metropolis proposal and accepted with a probability based on the ratio of probability values of the proposal and the last sample.
+The resulting position of the sample is then treated like a Metropolis proposal and accepted with probability based on the ratio of probability values of the proposal and the last sample.
 A visualization of this process can be seen in Figure \ref{fig:hmc_example}.
 Betancourt \cite{hmc} provides a thorough explanation of HMC with solid theoretical foundations.
 
@@ -886,8 +885,8 @@ This version of HMC was introduced by Betancourt in \cite{hmc_in_ns}.
 
 Like the Metropolis Algorithm, HMC for LRPS requires an adaptive step size.
 Without it, because the valid region to sample from becomes arbitrarily small, there would come a point at which the step size is so large that HMC has to reflect with every integration step.
-This is bad since the likelihood gradient used for reflection is calculated at the end of the integration step that lands outside the likelihood constraint.
-If the step size is very large in relation to the valid sampling area, the gradient will be calculated far away from the actual constraint boundary, leading to inaccurate reflection and biased samples.
+This causes problems since the likelihood gradient used for reflection is calculated at the end of the integration step that lands outside the likelihood constraint.
+If the step size is very large in relation to the valid sampling area, the gradient will be calculated far away from the actual constraint boundary, leading to inaccurate reflection and biased sampling.
 See the visualization in Figure \ref{fig:hmc_reflection_example}.
 
 \begin{figure}
@@ -914,11 +913,11 @@ The Barrier Method is used to solve optimization problems of the form
 with $f$ and all $f_i$ being convex and twice continuously differentiable.
 The problem also has to be strictly feasible, meaning that there exists an $\Tilde{x}$ in the domain of $f$, such that $f_i(\Tilde{x}) < 0 \; \forall i \in \{1,...,m\}$ \cite[561]{boyd}.
 
-We reformulate the optimization problem from (\ref{eq:cvxproblem}) to be unconstrained by incorporating the constraints into the objective function.
+We reformulate the optimization problem from (\ref{eq:cvxproblem}) to be unconstrained by incorporating the constraints into the objective function
 \begin{align}
     &\textrm{minimize} && f(x) + \sum_{i=1}^m I(f_i(x))&& \label{eq:cvxproblem_unconstrained}
 \end{align}
-With $I(u)$ being defined as follows.
+with $I(u)$ being defined as follows:
 \begin{equation}
     I(u) = \begin{cases}
         0,      & \text{if }  u \leq 0\\
@@ -1010,7 +1009,7 @@ However, as the log barrier function becomes a better approximation of the stric
 This causes the standard optimization procedures, such as Newton's method, to fail \cite[564]{boyd}.
 The Barrier Method is an approach that solves this issue by applying an iterative strategy.
 In each iteration, $x^*(t_i)$ is computed using Newton's Method in what's called a centering step.
-The value of $t_i$ increases with each iteration, and the result of the last iteration is used as the starting point for the current one.
+The value of $t_i$ increases with each iteration, and the result of the previous iteration is used as the starting point for the current one.
 This stabilizes the centering steps \cite[569]{boyd}.
 See Algorithm \ref{alg:barrier_method}.
 
