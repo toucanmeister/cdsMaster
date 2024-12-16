@@ -116,18 +116,19 @@ In a conducted benchmark, this approach achieves acceptance rates during likelih
 \chapter*{Introduction}
 Bayesian models are widely used for statistical inference tasks.
 They can extract information from data in a way that leads to intuitively interpretable results.
-Fitting a parameterized Bayesian model comprises more than just computing a point estimate for the parameter values, as would be the case in a maximum likelihood model.
+Fitting a parameterized Bayesian model comprises more than just computing a point estimate for the parameter values, as would be the case with a maximum likelihood approach.
 Instead, the result of Bayesian inference comprises a whole probability distribution over the parameter space, called the posterior distribution.
-A distribution, as opposed to a point estimate, provides extra information about how sure we can be of the results of our inference. 
+A distribution, as opposed to a point estimate, provides extra information about how sure we can be of the results of our inference.
+Bayesian inference also provides a canonical way to incorporate prior information about the model parameters, which the maximum likelihood approach does not.
 
-The upsides of Bayesian models come at the cost of being more difficult to fit than maximum likelihood models, especially so with increasing model complexity.
-Many techniques have been developed for this purpose, the most common of which are Monte Carlo methods.
-Instead of producing a parameterized version of the posterior distribution, they instead generate samples from it.
-These commonly used methods (Gibbs sampling \cite{gibbs}, Metropolis Hastings \cite{metropolishastings}, Hamiltonian Monte Carlo (HMC) \cite{hmc}, Slice Sampling \cite{slice_sampling}, etc.) all come with one downside:
+The upsides of Bayesian inference come at the cost of being more difficult than maximum likelihood estimation, especially so with increasing model complexity.
+Many techniques have been developed for the purpose of Bayesian inference, the most common of which are Monte Carlo methods.
+Monte Carlo methods perform inference by sampling parameter values from the posterior distribution.
+Commonly used methods (Gibbs sampling \cite{gibbs}, Metropolis Hastings \cite{metropolishastings}, Hamiltonian Monte Carlo (HMC) \cite{hmc}, Slice Sampling \cite{slice_sampling}, etc.) all come with one downside:
 They focus purely on the posterior distribution of a model fit and do not compute the evidence.
 The evidence is a term that comes up in Bayesian inference.
-It is a useful tool that can be used to compare whole classes of models with respect to how well they fit some data.
-Approaches that allow for computation of the evidence are, for example, Annealed Importance Sampling \cite{annealed_importance_sampling} and Probabilistic Integration \cite{bayesian_cubature}.
+It is a useful quantity that can be used to compare whole classes of models with respect to how well they fit some data.
+Approaches that allow for computation of the evidence are, for example, Annealed Importance Sampling \cite{annealed_importance_sampling}, Thermodynamic Integration \cite{thermodynamic_integration}, and Probabilistic Integration \cite{bayesian_cubature}.
 Another one is Nested Sampling, introduced by Skilling \cite{skilling}, which is the method this thesis focuses on.
 
 Nested Sampling is a Monte Carlo method for Bayesian inference whose main objective is computing the evidence, although it can also generate posterior samples.
@@ -346,7 +347,7 @@ For a given unnormalized density function $\mathbf{P}(\theta)$ of the target dis
 Then, we can generate a sample from the target distribution by sampling a $\theta^*$ from the proposal distribution and accepting the proposal with probability $\frac{\mathbf{P}(\theta^*)}{c \cdot \mathbf{Q}(\theta^*)}$.
 If the proposal is not accepted, the process may be repeated until an accepted sample is found \cite[364]{mckay}.
 
-While the simplicity of Rejection sampling is appealing, it fails in practice because
+While the simplicity of Rejection Sampling is appealing, it fails in practice because
 \begin{enumerate}
     \item we normally do not know the global maximum of our target distribution and thus do not know how to choose $c$, and
     \item even if we did know how to choose $c$, the fact that in high dimensional problems typically only a small fraction of the parameter space carries high posterior density forces us to scale $\mathbf{Q}$ so much everywhere else that acceptance rates plummet.
@@ -793,11 +794,11 @@ The original paper by Skilling provides little guidance for this step, only that
 In this section, we summarize multiple ways to do LRPS while presenting their advantages and drawbacks, working our way up from the simplest methods to more complex ones.
 
 \subsection{Rejection Sampling}
-Rejection sampling is the simplest way to sample from the constrained prior.
+Rejection Sampling is the simplest way to sample from the constrained prior.
 We generate a sample from the prior, compute its likelihood and check if it satisfies the likelihood constraint.
 If it does, we accept the sample; otherwise, we reject it.
 
-Rejection sampling is infeasible for larger models due to it being terribly inefficient in higher dimensions.
+Rejection Sampling is infeasible for larger models due to it being terribly inefficient in higher dimensions.
 The acceptance rate of the generated samples is proportional to how much of the prior mass is inside the likelihood constraint.
 Since the prior mass inside the likelihood constraint is expected to shrink by a factor of $\frac{1}{1+n}$ (mean of the $\textrm{Beta}(1, n)$ distribution) each iteration, the acceptance rate quickly plummets, leading to most proposals being rejected.
 
@@ -1038,13 +1039,13 @@ In the next chapter, we incorporate this idea into the LRPS step of Nested Sampl
 \section{Motivation}
 As was shown in Section 1.4, LRPS is difficult.
 Because the likelihood constraint grows tighter and the ratio of valid area to the area of the whole sample space decreases steadily, finding samples within the constraint boundary becomes more difficult with every Nested Sampling iteration.
-For methods like Rejection Sampling and the Metropolis algorithm, this manifests in low acceptance rates of proposals, which lead to wasted computational work.
+For methods like Rejection Sampling and the Metropolis algorithm, this manifests in low acceptance rates of proposals, which lead to wasted computational work, or (if an adaptive step size is used) in highly correlated samples.
 For HMC adapted to LRPS, detecting the point at which the particle breaches the likelihood constraint boundary and must be reflected also becomes harder, since the distance the particle can travel before leaving the valid region decreases with each iteration.
 All these methods only notice the likelihood constraint boundary once they have crossed it.
 The proposals for Rejection Sampling and the Metropolis Algorithm do not take into account the likelihood at all, having to reject (intermediate) samples that cross the boundary, and while HMC for LRPS can reflect during proposal generation, this only happens after the boundary has been crossed.
 We would like an approach that softens the hard likelihood constraint and pushes the samples away from the boundary during sampling.
 
-Thinking back to the Barrier Method, we can make the following observation:
+Thinking back to the Barrier Method from Section 1.5, we can make the following observation:
 The log barrier also softens a hard constraint function and allows the optimization algorithm to feel the constraint before crossing it.
 This leads us to the main idea of this thesis: incorporating the log barrier from the Barrier Method into the LRPS step of Nested Sampling.
 
@@ -1055,8 +1056,8 @@ In this section we draw parallels between LRPS and convex optimization to find a
 Convex optimization is concerned with minimizing a function constrained by a set of convex functions (as can be seen in (\ref{eq:cvxproblem})).
 In LRPS, we sample from a probability distribution $\pi(\theta)$, constrained by $L(\theta) > L^*$.
 Even though this constraint is not necessarily convex (for most real-world applications it will not be), it still constricts the space we are working on and thus takes on a similar role to the constraint functions in convex optimization.
-In the following paragraphs, we will pretend like LRPS is an optimization problem with $\pi(\theta)$ as the objective function and $L(\theta) > L^*$ as the constraint.
-This is done to apply the idea of the log barrier from Section 1.5 to LRPS, which will lead us to an important term that softens our hard likelihood constraint boundary.
+In the following paragraphs, we will pretend that LRPS is an optimization problem with $\pi(\theta)$ as the objective function and $L(\theta) > L^*$ as the constraint.
+This is done to apply the idea of the log barrier from Section 1.5 to LRPS, which will lead us to an important term that softens the likelihood constraint boundary.
 That said, we are only doing this for inspiration.
 We will not actually be solving the optimization problem we set up:
 \begin{align}
@@ -1070,6 +1071,7 @@ We also multiply the objective function by $-1$ so we can minimize instead of ma
     &\textrm{maximize} \quad \pi(\theta) &&\textrm{subject to} \quad L(\theta) > L^* \nonumber \nonumber \\
     \iff \; &\textrm{minimize} \quad -\log(\pi(\theta)) &&\textrm{subject to} \quad L(\theta) > L^* \nonumber\\
     \iff \; &\textrm{minimize} \quad -\log(\pi(\theta)) &&\textrm{subject to} \quad \log(L(\theta)) > \log(L^*) \nonumber\\
+    \iff \; &\textrm{minimize} \quad -\log(\pi(\theta)) &&\textrm{subject to} \quad l(\theta) > l^* \nonumber\\
     \iff \; &\textrm{minimize} \quad -\log(\pi(\theta)) &&\textrm{subject to} \quad l^* - l(\theta) < 0 \nonumber
 \end{align}
 We use the exact barrier function from (\ref{eq:exact_barrier_function}) to incorporate the constraints into the objective function:
@@ -1087,7 +1089,7 @@ Then we negate and exponentiate the objective function to return to a maximizati
     \iff \; &\textrm{maximize} \quad \exp(-(-\log(\pi(\theta)) - \frac{1}{t}\log(l(\theta) - l^*))) \nonumber\\
     \iff \; &\textrm{maximize} \quad \pi(\theta) \, (l(\theta) - l^*)^{\frac{1}{t}} \label{eq:last_optimization_problem}
 \end{align}
-And obtain a term that will be important for the rest of this thesis, the log barrier term:
+We obtain a term that will be important for the rest of this thesis, the log barrier term:
 \begin{equation}
     (l(\theta) - l^*)^\frac{1}{t} \label{eq:log_barrier_term}
 \end{equation}
@@ -1121,7 +1123,7 @@ This lets us freely choose the likelihood and prior of our new variable $q$.
 It also shows that we can perform Nested Sampling on the $(\theta, q)$-space and recover the original evidence as $Z_\theta = \frac{Z_{\theta, q}}{Z_q}$.
 
 Now, let us take a look at LRPS on this expanded space.
-We will call the likelihood-restricted prior $\bar{\pi}$.
+We will call the likelihood-restricted prior $\bar{\pi}$:
 \begin{align*}
     (\theta,q) \sim \; &\bar{\pi}(\theta, q \,|\, L^*) \\
     &\bar{\pi}(\theta, q \,|\, L^*) = \pi(\theta, q) \, \mathbbm{1}_{\{L(\theta, q) \, > \, L^*\}}
@@ -1144,7 +1146,7 @@ By defining the likelihood of $q$ as $L(q) = \frac{1}{q}$, we can reshape the li
     \bar{\pi}(q \,|\, L^*, \theta) &= \pi(q) \, \mathbbm{1}_{\{q < L(\theta) / L^*\}}
 \end{align*}
 Where $\Pi_q$ is the CDF of $q$.
-Since we are free to define $\Pi_q$ however we want, we can use it to insert the log barrier term from (\ref{eq:log_barrier_term}).
+Since we are free to define $\Pi_q$ however we want, we can use it to insert the log barrier term from (\ref{eq:log_barrier_term}):
 \begin{align*}
     \Pi_q(L(\theta) / L^*) &\overset{!}{=} (l(\theta) - l^*)^{\frac{1}{t}} \\
     \Pi_q(L(\theta) / L^*) &=(\log(L(\theta)) - \log(L^*))^{\frac{1}{t}} \\
@@ -1179,11 +1181,11 @@ However, as can be seen in Figure \ref{fig:unnormalized}, the CDF of $q$ is unno
     \addplot[
         domain=1:10, 
         samples=500,
-        color=green
+        color=orange
     ] { ln(x)^(1/4) };
     \node[color=red, anchor=east] at (axis cs: 3.8, 1.9) {t=0.5};
     \node[color=blue, anchor=east] at (axis cs: 4.7, 1.6) {t=1};
-    \node[color=green, anchor=east] at (axis cs: 4.5, 1.0) {t=4};
+    \node[color=orange, anchor=east] at (axis cs: 4.5, 1.0) {t=4};
     \end{axis}
     \end{tikzpicture}
     \caption{Visualization of the unnormalized CDF $\Pi_q$ of $q$ for different values of $t$ and $q_{\textrm{max}}=5$.}
@@ -1191,7 +1193,7 @@ However, as can be seen in Figure \ref{fig:unnormalized}, the CDF of $q$ is unno
 \end{figure}
 
 We can normalize it for any other $q_{\textrm{max}}$ by scaling $\Pi_q$ to have a value of $1$ at $q=q_{\textrm{max}}$.
-We called the normalized version $\hat{\Pi}_q$.
+We called the normalized version $\hat{\Pi}_q$:
 $$
 \hat{\Pi}_q(q) = \frac{\Pi_q(q)}{\Pi_q(q_{\textrm{max}})} \quad \textrm{if } q \in (1, q_{\textrm{max}})
 $$
@@ -1207,7 +1209,7 @@ $$
 \end{cases}
 $$
 
-Differentiating $\hat{\Pi}_q$ gives us the PDF of $q$.
+Differentiating $\hat{\Pi}_q$ gives us the PDF of $q$:
 $$
     \frac{\textrm{d} \, \Pi_q}{\textrm{d} \, q} (q) = \pi(q) = 
     \begin{cases}
@@ -1228,31 +1230,6 @@ The changes from the original are the following:
     \item Divide out $Z_q(t, q_{\textrm{max}})$ from the evidence before returning it.
 \end{enumerate}
 \vspace{0.25cm}
-
-Sampling $q$ from $\pi_q(q) \, \mathbbm{1}_{\{q < L(\theta_{\textrm{new}}) / L^*\}}$ is simple.
-We can generate samples from $\pi_q(q)$ using inverse transform sampling \cite[23]{bayesian_data_analysis} as $q = \hat{\Pi}^{-1}_q(u)$ for $u \sim \textrm{Uniform}(0,1)$.
-Using this we can generate samples until one satisfies the constraint of $q < L(\theta_{\textrm{new}}) / L^*$.
-Because $q$ is one-dimensional, we can generate millions of samples in milliseconds and need not worry about performance issues.
-
-The $q$-evidence $Z_q$ is a function of $t$ and $q_{\textrm{max}}$, and can be computed analytically:
-\begin{align}
-    Z_q(t, q_{\textrm{max}}) &= \int_1^{q_{\textrm{max}}} L(q) \, \pi(q) \, dq \nonumber\\
-    &= \int_1^{q_{\textrm{max}}} \frac{\log(q)^{\frac{1}{t}-1}}{tq^2\log(q_{\textrm{max}})^\frac{1}{t}} \, dq \nonumber\\
-    &= \frac{1}{t \log(q_{\textrm{max}})^{\frac{1}{t}}} \int_1^{q_{\textrm{max}}} \frac{\log(q)^{\frac{1}{t}-1}}{q^2} \, dq \nonumber\\
-    &\mathrel{\overset{\makebox[0pt]{\mbox{\normalfont\tiny int. by sub.}}}{=}} \quad \frac{1}{t \log(q_{\textrm{max}})^{\frac{1}{t}}} \int_0^{\log(q_{\textrm{max}})} u^{\frac{1}{t}-1} e^{-u} \, du \label{eq:sub_zq_1}
-\end{align}
-The substitution used is $u = \log(q)$.
-Now we use the definition of the lower incomplete gamma function:
-\begin{align}
-    \Gamma(a, x) &= \int_x^{\infty} u^{a-1} e^{-u} \, du \nonumber\\
-    \Gamma(a, x) - \Gamma(a, y) &= \int_x^{\infty} u^{a-1} e^{-u} \, du - \int_y^{\infty} u^{a-1} e^{-u} \, du \nonumber\\
-    \textrm{for } y > x\textrm{:} \quad \Gamma(a, x) - \Gamma(a, y) &= \int_x^y u^{a-1} e^{-u} \, du \label{eq:gamma_diff}
-\end{align}
-By setting $a = \frac{1}{t}$, $x = 0$ and $y = \log(q_{\textrm{max}})$, we can apply (\ref{eq:gamma_diff}) to (\ref{eq:sub_zq_1}):
-\begin{align*}
-    Z(t, q_{\textrm{max}}) &= \frac{1}{t \log(q_{\textrm{max}})^{\frac{1}{t}}} \int_0^{\log(q_{\textrm{max}})} u^{\frac{1}{t}-1} e^{-u} \, du \\
-    &= \frac{\Gamma(\frac{1}{t}, 0) - \Gamma(\frac{1}{t}, \log(q_{\textrm{max}}))}{t \log(q_{\textrm{max}})^{\frac{1}{t}}}
-\end{align*}
 
 \begin{algorithm}
     \caption[Nested Sampling with the log barrier term.]{NestedBarrierSampling ($n$, $\epsilon$, $\pi_\theta$, $L_\theta$, $t$, $q_{\textrm{max}}$)}
@@ -1283,6 +1260,32 @@ By setting $a = \frac{1}{t}$, $x = 0$ and $y = \log(q_{\textrm{max}})$, we can a
     \end{algorithmic}
 \end{algorithm}
 
+Sampling $q$ from $\pi_q(q) \, \mathbbm{1}_{\{q < L(\theta_{\textrm{new}}) / L^*\}}$ is simple.
+We can generate samples from $\pi_q(q)$ using inverse transform sampling \cite[23]{bayesian_data_analysis} as $q = \hat{\Pi}^{-1}_q(u)$ for $u \sim \textrm{Uniform}(0,1)$.
+Using this we can generate samples until one satisfies the constraint of $q < L(\theta_{\textrm{new}}) / L^*$.
+Because $q$ is one-dimensional, we can generate millions of samples in milliseconds and need not worry about performance issues.
+
+The $q$-evidence $Z_q$ is a function of $t$ and $q_{\textrm{max}}$, and can be computed analytically:
+\begin{align}
+    Z_q(t, q_{\textrm{max}}) &= \int_1^{q_{\textrm{max}}} L(q) \, \pi(q) \, dq \nonumber\\
+    &= \int_1^{q_{\textrm{max}}} \frac{\log(q)^{\frac{1}{t}-1}}{tq^2\log(q_{\textrm{max}})^\frac{1}{t}} \, dq \nonumber\\
+    &= \frac{1}{t \log(q_{\textrm{max}})^{\frac{1}{t}}} \int_1^{q_{\textrm{max}}} \frac{\log(q)^{\frac{1}{t}-1}}{q^2} \, dq \nonumber\\
+    &\mathrel{\overset{\makebox[0pt]{\mbox{\normalfont\tiny int. by sub.}}}{=}} \quad \frac{1}{t \log(q_{\textrm{max}})^{\frac{1}{t}}} \int_0^{\log(q_{\textrm{max}})} u^{\frac{1}{t}-1} e^{-u} \, du \label{eq:sub_zq_1}
+\end{align}
+The substitution used is $u = \log(q)$.
+Now we use the definition of the lower incomplete gamma function:
+\begin{align}
+    \Gamma(a, x) &= \int_x^{\infty} u^{a-1} e^{-u} \, du \nonumber\\
+    \Gamma(a, x) - \Gamma(a, y) &= \int_x^{\infty} u^{a-1} e^{-u} \, du - \int_y^{\infty} u^{a-1} e^{-u} \, du \nonumber\\
+    \textrm{for } y > x\textrm{:} \quad \Gamma(a, x) - \Gamma(a, y) &= \int_x^y u^{a-1} e^{-u} \, du \label{eq:gamma_diff}
+\end{align}
+By setting $a = \frac{1}{t}$, $x = 0$ and $y = \log(q_{\textrm{max}})$, we can apply (\ref{eq:gamma_diff}) to (\ref{eq:sub_zq_1}):
+\begin{align*}
+    Z(t, q_{\textrm{max}}) &= \frac{1}{t \log(q_{\textrm{max}})^{\frac{1}{t}}} \int_0^{\log(q_{\textrm{max}})} u^{\frac{1}{t}-1} e^{-u} \, du \\
+    &= \frac{\Gamma(\frac{1}{t}, 0) - \Gamma(\frac{1}{t}, \log(q_{\textrm{max}}))}{t \log(q_{\textrm{max}})^{\frac{1}{t}}}
+\end{align*}
+As implementations of the lower incomplete gamma function are readily available, this lets us easily compute $Z_q$ to recover $Z_{\theta}$ from $Z_{\theta, q}$.
+
 With that, we have successfully defined a version of Nested Sampling that incorporates the log barrier term from (\ref{eq:log_barrier_term}).
 Next, we will examine the newly introduced parts of the algorithm, namely the auxiliary variable $q$ and the parameters $t$ and $q_{\textrm{max}}$.
 
@@ -1291,11 +1294,11 @@ Next, we will examine the newly introduced parts of the algorithm, namely the au
 In this section, we analyze the elements of Nested Sampling with Barriers we introduced in the previous section.
 
 \subsection{Interpreting $q$}
-Each sample from the original $\theta$-space gets an auxiliary $q$ in Nested Sampling with Barriers.
+Each sample from the original $\theta$-space is paired with an auxiliary $q$ in Nested Sampling with Barriers.
 Because $L(\theta, q) = \frac{L(\theta)}{q}$ and $q > 1$, the likelihood of each $\theta$ is reduced by its $q$.
 Since $Z_q$ is divided out later, this does not influence the final evidence and is only relevant for the likelihood-threshold each point generates when it is removed from the live points.
 The larger the $q$, the more the likelihood is reduced.
-Since $q$ is sampled from $\pi_q(q) \, \mathbbm{1}_{\{q < L(\theta_{\textrm{new}}) / L^*\}}$, the $\theta$ that are further away from the likelihood constraint are expected to have higher $q$ values, reducing their likelihood more.
+Since $q$ is sampled from $\pi_q(q) \, \mathbbm{1}_{\{q < L(\theta) / L^*\}}$, the $\theta$ that are further away from the likelihood constraint are expected to have higher $q$ values, reducing their likelihood more.
 This can be interpreted as making up for the fact that the log barrier term discourages sampling close to the likelihood constraint.
 If the likelihoods were kept the same, the likelihood constraint would increase much more quickly.
 
@@ -1326,11 +1329,11 @@ Since the log barrier term is incorporated using the CDF of $q$, they also influ
             \addplot[
                 domain=1:2, 
                 samples=500,
-                color=green
+                color=orange
             ] { ln(x)^(1/2 - 1) / (2*x*ln(2)^(1/2)) };
             \node[color=red, anchor=west] at (axis cs: 1.8, 2.1) {t=0.5};
             \node[color=blue, anchor=west] at (axis cs: 1.25, 2.0) {t=1};
-            \node[color=green, anchor=west] at (axis cs: 1.03, 4) {t=2};
+            \node[color=orange, anchor=west] at (axis cs: 1.03, 4) {t=2};
             \end{axis}
             \end{tikzpicture}
     \end{minipage}
@@ -1356,11 +1359,11 @@ Since the log barrier term is incorporated using the CDF of $q$, they also influ
             \addplot[
                 domain=1:2, 
                 samples=500,
-                color=green
+                color=orange
             ] { ln(x)^(1/2) / (ln(2)^(1/2)) };
             \node[color=red, anchor=west] at (axis cs: 1.6, 0.4) {t=0.5};
             \node[color=blue, anchor=west] at (axis cs: 1.35, 0.4) {t=1};
-            \node[color=green, anchor=west] at (axis cs: 1.18, 0.7) {t=2};
+            \node[color=orange, anchor=west] at (axis cs: 1.18, 0.7) {t=2};
             \end{axis}
             \end{tikzpicture}
     \end{minipage}
@@ -1372,32 +1375,32 @@ A larger value for $q_{\textrm{max}}$ lets the log barrier term affect sampling 
 As discussed in Section 1.5, $t$ determines how closely the log barrier approximates the true barrier.
 A large $t$ leads to a better approximation, generating a steeper barrier, and making the log barrier term act less strongly in regions further away from the likelihood constraint boundary (see Figure \ref{fig:q_normalized}).
 Lower values of $t$ give the log barrier term more influence even in these regions.
-We will see how $t$ and $q_{\textrm{max}}$ practically influence the algorithm's performance in Section 2.5.
+We will see how $t$ and $q_{\textrm{max}}$ practically influence the algorithm's performance in Chapter 3.
 
 In the next section, we discuss, in theory, which methods for LRPS can make use of the introduced log barrier term.
 
 \section{Implementation of LRPS}
 As with the standard Nested Sampling algorithm, the step of likelihood-restricted prior sampling in the original $\theta$-space still exists (see line 16 of Algorithm \ref{alg:barriersampling}).
-However, we now have the log barrier term affecting the sampling, which we can make use of.
+However, the log barrier term now affects the sampling, which we can make use of.
 In this section we recapitulate the options for LRPS presented in Section 1.4 and describe how they may benefit from the log barrier term introduced by Nested Sampling with Barriers.
 
 \subsection{Rejection Sampling and Discretized LRPS}
 Because they are not MCMC methods, these techniques do not benefit from the log barrier term.
-Rejection sampling proposals are not affected by the log barrier term, so their acceptance rates stay the same as with standard Nested Sampling.
+Rejection Sampling proposals are not affected by the log barrier term, so their acceptance rates stay the same as with standard Nested Sampling.
 Discretized LRPS has no problem with acceptance rates, only with how many discrete points are needed for high-dimensional spaces, which Nested Sampling with Barriers does not help with.
 
 \subsection{Metropolis Algorithm}
 The Metropolis algorithm for LRPS can make use of the log barrier term.
 When a Metropolis Markov chain gets close to the likelihood constraint boundary, the log barrier term discourages it from sampling even closer.
 If the step size is chosen small enough, this may drastically reduce the number of invalid proposals (proposals violating the likelihood constraint).
-To ensure efficient exploration of the $\theta$-space for the whole Nested Sampling procedure, during which the explorable space continually shrinks, an adaptive step size is still required.
+To ensure efficient exploration of the $\theta$-space for the whole Nested Sampling procedure, an adaptive step size is still required.
 
 \subsection{Hamiltonian Monte Carlo}
 Like the Metropolis algorithm, HMC benefits from the log barrier term.
 It does so especially, since the log barrier term curves the negative log density surface, on which the HMC particles move, upwards as it gets closer to the likelihood constraint boundary.
 This causes the particles to turn away before they hit the boundary (see Figure \ref{fig:barrier_sampling_hmc}), and leads to all proposals being valid.
 This way, the particles do not have to be reflected off the boundary.
-An adaptive step size is still worth implementing with this method, since the later iterations of Nested Sampling have such tiny valid spaces that the boundary may otherwise be crossed before it can be felt.
+An adaptive step size is still worth implementing with this method, since the later iterations of Nested Sampling have such tiny valid spaces that the boundary may otherwise be crossed before the particle is affected by the log barrier term.
 
 \begin{figure}
     \centering
@@ -1426,7 +1429,7 @@ Where $I_{20}$ is the 20-dimensional identity matrix, $u = 0.01$ and $v = 0.1$.
 Both likelihoods are two-component Gaussian mixtures consisting of a flat slab ($v$-component) and a thin spike with a much larger factor ($u$-component), and both are considered with a uniform prior on the 20-dimensional cube $[-\frac{1}{2}, \frac{1}{2}]^{20}$.
 The two examples are taken from Skilling's introductory paper on Nested Sampling, where the $L_1$-example is presented as a type of problem Nested Sampling is well-suited for, while the $L_2$-example is said to be difficult even for Nested Sampling \cite[21]{skilling}.
 
-Since the behavior of Nested Sampling is heavily dependent on the method for LRPS used, I applied both standard Nested Sampling and the Barriers variant to each example problem with different LRPS methods.
+Since the behavior of the algorithm is heavily dependent on the method for LRPS used, I applied both standard Nested Sampling and the Barriers variant to each example problem with different LRPS methods.
 The following LRPS approaches were used:
 \begin{itemize}
     \item Metropolis Algorithm (with simple adaptive step size)
@@ -1434,14 +1437,14 @@ The following LRPS approaches were used:
     \item HMC (only for Nested Sampling with Barriers, with simple adaptive step size)
     \item an optimal method for sampling inside a $d$-ball (only for the $L_1$-problem with Standard Nested Sampling; labeled ``Ball'' in the figures)  
 \end{itemize}
-We can use the optimal $d$-ball sampler because the valid region in the $L_1$-problem is always a sphere.
-The used sampler is taken from a paper on the topic of sphere- and ball-sampling by Voelker, Gosmann and Stewart \cite[2]{sphere_sampling}.
+We can use the optimal $d$-ball sampler because the valid region in the $L_1$-problem is always a ball.
+The sampler is taken from a paper on the topic of sphere- and ball-sampling by Voelker, Gosmann and Stewart \cite[2]{sphere_sampling}.
 The simple adaptive step size Algorithm adjusts the Metropolis or HMC step size after each proposal.
 If the proposal is accepted, the step size is multiplied by a factor of $1.01$; if it is rejected, the step size is multiplied by $0.99$.
 The Nested Sampling configurations with Barriers use values of $t=1$ and $q_{\textrm{max}} = 2$ for their hyperparameters.
 
 Each configuration of example problem, algorithm and LRPS method was run 200 times, with each run using 200 live points and a stopping criterion of $\epsilon = 10^{-16}$.
-The configurations are compared by how their estimate of the evidence, how many posterior modes they find (measured in two ways), how many iterations they take and how many proposals they accept.
+The configurations are compared by their estimate of the evidence, how many posterior modes they find (measured in two ways), how many iterations they take, how many proposals they accept and (for the MCMC samplers) how much distance their Markov Chains cover for each proposal.
 
 \subsection{Estimated Evidence}
 In Figure \ref{fig:results_logZ_diffs}, we compare how close each test run's estimate of the evidence comes to the true value.
@@ -1450,10 +1453,11 @@ A possible explanation for the failure of HMC with reflection is as follows.
 
 The sphere-shaped valid region of the $L_1$-example causes many reflected particles to land back in the valid region, even with relatively large step sizes.
 This causes the adaptive step size algorithm to increase the step size even further.
-Eventually, the step size becomes so large that particles are always reflected into the valid region; this occurs because
+Eventually, the step size becomes so large that particles are always reflected into the valid region.
+This occurs because
 \begin{itemize}
     \item the particles are reflected not at the boundary, but at the point they would have landed at outside the valid region
-    \item the gradient of $L_1$ always points into the valid region
+    \item and the gradient of $L_1$ always points into the valid region.
 \end{itemize}
 These factors work together to cause highly acute angles of reflection.
 The behavior is similar to the one that occurs when no adaptive step size is used, seen in Figure \ref{fig:hmc_reflection_example} of Section 1.4.
@@ -1461,22 +1465,24 @@ This explanation of why HMC with reflection fails is backed by the fact that the
 
 On the $L_2$-example, none of the methods are as convincing as on the $L_1$-example.
 The Metropolis methods are the most accurate, with the HMC methods having higher bias and higher variance.
-The poor performance can be explained with the next criteria, concerning how well the posterior distribution was explored.
+The poor performance of all methods can be explained by the next criteria, concerning how well the posterior distribution was explored.
 
 \begin{figure}
     \centering
     \includegraphics[scale=0.4]{figs/results/logZ_diffs_spike_20d.png}
     \includegraphics[scale=0.4]{figs/results/logZ_diffs_spike_offcenter_20d.png}
-    \caption{Box plot of each method's evidence estimate's deviation from the true value. Top: $L_1$-example, Bottom: $L_2$-example. Orange lines are the median values, gray crosses are the mean values.}
+    \caption{Box plot of the deviation of each method's evidence estimate's from the true value. Top: $L_1$-example, Bottom: $L_2$-example. Orange lines are the median values, gray crosses are the mean values.}
     \label{fig:results_logZ_diffs}
 \end{figure}
 
 \subsection{Posterior Modes Found}
-This criterion measures how many of the posterior modes each configuration was able to find and explore, where the main challenge is finding the small spike.
-The criterion checks, for each mode, if there is a dead point within the 95th percentile of cumulative probability of the mode.
+For how well the configurations found the posterior modes, where the main challenge is finding the small spike, two criteria were implemented.
+
+The first criterion checks, for each mode, if there is a dead point within the 95th percentile of cumulative probability of the mode, and labels the mode as found if there is.
+The number of modes labeled as found in this way, in proportion to how many modes there are, make up the criterion.
 In the upper part of Figure \ref{fig:results_modes_found} on the $L_1$-example, we see all methods except HMC with reflection always finding the spike.
 On the $L_2$-example, HMC with reflection never finds the spike, with all other methods finding less than half of the time.
-This may explain part of the bias we see in the evidence estimates.
+This explains most of the bias we see in the evidence estimates.
 \begin{figure}
     \centering
     \includegraphics[scale=0.4]{figs/results/modes_found_spike_20d.png}
@@ -1487,13 +1493,13 @@ This may explain part of the bias we see in the evidence estimates.
 
 There is a second criterion pertaining to posterior modes, which is the Kullback-Leibler divergence (KLD) of estimated and true mode weights.
 Here, we create an estimate of the normalized mode weights ($\frac{100}{101}$ and $\frac{1}{101}$), by evaluating the PDF of each posterior mode (only possible because both $L_1$ and $L_2$ are Gaussian mixtures) on every dead point, normalizing, multiplying by the dead points' weights and summing over all dead points.
-The resulting vector of mode weight estimates is again normalized and compared using the KLD to the true normalized mode weights.
+The resulting vector of mode weight estimates is again normalized and compared using the KLD to the true normalized mode weights:
 \begin{align*}
     &\textrm{KLD}(\frac{\hat{m}}{||\hat{m}||_1}, \frac{m}{||m||_1}) \\
     \textrm{where} \quad &\hat{m} = \sum_i^n \frac{p(\theta_i)}{\sum_j p(\theta_i)_j} \cdot w_i \\
     \textrm{where} \quad &p(\theta) = (\mathcal{N}_1(\theta), \, \mathcal{N}_2(\theta))
 \end{align*}
-With $\mathcal{N}_1$ and $\mathcal{N}_2$ being the unweighted mode PDFs, $\theta_1, ..., \theta_n$ being the dead points, $w_1, ..., w_n$ being the dead points' estimated prior mass shells, m being the vector of true mode weights, $(100, 1)$ and $||\cdot||_1$ being the $L^1$-Norm: $||x||_1 = \sum_i |x_i|$.
+With $\mathcal{N}_1$ and $\mathcal{N}_2$ being the unweighted mode PDFs, $\theta_1, ..., \theta_n$ being the dead points, $w_1, ..., w_n$ being the dead points' estimated prior mass shells, $m$ being the vector of true mode weights, $(100, 1)$ and $||\cdot||_1$ being the $L^1$-Norm: $||x||_1 = \sum_i |x_i|$.
 
 The results in Figure \ref{fig:results_KLDs} show a similar pattern to the evidence estimate results.
 In the $L_1$-example, all methods but HMC with reflection are nearly equal and, in relation to the optimal ball sampler's performance, almost perfect.
@@ -1503,7 +1509,7 @@ In the $L_2$-example, the Metropolis methods tend to be worse than the HMC metho
     \includegraphics[trim={0cm 0cm 2cm 0cm}, clip, scale=0.4]{figs/results/KLDs_spike_20d.png}
     \includegraphics[scale=0.4]{figs/results/KLD_spike_20d_reflection.png}
     \includegraphics[scale=0.4]{figs/results/KLDs_spike_offcenter_20d.png}
-    \caption{Box plots of the KLD of estimated and true mode weights. Top: $L_1$-example, Bottom: $L_2$-example. The results for HMC with reflection is presented on a separate scale to allow better comparison between the others. Orange lines are the median values, gray crosses are the mean values.}
+    \caption{Box plots of the KLD of estimated and true mode weights. Top: $L_1$-example, Bottom: $L_2$-example. The results for HMC with reflection are presented on a separate scale to enable better comparison between the others. Orange lines are the median values, gray crosses are the mean values.}
     \label{fig:results_KLDs}
 \end{figure}
 
@@ -1522,7 +1528,7 @@ For both $L_1$ and $L_2$, the non-barrier methods take slightly fewer iterations
 \subsection{Acceptance Rate}
 In this section, we examine what ratio of the total proposals made during LRPS are accepted.
 Lower acceptance rates lead to slower overall execution time as more proposals have to be made until an acceptable one is found.
-This is where the main advantage of Nested Sampling with Barriers lies.
+As is visible in Figure \ref{fig:results_acceptance_rates}, this is where the main advantage of Nested Sampling with Barriers lies.
 In both example problems, Nested Sampling with Barriers reaches significantly higher acceptance rates than standard Nested Sampling when both use the Metropolis algorithm.
 For the $L_1$-example, the version with barriers achieves an acceptance rate that is a factor of $1.62$ higher than the standard version's acceptance rate.
 In the $L_2$-example, the improvement is by a factor of $1.23$.
@@ -1538,14 +1544,14 @@ The reason the optimal sampler does not reach an acceptance rate of $1$ is that 
 
 \subsection{Jump Distance}
 Because all tested MCMC methods use an adaptive step size, just examining the acceptance rate does not present the full picture.
-For the HMC methods, the adaptive step size keeps the acceptance rate steadily at $0.5$, so we have to look how much the step size has to be reduced to achieve this acceptance rate.
+For the HMC methods, the adaptive step size keeps the acceptance rate steadily at $0.5$, so we have to look at how much the step size has to be reduced to achieve this acceptance rate.
 The step size, however, is just how far each singular MCMC step goes.
-We are instead interested in how long the whole MCMC walk from one sample to the next is.
-This criterion is called the jump distance.
+We are instead interested in how long the whole Markov Chain from one sample to the next is.
+This criterion is called the jump distance \cite{rjd}.
 
 In Figure \ref{figs:results_jump_distances}, we see how the mean jump distance per iteration develops for each configuration.
 The barrier versions of the algorithms start out with lower jump distances than their standard counterparts, but in the late iterations, when sampling becomes difficult, they actually have higher jump distances.
-The curve of HMC with reflection ends much earlier than the others in the $L_1$-example because its number of iterations varies much more than the others and the curves are only shown as far as the shortest run of each configuration went.
+The curve of HMC with reflection ends earlier than the others in the $L_1$-example because its number of iterations varies much more than the others and the curves are only shown as far as the shortest run of each configuration went.
 \begin{figure}
     \centering
     \includegraphics[scale=0.4]{figs/results/mean_jump_distances_spike_20d.png}
@@ -1557,15 +1563,15 @@ The curve of HMC with reflection ends much earlier than the others in the $L_1$-
 \FloatBarrier
 \section{Influence of $t$ and $q_{\textrm{max}}$}
 In this section, we examine the influence of the hyperparameters $t$ and $q_{\textrm{max}}$ which Nested Sampling with Barriers introduces.
-We used $0.5$, $1$, $2$, and $5$ as values for $t$ and $1$, $1.1$, $2$ and $5$ as values for $q_{\textrm{max}}$.
-Each combination of $t$- and $q_{\textrm{max}}$-values was used in two configuration of Nested Sampling with Barriers, one using Metropolis for LRPS and one using HMC.
+$0.5$, $1$, $2$, and $5$ were used as values for $t$ and $1$, $1.1$, $2$ and $5$ as values for $q_{\textrm{max}}$.
+Each combination of $t$ and $q_{\textrm{max}}$ values was used in two configuration of Nested Sampling with Barriers, one using Metropolis for LRPS and one using HMC.
 These configurations, each using 200 live points and a stopping criterion of $\epsilon=10^{-16}$, were applied to the $L_2$-problem introduced in the previous section.
 The results of 200 runs per configuration are compiled in the following paragraphs.
 
 \subsection{Estimated Evidence}
 As is visible in Figure \ref{fig:results_params_logZ}, the evidence estimates are barely affected by the choice of $t$ and $q_{\textrm{max}}$.
 For the HMC version, $q_{\textrm{max}} = 1.1$ causes higher variance in the estimates than other values.
-In both cases, the value of $q_{\textrm{max}}$ has no discernible impact.
+In both the Metropolis and the HMC versions, the value of $q_{\textrm{max}}$ has no discernible impact.
 \begin{figure}
     \centering
     \includegraphics[trim={3cm 0cm 3cm 0cm}, clip, width=\textwidth]{figs/results/params/logZ_diffs_metropolis.png}
@@ -1577,7 +1583,7 @@ In both cases, the value of $q_{\textrm{max}}$ has no discernible impact.
 \subsection{Posterior Modes Found}
 Figure \ref{fig:results_params_modes_found} shows the number of modes found by each configuration, while Figure \ref{fig:results_params_KLDs} shows the KLD of the estimated and true mode weights.
 While some configurations, like $t = 0.5, q_{\textrm{max}} = 2$ for the Metropolis example, have a slightly higher mean number of modes found, there is no discernible pattern to these fluctuations.
-The KLDs are mostly stable across configurations, except for the $q_{\textrm{max}} = 1.1$-versions using HMC, which have higher variance than the other configurations.
+The KLDs are mostly stable across configurations, except for the $q_{\textrm{max}} = 1.1$ versions using HMC, which have higher variance than the other configurations.
 The configuration with $t = 5, q_{\textrm{max}} = 1.1$ is especially problematic, with large outliers bringing its mean KLD far above the median.
 \begin{figure}
     \centering
@@ -1620,7 +1626,6 @@ In both cases, $q_{\textrm{max}}$'s influence is opposite of $t$ and stronger fo
 \subsection{Jump Distance}
 For the Metropolis version in Figure \ref{fig:results_params_jump_distances_metropolis}, the value of $t$ has no discernible impact.
 The configurations with higher values of $q_{\textrm{max}}$ have higher jump distances over all iterations.
-
 In the HMC version in Figure \ref{fig:results_params_jump_distances_hmc}, both parameters have much more influence on the jump distances.
 Lower values of $t$ lead to higher jump distances, but also to larger differences between configurations with different values of $q_{\textrm{max}}$.
 Again, higher values of  $q_{\textrm{max}}$ cause higher jump distances over the whole run.
@@ -1646,7 +1651,7 @@ Again, higher values of  $q_{\textrm{max}}$ cause higher jump distances over the
 
 \chapter{Conclusions}
 This thesis introduced Nested Sampling with Barriers as a modification of the standard Nested Sampling algorithm that softens the hard likelihood constraint boundary and guides MCMC samplers during the LRPS step.
-Using the Metropolis algorithm for LRPS, it achieves mean acceptance rates that are up to a factor of $1.23$ higher than standard Nested Sampling, and reaches
+Using the Metropolis algorithm for LRPS, it achieves mean acceptance rates that are up to a factor of $1.23$ higher than standard Nested Sampling.
 Using HMC for LRPS, it reaches higher jump distances than standard Nested Sampling in the later iterations, but sacrifices jump distance in the early iterations of a run.
 Other criteria such as correctness of evidence estimates, number of posterior modes found and number of iterations taken stay largely the same as with standard Nested Sampling.
 These results indicate that Nested Sampling with Barriers is able to effectively guide the LRPS sampler to explore the posterior more efficiently without sacrificing performance in other ways.
@@ -1665,7 +1670,7 @@ Many of the ideas used by these implementations, like the dynamic number of live
 Furthermore, the convergence rate of Nested Sampling with Barriers warrants thorough theoretical investigation.
 The derivation of Nested Sampling itself, especially the reformulation of the evidence as a one-dimensional integral, also shows room for more research.
 The theory could be formalized and put on rigorous foundations using measure theory.
-Another point of interest is the curious behavior of jump distances in Nested Sampling with Barriers, outperforming standard Nested Sampling in the late iterations of the run while staying below it early on.
+Another point of interest is the curious behavior of jump distances in Nested Sampling with Barriers, outperforming standard Nested Sampling in the late iterations of the run while sacrificing jump distance in the early iterations.
 
 \clearpage
 \addcontentsline{toc}{chapter}{Bibliography}

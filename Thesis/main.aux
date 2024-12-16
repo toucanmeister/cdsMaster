@@ -10,6 +10,8 @@
 \abx@aux@segm{0}{0}{slice_sampling}
 \abx@aux@cite{0}{annealed_importance_sampling}
 \abx@aux@segm{0}{0}{annealed_importance_sampling}
+\abx@aux@cite{0}{thermodynamic_integration}
+\abx@aux@segm{0}{0}{thermodynamic_integration}
 \abx@aux@cite{0}{bayesian_cubature}
 \abx@aux@segm{0}{0}{bayesian_cubature}
 \abx@aux@cite{0}{skilling}
@@ -192,10 +194,10 @@
 \newlabel{fig:unnormalized}{{2.1}{35}}
 \abx@aux@cite{0}{bayesian_data_analysis}
 \abx@aux@segm{0}{0}{bayesian_data_analysis}
-\newlabel{eq:sub_zq_1}{{2.4}{36}}
-\newlabel{eq:gamma_diff}{{2.5}{36}}
-\@writefile{loa}{\contentsline {algorithm}{\numberline {4}{\ignorespaces Nested Sampling with the log barrier term.}}{37}{}\protected@file@percent }
-\newlabel{alg:barriersampling}{{4}{37}}
+\@writefile{loa}{\contentsline {algorithm}{\numberline {4}{\ignorespaces Nested Sampling with the log barrier term.}}{36}{}\protected@file@percent }
+\newlabel{alg:barriersampling}{{4}{36}}
+\newlabel{eq:sub_zq_1}{{2.4}{37}}
+\newlabel{eq:gamma_diff}{{2.5}{37}}
 \@writefile{toc}{\contentsline {section}{\numberline {2.3}Interpretation}{37}{}\protected@file@percent }
 \@writefile{lof}{\contentsline {figure}{\numberline {2.2}{\ignorespaces Visualization of the normalized PDF (left) and normalized CDF (right) of $q$ for different values of $t$ and $q_{\textrm  {max}}=2$.\relax }}{38}{}\protected@file@percent }
 \newlabel{fig:q_normalized}{{2.2}{38}}
@@ -216,13 +218,15 @@
 \abx@aux@cite{0}{sphere_sampling}
 \abx@aux@segm{0}{0}{sphere_sampling}
 \@writefile{toc}{\contentsline {subsection}{\numberline {3.1.1}Estimated Evidence}{42}{}\protected@file@percent }
-\@writefile{lof}{\contentsline {figure}{\numberline {3.1}{\ignorespaces Box plot of each method's evidence estimate's deviation from the true value. Top: $L_1$-example, Bottom: $L_2$-example. Orange lines are the median values, gray crosses are the mean values.\relax }}{43}{}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {3.1}{\ignorespaces Box plot of the deviation of each method's evidence estimate's from the true value. Top: $L_1$-example, Bottom: $L_2$-example. Orange lines are the median values, gray crosses are the mean values.\relax }}{43}{}\protected@file@percent }
 \newlabel{fig:results_logZ_diffs}{{3.1}{43}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {3.1.2}Posterior Modes Found}{43}{}\protected@file@percent }
 \@writefile{lof}{\contentsline {figure}{\numberline {3.2}{\ignorespaces Box plots of how many of the two modes were found by each method. The values represent $\frac  {m}{2}$, where $m$ is the number of modes found. Top: $L_1$-example, Bottom: $L_2$-example. Orange lines are the median values, gray crosses are the mean values.\relax }}{44}{}\protected@file@percent }
 \newlabel{fig:results_modes_found}{{3.2}{44}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {3.1.3}Number of Iterations}{44}{}\protected@file@percent }
-\@writefile{lof}{\contentsline {figure}{\numberline {3.3}{\ignorespaces Box plots of the KLD of estimated and true mode weights. Top: $L_1$-example, Bottom: $L_2$-example. The results for HMC with reflection is presented on a separate scale to allow better comparison between the others. Orange lines are the median values, gray crosses are the mean values.\relax }}{45}{}\protected@file@percent }
+\abx@aux@cite{0}{rjd}
+\abx@aux@segm{0}{0}{rjd}
+\@writefile{lof}{\contentsline {figure}{\numberline {3.3}{\ignorespaces Box plots of the KLD of estimated and true mode weights. Top: $L_1$-example, Bottom: $L_2$-example. The results for HMC with reflection are presented on a separate scale to enable better comparison between the others. Orange lines are the median values, gray crosses are the mean values.\relax }}{45}{}\protected@file@percent }
 \newlabel{fig:results_KLDs}{{3.3}{45}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {3.1.4}Acceptance Rate}{45}{}\protected@file@percent }
 \@writefile{lof}{\contentsline {figure}{\numberline {3.4}{\ignorespaces Box plots of how many iterations each method took to reach the stopping point. Top: $L_1$-example, Bottom: $L_2$-example. Orange lines are the median values, gray crosses are the mean values.\relax }}{46}{}\protected@file@percent }
@@ -250,8 +254,8 @@
 \@writefile{toc}{\contentsline {subsection}{\numberline {3.2.5}Jump Distance}{51}{}\protected@file@percent }
 \@writefile{lof}{\contentsline {figure}{\numberline {3.12}{\ignorespaces Mean jump distance of each Metropolis configuration per iteration.\relax }}{52}{}\protected@file@percent }
 \newlabel{fig:results_params_jump_distances_metropolis}{{3.12}{52}}
-\@writefile{lof}{\contentsline {figure}{\numberline {3.13}{\ignorespaces Mean jump distance of each HMC configuration per iteration.\relax }}{53}{}\protected@file@percent }
-\newlabel{fig:results_params_jump_distances_hmc}{{3.13}{53}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3.13}{\ignorespaces Mean jump distance of each HMC configuration per iteration.\relax }}{52}{}\protected@file@percent }
+\newlabel{fig:results_params_jump_distances_hmc}{{3.13}{52}}
 \abx@aux@cite{0}{ultranest}
 \abx@aux@segm{0}{0}{ultranest}
 \abx@aux@cite{0}{dynesty}
@@ -260,22 +264,23 @@
 \abx@aux@segm{0}{0}{jaxns}
 \abx@aux@cite{0}{polychord}
 \abx@aux@segm{0}{0}{polychord}
-\@writefile{toc}{\contentsline {chapter}{\numberline {4}Conclusions}{54}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {chapter}{\numberline {4}Conclusions}{53}{}\protected@file@percent }
 \@writefile{lof}{\addvspace {10\p@ }}
 \@writefile{lot}{\addvspace {10\p@ }}
-\@writefile{toc}{\contentsline {chapter}{Bibliography}{56}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {chapter}{Bibliography}{55}{}\protected@file@percent }
 \abx@aux@cite{0}{casellaberger}
 \abx@aux@segm{0}{0}{casellaberger}
 \@writefile{toc}{\contentsline {chapter}{Appendix}{58}{}\protected@file@percent }
 \newlabel{eq:prior_mass_integral_appendix}{{4.1}{58}}
 \@writefile{lof}{\contentsline {figure}{\numberline {4.1}{\ignorespaces Visualization of the integral in (4.1\hbox {}). The shaded region is the integral, equivalent to $\mu (L^*) - \mu (\lambda )$.\relax }}{59}{}\protected@file@percent }
 \newlabel{fig:vis_prior_masses_lrps_appendix}{{4.1}{59}}
-\abx@aux@read@bbl@mdfivesum{D684AC38BED003D0A69E908B782D0AAB}
+\abx@aux@read@bbl@mdfivesum{11DC94C5E649F851E7A04C213D3A30F9}
 \abx@aux@defaultrefcontext{0}{gibbs}{none/global//global/global}
 \abx@aux@defaultrefcontext{0}{metropolishastings}{none/global//global/global}
 \abx@aux@defaultrefcontext{0}{hmc}{none/global//global/global}
 \abx@aux@defaultrefcontext{0}{slice_sampling}{none/global//global/global}
 \abx@aux@defaultrefcontext{0}{annealed_importance_sampling}{none/global//global/global}
+\abx@aux@defaultrefcontext{0}{thermodynamic_integration}{none/global//global/global}
 \abx@aux@defaultrefcontext{0}{bayesian_cubature}{none/global//global/global}
 \abx@aux@defaultrefcontext{0}{skilling}{none/global//global/global}
 \abx@aux@defaultrefcontext{0}{hmc_in_ns}{none/global//global/global}
@@ -295,6 +300,7 @@
 \abx@aux@defaultrefcontext{0}{collapsed_gibbs}{none/global//global/global}
 \abx@aux@defaultrefcontext{0}{bayesian_data_analysis}{none/global//global/global}
 \abx@aux@defaultrefcontext{0}{sphere_sampling}{none/global//global/global}
+\abx@aux@defaultrefcontext{0}{rjd}{none/global//global/global}
 \abx@aux@defaultrefcontext{0}{ultranest}{none/global//global/global}
 \abx@aux@defaultrefcontext{0}{dynesty}{none/global//global/global}
 \abx@aux@defaultrefcontext{0}{jaxns}{none/global//global/global}

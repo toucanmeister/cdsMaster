@@ -41,6 +41,6 @@
 \contentsline {subsection}{\numberline {3.2.3}Number of Iterations}{49}{}%
 \contentsline {subsection}{\numberline {3.2.4}Acceptance Rate}{51}{}%
 \contentsline {subsection}{\numberline {3.2.5}Jump Distance}{51}{}%
-\contentsline {chapter}{\numberline {4}Conclusions}{54}{}%
-\contentsline {chapter}{Bibliography}{56}{}%
+\contentsline {chapter}{\numberline {4}Conclusions}{53}{}%
+\contentsline {chapter}{Bibliography}{55}{}%
 \contentsline {chapter}{Appendix}{58}{}%
