@@ -2345,7 +2345,7 @@
   </bcf:bibdata>
   <bcf:section number="0">
     <bcf:citekey order="1">gibbs</bcf:citekey>
-    <bcf:citekey order="2">metropolishastings</bcf:citekey>
+    <bcf:citekey order="2">metropolis</bcf:citekey>
     <bcf:citekey order="3">hmc</bcf:citekey>
     <bcf:citekey order="4">slice_sampling</bcf:citekey>
     <bcf:citekey order="5">annealed_importance_sampling</bcf:citekey>
@@ -2411,7 +2411,7 @@
     <bcf:citekey order="65">polychord</bcf:citekey>
     <bcf:citekey order="66">casellaberger</bcf:citekey>
     <bcf:citekey order="67">gibbs</bcf:citekey>
-    <bcf:citekey order="68">metropolishastings</bcf:citekey>
+    <bcf:citekey order="68">metropolis</bcf:citekey>
     <bcf:citekey order="69">hmc</bcf:citekey>
     <bcf:citekey order="70">slice_sampling</bcf:citekey>
     <bcf:citekey order="71">annealed_importance_sampling</bcf:citekey>
