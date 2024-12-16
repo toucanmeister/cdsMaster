@@ -53,57 +53,99 @@
       \verb 10.1080/00031305.1992.10475878
       \endverb
     \endentry
-    \entry{metropolishastings}{misc}{}
-      \name{author}{1}{}{%
-        {{hash=0a257fbe5a59f3a17cc4e1089b887257}{%
-           family={Robert},
+    \entry{metropolis}{misc}{}
+      \name{author}{5}{}{%
+        {{hash=2b73f47a1a84dd52f45fe57c381c3786}{%
+           family={Metropolis},
+           familyi={M\bibinitperiod},
+           given={Nicholas},
+           giveni={N\bibinitperiod}}}%
+        {{hash=8f2d64584d53ec74892cb43a030d890b}{%
+           family={Rosenbluth},
            familyi={R\bibinitperiod},
-           given={Christian\bibnamedelima P.},
-           giveni={C\bibinitperiod\bibinitdelim P\bibinitperiod}}}%
+           given={Arianna\bibnamedelima W.},
+           giveni={A\bibinitperiod\bibinitdelim W\bibinitperiod}}}%
+        {{hash=19853e2ef86f6c052dc24bbd3c764f76}{%
+           family={Rosenbluth},
+           familyi={R\bibinitperiod},
+           given={Marshall\bibnamedelima N.},
+           giveni={M\bibinitperiod\bibinitdelim N\bibinitperiod}}}%
+        {{hash=6fc89324948d311f731ac42029f909c2}{%
+           family={Teller},
+           familyi={T\bibinitperiod},
+           given={Augusta\bibnamedelima H.},
+           giveni={A\bibinitperiod\bibinitdelim H\bibinitperiod}}}%
+        {{hash=e22e18e792a0fca9678ed7c3a29c1fed}{%
+           family={Teller},
+           familyi={T\bibinitperiod},
+           given={Edward},
+           giveni={E\bibinitperiod}}}%
       }
-      \strng{namehash}{0a257fbe5a59f3a17cc4e1089b887257}
-      \strng{fullhash}{0a257fbe5a59f3a17cc4e1089b887257}
-      \strng{bibnamehash}{0a257fbe5a59f3a17cc4e1089b887257}
-      \strng{authorbibnamehash}{0a257fbe5a59f3a17cc4e1089b887257}
-      \strng{authornamehash}{0a257fbe5a59f3a17cc4e1089b887257}
-      \strng{authorfullhash}{0a257fbe5a59f3a17cc4e1089b887257}
+      \strng{namehash}{5e4fd1c4740883d53e259a40b68b0611}
+      \strng{fullhash}{a8859960f76f5f3055cd70f2655bf77a}
+      \strng{bibnamehash}{5e4fd1c4740883d53e259a40b68b0611}
+      \strng{authorbibnamehash}{5e4fd1c4740883d53e259a40b68b0611}
+      \strng{authornamehash}{5e4fd1c4740883d53e259a40b68b0611}
+      \strng{authorfullhash}{a8859960f76f5f3055cd70f2655bf77a}
       \field{sortinit}{2}
       \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
-      \field{eprintclass}{stat.CO}
-      \field{eprinttype}{arXiv}
-      \field{title}{The Metropolis-Hastings algorithm}
-      \field{year}{2016}
-      \verb{eprint}
-      \verb 1504.01896
-      \endverb
+      \field{journaltitle}{The Journal of Chemical Physics}
+      \field{number}{6}
+      \field{title}{Equation of State Calculations by Fast Computing Machines}
+      \field{volume}{21}
+      \field{year}{1953}
     \endentry
-    \entry{hmc}{misc}{}
-      \name{author}{1}{}{%
-        {{hash=1982fa604a3f94837efceaa53330b2a4}{%
-           family={Betancourt},
-           familyi={B\bibinitperiod},
-           given={Michael},
-           giveni={M\bibinitperiod}}}%
+    \entry{hmc_origin}{article}{}
+      \name{author}{4}{}{%
+        {{hash=bdebd6ef9e8e1b043aff76bf2f764e33}{%
+           family={Duane},
+           familyi={D\bibinitperiod},
+           given={Simon},
+           giveni={S\bibinitperiod}}}%
+        {{hash=d144582927796ad0d71489fa0bf837b7}{%
+           family={Kennedy},
+           familyi={K\bibinitperiod},
+           given={A.D.},
+           giveni={A\bibinitperiod}}}%
+        {{hash=e79e74b3caf12b77e3b62a5b4d078861}{%
+           family={Pendleton},
+           familyi={P\bibinitperiod},
+           given={Brian\bibnamedelima J.},
+           giveni={B\bibinitperiod\bibinitdelim J\bibinitperiod}}}%
+        {{hash=f373ac3ca3b70772140ff348ba2d50d5}{%
+           family={Roweth},
+           familyi={R\bibinitperiod},
+           given={Duncan},
+           giveni={D\bibinitperiod}}}%
       }
-      \strng{namehash}{1982fa604a3f94837efceaa53330b2a4}
-      \strng{fullhash}{1982fa604a3f94837efceaa53330b2a4}
-      \strng{bibnamehash}{1982fa604a3f94837efceaa53330b2a4}
-      \strng{authorbibnamehash}{1982fa604a3f94837efceaa53330b2a4}
-      \strng{authornamehash}{1982fa604a3f94837efceaa53330b2a4}
-      \strng{authorfullhash}{1982fa604a3f94837efceaa53330b2a4}
-      \field{extraname}{1}
+      \strng{namehash}{87d02c47c1dd23e727ec407c868c8be0}
+      \strng{fullhash}{880a7134f6f4b2e84f2ad885544bcf22}
+      \strng{bibnamehash}{87d02c47c1dd23e727ec407c868c8be0}
+      \strng{authorbibnamehash}{87d02c47c1dd23e727ec407c868c8be0}
+      \strng{authornamehash}{87d02c47c1dd23e727ec407c868c8be0}
+      \strng{authorfullhash}{880a7134f6f4b2e84f2ad885544bcf22}
       \field{sortinit}{3}
       \field{sortinithash}{ad6fe7482ffbd7b9f99c9e8b5dccd3d7}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
-      \field{eprintclass}{stat.ME}
-      \field{eprinttype}{arXiv}
-      \field{title}{A Conceptual Introduction to Hamiltonian Monte Carlo}
-      \field{year}{2018}
-      \verb{eprint}
-      \verb 1701.02434
+      \field{issn}{0370-2693}
+      \field{journaltitle}{Physics Letters B}
+      \field{number}{2}
+      \field{title}{Hybrid Monte Carlo}
+      \field{volume}{195}
+      \field{year}{1987}
+      \field{pages}{216\bibrangedash 222}
+      \range{pages}{7}
+      \verb{doi}
+      \verb https://doi.org/10.1016/0370-2693(87)91197-X
+      \endverb
+      \verb{urlraw}
+      \verb https://www.sciencedirect.com/science/article/pii/037026938791197X
+      \endverb
+      \verb{url}
+      \verb https://www.sciencedirect.com/science/article/pii/037026938791197X
       \endverb
     \endentry
     \entry{slice_sampling}{article}{}
@@ -435,7 +477,7 @@
       \strng{authorbibnamehash}{1982fa604a3f94837efceaa53330b2a4}
       \strng{authornamehash}{1982fa604a3f94837efceaa53330b2a4}
       \strng{authorfullhash}{1982fa604a3f94837efceaa53330b2a4}
-      \field{extraname}{2}
+      \field{extraname}{1}
       \field{sortinit}{2}
       \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
       \field{labelnamesource}{author}
@@ -674,6 +716,33 @@
       \field{year}{2024}
       \verb{eprint}
       \verb 2310.16782
+      \endverb
+    \endentry
+    \entry{hmc}{misc}{}
+      \name{author}{1}{}{%
+        {{hash=1982fa604a3f94837efceaa53330b2a4}{%
+           family={Betancourt},
+           familyi={B\bibinitperiod},
+           given={Michael},
+           giveni={M\bibinitperiod}}}%
+      }
+      \strng{namehash}{1982fa604a3f94837efceaa53330b2a4}
+      \strng{fullhash}{1982fa604a3f94837efceaa53330b2a4}
+      \strng{bibnamehash}{1982fa604a3f94837efceaa53330b2a4}
+      \strng{authorbibnamehash}{1982fa604a3f94837efceaa53330b2a4}
+      \strng{authornamehash}{1982fa604a3f94837efceaa53330b2a4}
+      \strng{authorfullhash}{1982fa604a3f94837efceaa53330b2a4}
+      \field{extraname}{2}
+      \field{sortinit}{4}
+      \field{sortinithash}{9381316451d1b9788675a07e972a12a7}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{eprintclass}{stat.ME}
+      \field{eprinttype}{arXiv}
+      \field{title}{A Conceptual Introduction to Hamiltonian Monte Carlo}
+      \field{year}{2018}
+      \verb{eprint}
+      \verb 1701.02434
       \endverb
     \endentry
     \entry{boyd}{book}{}

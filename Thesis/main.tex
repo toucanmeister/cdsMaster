@@ -124,7 +124,7 @@ Bayesian inference also provides a canonical way to incorporate prior informatio
 The upsides of Bayesian inference come at the cost of being more difficult than maximum likelihood estimation, especially so with increasing model complexity.
 Many techniques have been developed for the purpose of Bayesian inference, the most common of which are Monte Carlo methods.
 Monte Carlo methods perform inference by sampling parameter values from the posterior distribution.
-Commonly used methods (Gibbs sampling \cite{gibbs}, the Metropolis algorithm \cite{metropolis}, Hamiltonian Monte Carlo (HMC) \cite{hmc}, Slice Sampling \cite{slice_sampling}, etc.) all come with one downside:
+Commonly used methods (Gibbs sampling \cite{gibbs}, the Metropolis algorithm \cite{metropolis}, Hamiltonian Monte Carlo (HMC) \cite{hmc_origin}, Slice Sampling \cite{slice_sampling}, etc.) all come with one downside:
 They focus purely on the posterior distribution of a model fit and do not compute the evidence.
 The evidence is a term that comes up in Bayesian inference.
 It is a useful quantity that can be used to compare whole classes of models with respect to how well they fit some data.

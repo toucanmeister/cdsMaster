@@ -2346,7 +2346,7 @@
   <bcf:section number="0">
     <bcf:citekey order="1">gibbs</bcf:citekey>
     <bcf:citekey order="2">metropolis</bcf:citekey>
-    <bcf:citekey order="3">hmc</bcf:citekey>
+    <bcf:citekey order="3">hmc_origin</bcf:citekey>
     <bcf:citekey order="4">slice_sampling</bcf:citekey>
     <bcf:citekey order="5">annealed_importance_sampling</bcf:citekey>
     <bcf:citekey order="6">thermodynamic_integration</bcf:citekey>
@@ -2412,7 +2412,7 @@
     <bcf:citekey order="66">casellaberger</bcf:citekey>
     <bcf:citekey order="67">gibbs</bcf:citekey>
     <bcf:citekey order="68">metropolis</bcf:citekey>
-    <bcf:citekey order="69">hmc</bcf:citekey>
+    <bcf:citekey order="69">hmc_origin</bcf:citekey>
     <bcf:citekey order="70">slice_sampling</bcf:citekey>
     <bcf:citekey order="71">annealed_importance_sampling</bcf:citekey>
     <bcf:citekey order="72">thermodynamic_integration</bcf:citekey>
@@ -2431,15 +2431,16 @@
     <bcf:citekey order="85">nested_sampling_talk</bcf:citekey>
     <bcf:citekey order="86">kld</bcf:citekey>
     <bcf:citekey order="87">automala</bcf:citekey>
-    <bcf:citekey order="88">boyd</bcf:citekey>
-    <bcf:citekey order="89">collapsed_gibbs</bcf:citekey>
-    <bcf:citekey order="90">bayesian_data_analysis</bcf:citekey>
-    <bcf:citekey order="91">sphere_sampling</bcf:citekey>
-    <bcf:citekey order="92">rjd</bcf:citekey>
-    <bcf:citekey order="93">ultranest</bcf:citekey>
-    <bcf:citekey order="94">dynesty</bcf:citekey>
-    <bcf:citekey order="95">jaxns</bcf:citekey>
-    <bcf:citekey order="96">polychord</bcf:citekey>
+    <bcf:citekey order="88">hmc</bcf:citekey>
+    <bcf:citekey order="89">boyd</bcf:citekey>
+    <bcf:citekey order="90">collapsed_gibbs</bcf:citekey>
+    <bcf:citekey order="91">bayesian_data_analysis</bcf:citekey>
+    <bcf:citekey order="92">sphere_sampling</bcf:citekey>
+    <bcf:citekey order="93">rjd</bcf:citekey>
+    <bcf:citekey order="94">ultranest</bcf:citekey>
+    <bcf:citekey order="95">dynesty</bcf:citekey>
+    <bcf:citekey order="96">jaxns</bcf:citekey>
+    <bcf:citekey order="97">polychord</bcf:citekey>
   </bcf:section>
   <!-- SORTING TEMPLATES -->
   <bcf:sortingtemplate name="none">
