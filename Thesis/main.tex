@@ -1482,8 +1482,8 @@ The poor performance of all methods can be explained by the next criteria, conce
 
 \begin{figure}
     \centering
-    \includegraphics[scale=0.4]{figs/results/logZ_diffs_spike_20d.png}
-    \includegraphics[scale=0.4]{figs/results/logZ_diffs_spike_offcenter_20d.png}
+    \includegraphics[scale=0.5]{figs/results/logZ_diffs_spike_20d.png}
+    \includegraphics[scale=0.5]{figs/results/logZ_diffs_spike_offcenter_20d.png}
     \caption{Box plot of the deviation of each method's evidence estimate's from the true value. Top: $L_1$-example, Bottom: $L_2$-example. Orange lines are the median values, gray crosses are the mean values.}
     \label{fig:results_logZ_diffs}
 \end{figure}
@@ -1498,8 +1498,8 @@ On the $L_2$-example, HMC with reflection never finds the spike, with all other 
 This explains most of the bias we see in the evidence estimates.
 \begin{figure}
     \centering
-    \includegraphics[scale=0.4]{figs/results/modes_found_spike_20d.png}
-    \includegraphics[scale=0.4]{figs/results/modes_found_spike_offcenter_20d.png}
+    \includegraphics[scale=0.5]{figs/results/modes_found_spike_20d.png}
+    \includegraphics[scale=0.5]{figs/results/modes_found_spike_offcenter_20d.png}
     \caption{Box plots of how many of the two modes were found by each method. The values represent $\frac{m}{2}$, where $m$ is the number of modes found. Top: $L_1$-example, Bottom: $L_2$-example. Orange lines are the median values, gray crosses are the mean values.}
     \label{fig:results_modes_found}
 \end{figure}
@@ -1519,9 +1519,9 @@ In the $L_1$-example, all methods but HMC with reflection are nearly equal and, 
 In the $L_2$-example, the Metropolis methods tend to be worse than the HMC methods, but the HMC methods have higher variance.
 \begin{figure}
     \centering
-    \includegraphics[trim={0cm 0cm 2cm 0cm}, clip, scale=0.4]{figs/results/KLDs_spike_20d.png}
-    \includegraphics[scale=0.4]{figs/results/KLD_spike_20d_reflection.png}
-    \includegraphics[scale=0.4]{figs/results/KLDs_spike_offcenter_20d.png}
+    \includegraphics[trim={0cm 0cm 2cm 0cm}, clip, scale=0.5]{figs/results/KLDs_spike_20d.png}
+    \includegraphics[scale=0.5]{figs/results/KLD_spike_20d_reflection.png}
+    \includegraphics[scale=0.5]{figs/results/KLDs_spike_offcenter_20d.png}
     \caption{Box plots of the KLD of estimated and true mode weights. Top: $L_1$-example, Bottom: $L_2$-example. The results for HMC with reflection are presented on a separate scale to enable better comparison between the others. Orange lines are the median values, gray crosses are the mean values.}
     \label{fig:results_KLDs}
 \end{figure}
@@ -1532,8 +1532,8 @@ For the $L_1$-example, HMC with reflection is again the outlier, showing drastic
 For both $L_1$ and $L_2$, the non-barrier methods take slightly fewer iterations than the barrier methods, and the Metropolis approach has lower variance than the HMC approaches.
 \begin{figure}
     \centering
-    \includegraphics[scale=0.4]{figs/results/iterations_spike_20d.png}
-    \includegraphics[scale=0.4]{figs/results/iterations_spike_offcenter_20d.png}
+    \includegraphics[scale=0.5]{figs/results/iterations_spike_20d.png}
+    \includegraphics[scale=0.5]{figs/results/iterations_spike_offcenter_20d.png}
     \caption{Box plots of how many iterations each method took to reach the stopping point. Top: $L_1$-example, Bottom: $L_2$-example. Orange lines are the median values, gray crosses are the mean values.}
     \label{fig:results_iterations}
 \end{figure}
@@ -1549,8 +1549,8 @@ The HMC methods are completely even, and, as one would expect, the optimal sampl
 The reason the optimal sampler does not reach an acceptance rate of $1$ is that in the early iterations, the likelihood constraint boundary is further outwards from the origin than the prior reaches, causing a significant number of early proposals to be rejected because they do not land in the prior.
 \begin{figure}
     \centering
-    \includegraphics[scale=0.4]{figs/results/acceptance_rates_spike_20d.png}
-    \includegraphics[scale=0.4]{figs/results/acceptance_rates_spike_offcenter_20d.png}
+    \includegraphics[scale=0.5]{figs/results/acceptance_rates_spike_20d.png}
+    \includegraphics[scale=0.5]{figs/results/acceptance_rates_spike_offcenter_20d.png}
     \caption{Box plots of the ratio of accepted proposals to total proposals made during LRPS for each method. Top: $L_1$-example, Bottom: $L_2$-example. Orange lines are the median values, gray crosses are the mean values.}
     \label{fig:results_acceptance_rates}
 \end{figure}
@@ -1567,8 +1567,8 @@ The barrier versions of the algorithms start out with lower jump distances than 
 The curve of HMC with reflection ends earlier than the others in the $L_1$-example because its number of iterations varies much more than the others and the curves are only shown as far as the shortest run of each configuration went.
 \begin{figure}
     \centering
-    \includegraphics[scale=0.4]{figs/results/mean_jump_distances_spike_20d.png}
-    \includegraphics[scale=0.4]{figs/results/mean_jump_distances_spike_offcenter_20d.png}
+    \includegraphics[scale=0.5]{figs/results/mean_jump_distances_spike_20d.png}
+    \includegraphics[scale=0.5]{figs/results/mean_jump_distances_spike_offcenter_20d.png}
     \caption{Mean jump distance of each configuration per iteration; Unweighted rolling average with a window of 50. Top: $L_1$-example, Bottom: $L_2$-example. Curves are only shown as far as the shortest run went.}
     \label{figs:results_jump_distances}
 \end{figure}
@@ -1644,20 +1644,20 @@ Lower values of $t$ lead to higher jump distances, but also to larger difference
 Again, higher values of  $q_{\textrm{max}}$ cause higher jump distances over the whole run.
 \begin{figure}
     \centering
-    \includegraphics[width=0.4\textwidth]{figs/results/params/jump_distances_metropolis_t_05}
-    \includegraphics[width=0.4\textwidth]{figs/results/params/jump_distances_metropolis_t_1}
-    \includegraphics[width=0.4\textwidth]{figs/results/params/jump_distances_metropolis_t_2}
-    \includegraphics[width=0.4\textwidth]{figs/results/params/jump_distances_metropolis_t_5}
+    \includegraphics[width=0.5\textwidth]{figs/results/params/jump_distances_metropolis_t_05}
+    \includegraphics[width=0.5\textwidth]{figs/results/params/jump_distances_metropolis_t_1}
+    \includegraphics[width=0.5\textwidth]{figs/results/params/jump_distances_metropolis_t_2}
+    \includegraphics[width=0.5\textwidth]{figs/results/params/jump_distances_metropolis_t_5}
     \caption{Mean jump distance of each Metropolis configuration per iteration.}
     \label{fig:results_params_jump_distances_metropolis}
 \end{figure}
 
 \begin{figure}
     \centering
-    \includegraphics[width=0.4\textwidth]{figs/results/params/jump_distances_hmc_t_05}
-    \includegraphics[width=0.4\textwidth]{figs/results/params/jump_distances_hmc_t_1}
-    \includegraphics[width=0.4\textwidth]{figs/results/params/jump_distances_hmc_t_2}
-    \includegraphics[width=0.4\textwidth]{figs/results/params/jump_distances_hmc_t_5}
+    \includegraphics[width=0.5\textwidth]{figs/results/params/jump_distances_hmc_t_05}
+    \includegraphics[width=0.5\textwidth]{figs/results/params/jump_distances_hmc_t_1}
+    \includegraphics[width=0.5\textwidth]{figs/results/params/jump_distances_hmc_t_2}
+    \includegraphics[width=0.5\textwidth]{figs/results/params/jump_distances_hmc_t_5}
     \caption{Mean jump distance of each HMC configuration per iteration.}
     \label{fig:results_params_jump_distances_hmc}
 \end{figure}
