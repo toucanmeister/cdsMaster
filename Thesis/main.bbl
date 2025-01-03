@@ -463,6 +463,56 @@
       \field{title}{Information Theory, Inference \& Learning Algorithms}
       \field{year}{2002}
     \endentry
+    \entry{bayesian_data_analysis}{book}{}
+      \name{author}{6}{}{%
+        {{hash=1e1eb60e3b6e222217bf8e9b24070b28}{%
+           family={Gelman},
+           familyi={G\bibinitperiod},
+           given={Andrew},
+           giveni={A\bibinitperiod}}}%
+        {{hash=f34f8d7beadb3b443b64e32d7bfe9421}{%
+           family={Carlin},
+           familyi={C\bibinitperiod},
+           given={John},
+           giveni={J\bibinitperiod}}}%
+        {{hash=933c8ba3d8b6c1fb6a5269a8476355ca}{%
+           family={Stern},
+           familyi={S\bibinitperiod},
+           given={Hal},
+           giveni={H\bibinitperiod}}}%
+        {{hash=39a7db9b46f7d09bf73ea233779d88a5}{%
+           family={Rubin},
+           familyi={R\bibinitperiod},
+           given={Donald},
+           giveni={D\bibinitperiod}}}%
+        {{hash=d1f0fc81dc0af9d488d71669115fff82}{%
+           family={Dunson},
+           familyi={D\bibinitperiod},
+           given={David},
+           giveni={D\bibinitperiod}}}%
+        {{hash=5d36e97683cbc9d6ef06fc2ec40becb0}{%
+           family={Vehtari},
+           familyi={V\bibinitperiod},
+           given={Aki},
+           giveni={A\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {CRC Press}%
+      }
+      \strng{namehash}{7b511f44eded88e08c98470ecd75568d}
+      \strng{fullhash}{e8ae3b1cc8ae254c68d46d3cba982746}
+      \strng{bibnamehash}{7b511f44eded88e08c98470ecd75568d}
+      \strng{authorbibnamehash}{7b511f44eded88e08c98470ecd75568d}
+      \strng{authornamehash}{7b511f44eded88e08c98470ecd75568d}
+      \strng{authorfullhash}{e8ae3b1cc8ae254c68d46d3cba982746}
+      \field{sortinit}{2}
+      \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{edition}{3}
+      \field{title}{Bayesian Data Analysis}
+      \field{year}{2021}
+    \endentry
     \entry{betancourt_talk}{misc}{}
       \name{author}{1}{}{%
         {{hash=1982fa604a3f94837efceaa53330b2a4}{%
@@ -511,8 +561,8 @@
       \strng{authorbibnamehash}{aa7fec45c77f48ce8a527f3117b12ac8}
       \strng{authornamehash}{aa7fec45c77f48ce8a527f3117b12ac8}
       \strng{authorfullhash}{aa7fec45c77f48ce8a527f3117b12ac8}
-      \field{sortinit}{2}
-      \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
+      \field{sortinit}{3}
+      \field{sortinithash}{ad6fe7482ffbd7b9f99c9e8b5dccd3d7}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
       \field{edition}{2nd}
@@ -566,8 +616,8 @@
       \strng{authorbibnamehash}{25fe73642338d124932fe58c5b315026}
       \strng{authornamehash}{25fe73642338d124932fe58c5b315026}
       \strng{authorfullhash}{25fe73642338d124932fe58c5b315026}
-      \field{sortinit}{3}
-      \field{sortinithash}{ad6fe7482ffbd7b9f99c9e8b5dccd3d7}
+      \field{sortinit}{4}
+      \field{sortinithash}{9381316451d1b9788675a07e972a12a7}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
       \field{edition}{2nd}
@@ -591,8 +641,8 @@
       \strng{authorbibnamehash}{3b0277a482a86dee7607aa9af778f3f7}
       \strng{authornamehash}{3b0277a482a86dee7607aa9af778f3f7}
       \strng{authorfullhash}{3b0277a482a86dee7607aa9af778f3f7}
-      \field{sortinit}{3}
-      \field{sortinithash}{ad6fe7482ffbd7b9f99c9e8b5dccd3d7}
+      \field{sortinit}{4}
+      \field{sortinithash}{9381316451d1b9788675a07e972a12a7}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
       \field{edition}{1st}
@@ -733,8 +783,8 @@
       \strng{authornamehash}{1982fa604a3f94837efceaa53330b2a4}
       \strng{authorfullhash}{1982fa604a3f94837efceaa53330b2a4}
       \field{extraname}{2}
-      \field{sortinit}{4}
-      \field{sortinithash}{9381316451d1b9788675a07e972a12a7}
+      \field{sortinit}{5}
+      \field{sortinithash}{20e9b4b0b173788c5dace24730f47d8c}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
       \field{eprintclass}{stat.ME}
@@ -791,8 +841,8 @@
       \strng{authorbibnamehash}{e9d8ae3a8d167f57a3562a4b5395aa32}
       \strng{authornamehash}{e9d8ae3a8d167f57a3562a4b5395aa32}
       \strng{authorfullhash}{e9d8ae3a8d167f57a3562a4b5395aa32}
-      \field{sortinit}{5}
-      \field{sortinithash}{20e9b4b0b173788c5dace24730f47d8c}
+      \field{sortinit}{6}
+      \field{sortinithash}{b33bc299efb3c36abec520a4c896a66d}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
       \field{journaltitle}{Journal of the American Statistical Association}
@@ -805,56 +855,6 @@
       \verb{doi}
       \verb 10.1080/01621459.1994.10476829
       \endverb
-    \endentry
-    \entry{bayesian_data_analysis}{book}{}
-      \name{author}{6}{}{%
-        {{hash=1e1eb60e3b6e222217bf8e9b24070b28}{%
-           family={Gelman},
-           familyi={G\bibinitperiod},
-           given={Andrew},
-           giveni={A\bibinitperiod}}}%
-        {{hash=f34f8d7beadb3b443b64e32d7bfe9421}{%
-           family={Carlin},
-           familyi={C\bibinitperiod},
-           given={John},
-           giveni={J\bibinitperiod}}}%
-        {{hash=933c8ba3d8b6c1fb6a5269a8476355ca}{%
-           family={Stern},
-           familyi={S\bibinitperiod},
-           given={Hal},
-           giveni={H\bibinitperiod}}}%
-        {{hash=39a7db9b46f7d09bf73ea233779d88a5}{%
-           family={Rubin},
-           familyi={R\bibinitperiod},
-           given={Donald},
-           giveni={D\bibinitperiod}}}%
-        {{hash=d1f0fc81dc0af9d488d71669115fff82}{%
-           family={Dunson},
-           familyi={D\bibinitperiod},
-           given={David},
-           giveni={D\bibinitperiod}}}%
-        {{hash=5d36e97683cbc9d6ef06fc2ec40becb0}{%
-           family={Vehtari},
-           familyi={V\bibinitperiod},
-           given={Aki},
-           giveni={A\bibinitperiod}}}%
-      }
-      \list{publisher}{1}{%
-        {CRC Press}%
-      }
-      \strng{namehash}{7b511f44eded88e08c98470ecd75568d}
-      \strng{fullhash}{e8ae3b1cc8ae254c68d46d3cba982746}
-      \strng{bibnamehash}{7b511f44eded88e08c98470ecd75568d}
-      \strng{authorbibnamehash}{7b511f44eded88e08c98470ecd75568d}
-      \strng{authornamehash}{7b511f44eded88e08c98470ecd75568d}
-      \strng{authorfullhash}{e8ae3b1cc8ae254c68d46d3cba982746}
-      \field{sortinit}{5}
-      \field{sortinithash}{20e9b4b0b173788c5dace24730f47d8c}
-      \field{labelnamesource}{author}
-      \field{labeltitlesource}{title}
-      \field{edition}{3}
-      \field{title}{Bayesian Data Analysis}
-      \field{year}{2021}
     \endentry
     \entry{sphere_sampling}{article}{}
       \name{author}{3}{}{%

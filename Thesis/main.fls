@@ -996,8 +996,6 @@ OUTPUT main.toc
 INPUT e:/Program Files (x86)/texlive/2022/texmf-dist/fonts/tfm/public/cm/cmr17.tfm
 INPUT e:/Program Files (x86)/texlive/2022/texmf-dist/fonts/tfm/public/cm/cmbx12.tfm
 INPUT e:/Program Files (x86)/texlive/2022/texmf-dist/fonts/tfm/public/cm/cmbx12.tfm
-INPUT e:/Program Files (x86)/texlive/2022/texmf-dist/fonts/tfm/public/cm/cmbx8.tfm
-INPUT e:/Program Files (x86)/texlive/2022/texmf-dist/fonts/tfm/public/cm/cmbx6.tfm
 INPUT e:/Program Files (x86)/texlive/2022/texmf-dist/tex/latex/bbm-macros/ubbm.fd
 INPUT e:/Program Files (x86)/texlive/2022/texmf-dist/tex/latex/bbm-macros/ubbm.fd
 INPUT e:/Program Files (x86)/texlive/2022/texmf-dist/tex/latex/bbm-macros/ubbm.fd
@@ -1041,11 +1039,11 @@ INPUT ./figs/barrier_method_example.png
 INPUT figs/barrier_method_example.png
 INPUT ./figs/barrier_method_example.png
 INPUT ./figs/barrier_method_example.png
-INPUT e:/Program Files (x86)/texlive/2022/texmf-dist/fonts/tfm/public/cm/cmbx10.tfm
-INPUT e:/Program Files (x86)/texlive/2022/texmf-dist/fonts/tfm/public/cm/cmbx7.tfm
 INPUT e:/Program Files (x86)/texlive/2022/texmf-dist/fonts/tfm/public/bbm/bbm12.tfm
 INPUT e:/Program Files (x86)/texlive/2022/texmf-dist/fonts/tfm/public/bbm/bbm10.tfm
 INPUT e:/Program Files (x86)/texlive/2022/texmf-dist/fonts/tfm/public/bbm/bbm7.tfm
+INPUT e:/Program Files (x86)/texlive/2022/texmf-dist/fonts/tfm/public/cm/cmbx10.tfm
+INPUT e:/Program Files (x86)/texlive/2022/texmf-dist/fonts/tfm/public/cm/cmbx7.tfm
 INPUT ./figs/barrier_sampling_hmc.png
 INPUT ./figs/barrier_sampling_hmc.png
 INPUT figs/barrier_sampling_hmc.png
@@ -1214,7 +1212,6 @@ INPUT e:/Program Files (x86)/texlive/2022/texmf-dist/fonts/enc/dvips/cm-super/cm
 INPUT c:/Users/Farin/.texlive2022/texmf-var/fonts/pk/ljfour/public/bbm/bbm12.600pk
 INPUT e:/Program Files (x86)/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb
 INPUT e:/Program Files (x86)/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb
-INPUT e:/Program Files (x86)/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx8.pfb
 INPUT e:/Program Files (x86)/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmcsc10.pfb
 INPUT e:/Program Files (x86)/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb
 INPUT e:/Program Files (x86)/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb

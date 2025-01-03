@@ -1,13 +1,13 @@
 # Fdb version 3
-["biber main"] 1734363530 "main.bcf" "main.bbl" "main" 1734363608
+["biber main"] 1735820841 "main.bcf" "main.bbl" "main" 1735890300
   "bib.bib" 1734363497 9517 d9ea83f70b8ad083d89bb72a6a0aa55a ""
-  "main.bcf" 1734363607 111213 279c30e4dcd1b51726014b481a490d8c "pdflatex"
+  "main.bcf" 1735890300 111433 8d47a89b16041e06a053950ab000f2fb "pdflatex"
   (generated)
   "main.bbl"
   "main.blg"
-["pdflatex"] 1734363583 "d:/Uni/cdsMaster/Thesis/main.tex" "main.pdf" "main" 1734363608
+["pdflatex"] 1735890272 "d:/Uni/cdsMaster/Thesis/main.tex" "main.pdf" "main" 1735890300
   "c:/Users/Farin/.texlive2022/texmf-var/fonts/pk/ljfour/public/bbm/bbm12.600pk" 1720172913 8424 7581c47eb8cd920e4d90403cd0b157f9 ""
-  "d:/Uni/cdsMaster/Thesis/main.tex" 1734363503 126277 93b3a9e5634605bbbe14cc112b61e92b ""
+  "d:/Uni/cdsMaster/Thesis/main.tex" 1735890246 128028 487e76869e75868defe83e460e05a243 ""
   "e:/Program Files (x86)/texlive/2022/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc" 1649398513 2900 1537cc8184ad1792082cd229ecc269f4 ""
   "e:/Program Files (x86)/texlive/2022/texmf-dist/fonts/map/fontname/texfonts.map" 1649399096 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "e:/Program Files (x86)/texlive/2022/texmf-dist/fonts/tfm/jknappen/ec/tcrm1200.tfm" 1649398839 1536 74b7293ec3713bb7fdca8dd1bd1f469c ""
@@ -25,9 +25,7 @@
   "e:/Program Files (x86)/texlive/2022/texmf-dist/fonts/tfm/public/bbm/bbm8.tfm" 1649398220 560 2e80f8a1cb59527f57d99bb5fccd0f3c ""
   "e:/Program Files (x86)/texlive/2022/texmf-dist/fonts/tfm/public/cm/cmbx10.tfm" 1649398506 1328 c834bbb027764024c09d3d2bf908b5f0 ""
   "e:/Program Files (x86)/texlive/2022/texmf-dist/fonts/tfm/public/cm/cmbx12.tfm" 1649398506 1324 c910af8c371558dc20f2d7822f66fe64 ""
-  "e:/Program Files (x86)/texlive/2022/texmf-dist/fonts/tfm/public/cm/cmbx6.tfm" 1649398506 1344 8a0be4fe4d376203000810ad4dc81558 ""
   "e:/Program Files (x86)/texlive/2022/texmf-dist/fonts/tfm/public/cm/cmbx7.tfm" 1649398506 1336 3125ccb448c1a09074e3aa4a9832f130 ""
-  "e:/Program Files (x86)/texlive/2022/texmf-dist/fonts/tfm/public/cm/cmbx8.tfm" 1649398506 1332 1fde11373e221473104d6cc5993f046e ""
   "e:/Program Files (x86)/texlive/2022/texmf-dist/fonts/tfm/public/cm/cmcsc10.tfm" 1649398506 1300 63a6111ee6274895728663cf4b4e7e81 ""
   "e:/Program Files (x86)/texlive/2022/texmf-dist/fonts/tfm/public/cm/cmex10.tfm" 1649398506 992 662f679a0b3d2d53c1b94050fdaa3f50 ""
   "e:/Program Files (x86)/texlive/2022/texmf-dist/fonts/tfm/public/cm/cmmi12.tfm" 1649398506 1524 4414a8315f39513458b80dfc63bff03a ""
@@ -44,7 +42,6 @@
   "e:/Program Files (x86)/texlive/2022/texmf-dist/fonts/tfm/public/cm/cmtt12.tfm" 1649398506 772 9a936b7f5e2ff0557fce0f62822f0bbf ""
   "e:/Program Files (x86)/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb" 1649398060 34811 78b52f49e893bcba91bd7581cdc144c0 ""
   "e:/Program Files (x86)/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb" 1649398060 32080 340ef9bf63678554ee606688e7b5339d ""
-  "e:/Program Files (x86)/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx8.pfb" 1649398060 32166 b0c356b15f19587482a9217ce1d8fa67 ""
   "e:/Program Files (x86)/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmcsc10.pfb" 1649398060 32001 6aeea3afe875097b1eb0da29acd61e28 ""
   "e:/Program Files (x86)/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb" 1649398060 30251 6afa5cb1d0204815a708a080681d4674 ""
   "e:/Program Files (x86)/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb" 1649398060 36741 0ee9e374ec3e30da87cdfb0ea3575226 ""
@@ -259,8 +256,8 @@
   "figs/hmc_reflection_example.png" 1730991367 202611 3c0a17d4df8d4aa1b2f73e48f0c74754 ""
   "figs/logo.png" 1730718323 379142 96235d4cf93ca66f7d6b874169cc7da1 ""
   "figs/metropolis_example.png" 1730991371 253151 21c34928ca802ff4d20095648a5fafe4 ""
-  "figs/ns_eggcrate_example_1.png" 1730718323 356677 6f0214712cf0682be4bfde8d53a5a3c2 ""
-  "figs/ns_eggcrate_example_2.png" 1730718323 373311 660e6947f5c5d36974b63afc982f41d4 ""
+  "figs/ns_eggcrate_example_1.png" 1735813797 372641 2803f0abd0a626dfe77031e67c010d10 ""
+  "figs/ns_eggcrate_example_2.png" 1735813900 377667 12d84ca6f00bc89343833c44293f7f58 ""
   "figs/results/KLDS_spike_offcenter_20d.png" 1732012933 158163 cc9bb68678799df9f153b71cfe1b61d8 ""
   "figs/results/KLD_spike_20d_reflection.png" 1732014465 65852 07c0fc6f3781a711ce0385a13f4dae33 ""
   "figs/results/KLDs_spike_20d.png" 1732012933 125139 535c2c21c24e1415c767920608d27798 ""
@@ -292,11 +289,11 @@
   "figs/results/params/logZ_diffs_metropolis.png" 1732012933 207170 0b62a44e665587981fdf17a625005f47 ""
   "figs/results/params/modes_found_hmc.png" 1732012933 195407 6caef1a6253f78f6373832b84a879c6c ""
   "figs/results/params/modes_found_metropolis.png" 1732012933 197061 70d70e9c4088f7d340915f543905699f ""
-  "main.aux" 1734363607 23708 163940cd9f6891867dbbdc64c0fd8966 "pdflatex"
-  "main.bbl" 1734363532 43439 fed64b5676f8716c5cbc59ae093576dd "biber main"
-  "main.run.xml" 1734363607 2332 83e05f0b52c9fa4cfbd2ea6cf1c82ad4 "pdflatex"
-  "main.tex" 1734363503 126277 93b3a9e5634605bbbe14cc112b61e92b ""
-  "main.toc" 1734363607 3392 b390685717d2977306bd02c3872f9428 "pdflatex"
+  "main.aux" 1735890300 24022 901f1e4aa55ee38a09c1b7c7d69288ff "pdflatex"
+  "main.bbl" 1735820843 43439 917a487bf552bf694417a88724963843 "biber main"
+  "main.run.xml" 1735890300 2332 83e05f0b52c9fa4cfbd2ea6cf1c82ad4 "pdflatex"
+  "main.tex" 1735890246 128028 487e76869e75868defe83e460e05a243 ""
+  "main.toc" 1735890300 3405 af3fbd2ffb29789d4e1ae1671fca6fd8 "pdflatex"
   (generated)
   "main.aux"
   "main.bcf"

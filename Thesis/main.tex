@@ -230,11 +230,14 @@ For example, the likelihood of $\theta = \frac{3}{4}$ would be $\frac{3}{4} \cdo
 For comparison, the likelihood of $\theta = \frac{1}{4}$ would be $\frac{1}{4} \cdot \frac{3}{4} \cdot \frac{1}{4} \cdot \frac{1}{4} \cdot \frac{1}{4} \approx 0.0029$.
 We can see how the likelihood lets us rank parameter values by how well the data supports them (see also the right side of Figure \ref{fig:coin_example}).
 
-Now we can use Bayes' rule to generate the posterior.
+Now we can use Bayes' rule to obtain the posterior.
 For our simple, one-dimensional example we can approximate the posterior numerically by discretizing the $\theta$-space and evaluating Bayes' rule for each discrete point.
 More information on how this step is done in practice follows in the next section.
 For each value of $\theta$, we compute the unnormalized posterior probability $L(\theta) \cdot \pi(\theta) = P(\textrm{H T H H H} \, | \, \theta) \cdot 2 \cdot (1 - \theta)$.
-We can approximate the evidence (\ref{eq:evidence}) using numerical quadrature: $Z \approx \sum_{i} L(\theta) \cdot \pi(\theta) \cdot \frac{1}{N}$, where $N$ is the number of points we discretize the $\theta$-space into.
+In this simple example, the evidence can be computed analytically, but for most real-world problems, this will not be the case.
+Then, an approximate method of evidence computation has to be used.
+Because it is more similar to the methods for evidence computation used later in this thesis, we will use an approximate method here as well.
+For our example, the evidence (\ref{eq:evidence}) can be approximated using numerical quadrature: $Z \approx \sum_{i} L(\theta) \cdot \pi(\theta) \cdot \frac{1}{N}$, where $N$ is the number of points we discretize the $\theta$-space into.
 To get our posterior values, we divide each of the unnormalized posterior probabilities by the evidence.
 The posterior can be seen in the bottom image of Figure \ref{fig:coin_example}.
 Note how the posterior mode lands somewhere in between the prior and likelihood modes.
@@ -252,7 +255,7 @@ The more data we collect and incorporate, the more ``sure'' our posterior will b
                 ylabel=$\pi(\theta)$,
                 y label style={at={(axis description cs:-0.2, 0.5)},anchor=east},
                 x label style={at={(axis description cs:0.5,-0.15)},anchor=north},
-                scale=0.6
+                scale=0.5
             ]
             \addplot[
                 name path=A,
@@ -271,7 +274,7 @@ The more data we collect and incorporate, the more ``sure'' our posterior will b
                 ylabel=$L(\theta)$,
                 y label style={at={(axis description cs:-0.3, 0.5)},anchor=east},
                 x label style={at={(axis description cs:0.5,-0.15)},anchor=north},
-                scale=0.6,
+                scale=0.5,
                 yticklabel style={
                     /pgf/number format/fixed,
                     /pgf/number format/precision=5
@@ -282,7 +285,7 @@ The more data we collect and incorporate, the more ``sure'' our posterior will b
                 name path=A,
                 domain=0:1, 
                 samples=200,
-                color=blue
+                color=blue,
             ] { x^4 * (1-x) };
             \end{axis}
         \end{tikzpicture}
@@ -300,7 +303,7 @@ The more data we collect and incorporate, the more ``sure'' our posterior will b
                     /pgf/number format/precision=5
                 },
             scaled y ticks=false,
-            scale=0.6
+            scale=0.5
         ]
         \addplot[
             name path=A,
@@ -310,21 +313,21 @@ The more data we collect and incorporate, the more ``sure'' our posterior will b
         ] { ((x^4 * (1-x)) * (2 * (1-x))) / 0.01895};
         \end{axis}
     \end{tikzpicture}
-    \caption{Prior $pi(\theta) = P(\theta)$, likelihood $L(\theta) = P(H T H H H \,|\, \theta)$ and posterior $P(\theta \,|\, H T H H H)$ of $\theta$ in the coin example with $\pi(\theta) = 2 \cdot (1-x)$ and data: H T H H H}
+    \caption{Prior $\pi(\theta) = P(\theta)$, likelihood $L(\theta) = P(H T H H H \,|\, \theta)$ and posterior $P(\theta \,|\, H T H H H)$ of $\theta$ in the coin example with $\pi(\theta) = 2 \cdot (1-x)$ and data: H T H H H}
     \label{fig:coin_example}
 \end{figure}
 
-
+\FloatBarrier
 \section{Fitting Bayesian Models}
 Having introduced Bayesian statistics and described how Bayesian inference works conceptually, let us now turn our attention to how to do it in practice.
 This section briefly covers methods developed for fitting Bayesian models, starting with analytical and numerical methods, continuing to Monte Carlo methods and then Markov chain Monte Carlo methods.
 
-\subsection{Analytical and Numerical Methods}
+\subsection{Analytical and Numerical Quadrature Methods}
 In some cases, the posterior can be computed analytically, yielding a parameterized probability distribution.
 However, this only works for very simple models and severely limits the types of prior one can use (the prior has to be ``conjugate'' to the likelihood) \cite[39]{mcelreath}.
-Another option is the one we used in the previous section, a numerical approximation utilizing a discretization of the parameter space.
+Another option is the one we used in the previous section, a numerical quadrature approximation utilizing a discretization of the parameter space.
 This approach does not work for models with many parameters, because its computational requirements scale exponentially with the dimensionality of the parameter space.
-For most real-world problems, both analytical and numerical computation of the posterior is infeasible.
+For most real-world problems, both analytical and numerical quadrature methods are infeasible for the computation of the posterior.
 
 \subsection{Monte Carlo Methods}
 The most prevalent family of algorithms for Bayesian model fitting do not try to evaluate the posterior as a parameterized distribution, nor discretize the parameter space.
@@ -340,29 +343,29 @@ All Monte Carlo methods for Bayesian inference have to solve this problem of sam
 
 To concretize the idea of Monte Carlo, I give a brief overview of one of the simplest Monte Carlo algorithms, Rejection Sampling, in the following paragraphs.
 Like most other Monte Carlo methods, Rejection Sampling makes use of a proposal distribution, a distribution we can easily sample from and which fulfills the following requirement:
-For a given unnormalized density function $\mathbf{P}(\theta)$ of the target distribution, the proposal distribution's density $\mathbf{Q}(\theta)$ can be scaled up using a constant $c$ to fully envelop the target density:
+For a given unnormalized density function $P(\theta)$ of the target distribution, the proposal distribution's density $Q(\theta)$ can be scaled up using a constant $c$ to fully envelop the target density:
 \begin{equation}
-    c \cdot \mathbf{Q}(\theta) > \mathbf{P}(\theta) \quad \forall \, \theta \in \Theta \nonumber
+    c \cdot Q(\theta) > P(\theta) \quad \forall \, \theta \in \Theta \nonumber
 \end{equation}
-Then, we can generate a sample from the target distribution by sampling a $\theta^*$ from the proposal distribution and accepting the proposal with probability $\frac{\mathbf{P}(\theta^*)}{c \cdot \mathbf{Q}(\theta^*)}$.
+Then, we can generate a sample from the target distribution by sampling a $\theta^*$ from the proposal distribution and accepting the proposal with probability $\textrm{min}\left(\frac{P(\theta^*)}{c \cdot Q(\theta^*)}, 1 \right)$.
 If the proposal is not accepted, the process may be repeated until an accepted sample is found \cite[364]{mckay}.
 
 While the simplicity of Rejection Sampling is appealing, it fails in practice because
 \begin{enumerate}
     \item we normally do not know the global maximum of our target distribution and thus do not know how to choose $c$, and
-    \item even if we did know how to choose $c$, the fact that in high dimensional problems typically only a small fraction of the parameter space carries high posterior density forces us to scale $\mathbf{Q}$ so much everywhere else that acceptance rates plummet.
+    \item even if we did know how to choose $c$, the fact that in high dimensional problems typically only a small fraction of the parameter space carries high posterior density forces us to scale $Q$ so much everywhere else that acceptance rates plummet.
 \end{enumerate}
 
 \subsection{Markov Chain Monte Carlo Methods}
 The most used algorithms in Bayesian statistics overcome the flaws present in simple Monte Carlo methods like Rejection Sampling by choosing a proposal distribution with dependent samples.
-They are a subcategory of Monte Carlo methods called Markov chain Monte Carlo (MCMC) methods.
+They are a subcategory of Monte Carlo methods called Markov chain Monte Carlo (MCMC) methods \cite[p. 275 ff.]{bayesian_data_analysis}.
 Each MCMC sample is dependent on its predecessor and often lands in the vicinity of it.
 This allows more efficient exploration of the posterior, because once a region of high posterior density is found, its local surroundings often also carry high posterior density. 
 
-Again, to illustrate, let us take a look at one relatively simple example algorithm, the Metropolis algorithm.
-The Metropolis algorithm uses a symmetrical proposal distribution $\mathbf{Q}(\theta_{\textrm{new}} \,|\, \theta_{\textrm{old}})$.
+Again, to illustrate, let us take a look at one relatively simple example algorithm, the Metropolis algorithm \cite{metropolis}.
+The Metropolis algorithm uses a symmetrical proposal distribution $Q(\theta_{\textrm{new}} \,|\, \theta_{\textrm{old}})$.
 Often, a normal distribution around the last sample is used.
-The proposal is then accepted with probability $\textrm{max}\left(\frac{\mathbf{P}(\theta_{\textrm{new}})}{\mathbf{P}(\theta_{\textrm{old}})}, 1\right)$ \cite[p. 365f.]{mckay}.
+The proposal is then accepted with probability $\textrm{max}\left(\frac{P(\theta_{\textrm{new}})}{P(\theta_{\textrm{old}})}, 1\right)$ \cite[p. 365f.]{mckay}.
 
 I will not go into detail on why the Metropolis algorithm works, but I do want to at least mention the fundamentals of Markov chain Monte Carlo.
 Markov chain Monte Carlo methods get their name from the fact that their samples form a Markov chain.
@@ -402,17 +405,18 @@ Nested Sampling, introduced by Skilling \cite{skilling}, is an algorithm that co
 In this section, I derive the Nested Sampling algorithm, explaining the main ideas along the way.
 
 \FloatBarrier
-\subsection{From a multi- to a one-dimensional Integral}
+\subsection{From a Multi- to a One-Dimensional Integral}
 We start by reducing the potentially multidimensional evidence integral from (\ref{eq:evidence}) to a one-dimensional integral.
 To this end, we first replace the likelihood in the evidence integral by its layer cake representation, a tool borrowed from measure theory \cite[26]{liebloss}.
-For a quick derivation of the layer cake representation, let us define the indicator function $\mathbbm{1}_S(x)$  and the super level set $\{f(\theta) \, > \, t\}$:
+For a quick derivation of the layer cake representation, let us define the indicator function $\mathbbm{1}_S(x)$:
 \begin{align*}
-    \mathbbm{1}_S(x) &:= \begin{cases}
+    \mathbbm{1}_{S}(x) &:= \begin{cases}
         1, & \textrm{if } x \in S \\
         0, & \textrm{otherwise}
-    \end{cases} \\
-    \{f(\theta) \, > \, t\} &:= \{ \theta \in \Theta \, | \, f(\theta) > t \}
+    \end{cases}
 \end{align*}
+We will often use the indicator function with an abbreviated set notation.
+For some predicate $p: X \rightarrow \{\textrm{true}, \textrm{false}\}$, $\{\,p(x)\,\}$ is short for $\{x \,|\, x \in X,\; p(x) \}$, and $\mathbbm{1}_{\{\,p(x)\,\}} (x)$ is 1 exactly when $p(x)$ is true.
 With these definitions we rewrite $L(\theta)$ as its layer cake representation:
 \begin{align*}
     L(\theta) 
@@ -431,12 +435,13 @@ Now we plug this layer cake representation of $L(\theta)$ into the evidence inte
 \end{align}
 We may swap the integrals in step (\ref{eq:tonelli}) thanks to Tonelli's theorem \cite[147]{measure_theory}.
 With that, we have defined one of the key functions of Skilling's original paper \cite{skilling}.
-$\mu$ returns, for a given likelihood-threshold $\lambda$, the amount of prior mass which exists above that likelihood threshold:
+$\mu: \mathbbm{R} \rightarrow [0,1]$ returns, for a given likelihood-threshold $\lambda$, the amount of prior mass which exists above that likelihood threshold:
 \begin{align}
 \mu(\lambda) 
 = \int_\Theta \mathbbm{1}_{\{ L(\theta) \, > \, \lambda \}}(\theta) \, \pi(\theta) \; d\theta
 = \int_{\{L(\theta) \,>\, \lambda\}} \pi(\theta) \; d\theta \label{eq:mu_definition}
 \end{align}
+It is a monotonically decreasing function with $\mu(0) = 1$ and $\lim_{\lambda \rightarrow \infty} \mu(\lambda) = 0$.
 A visualization is given in Figure \ref{fig:xlambda}.
 
 \begin{figure}
@@ -506,7 +511,8 @@ We will reformulate the current version of the evidence integral, (\ref{eq:integ
 Note that $\left(\lim_{\lambda \rightarrow \infty} \mu(\lambda) \lambda\right) = 0$ in (\ref{eq:integral_3}) because $\mu(\lambda)$ becomes $0$ after some finite value for $\lambda$.
 The substitution used in (\ref{eq:integral_4}) is $X = \mu(\lambda)$.
 
-Following Skilling's notation, we call the inverse of the prior mass function, $\mu^{-1}$, by the name $\mathcal{L}$.
+Following Skilling's notation, we denote the inverse of the prior mass function, $\mu^{-1}$, by $\mathcal{L}$.
+This inverse exists because of $\mu$'s monotonicity.
 It returns the corresponding likelihood threshold $\mathcal{L}(X)$ to a given prior mass $X \in [0,1]$.
 \begin{align}
     Z = \int_0^1 \mu^{-1}(X) \; dX = \int_0^1 \mathcal{L}(X) \; dX
@@ -521,7 +527,7 @@ The next section is about estimating this integral.
 \subsection{Sampling and Sorting}
 
 Imagine we had uniformly sampled $n$ prior mass values $X_i \in [0,1] \; \forall i \in \{1, ..., n\}$.
-We could use $\mathcal{L}$ to compute their likelihood thresholds and sort them from lowest to highest.
+We could then use $\mathcal{L}$ to compute their likelihood thresholds and sort them from lowest to highest.
 Since $\mathcal{L}$ is a decreasing function, this would also sort the $X_i$ in decreasing order of their own values.
 For simpler notation, the $X_i$'s sorting follows their indices.
 Imagine we had assigned them these indices after sorting.
@@ -622,7 +628,7 @@ In the case of there being two equal likelihood thresholds, we may randomly add 
         ];
         \end{axis}
     \end{tikzpicture}
-    \caption{Visualization of how the evidence integral can be approximated using prior mass samples $X_i$ sorted by their likelihoods, in this case using an upper sum. The shaded region is the approximate evidence. Based on a graphic in \cite[4]{skilling}.}
+    \caption{Visualization of how the evidence integral can be approximated using prior mass samples $X_i$ sorted by their likelihoods, in this case using an upper sum. The shaded region is the approximate evidence. Based on a figure in \cite[4]{skilling}.}
     \label{fig:integral_approximate}
 \end{figure}
 
@@ -640,9 +646,10 @@ We can prove that their corresponding prior masses are uniformly distributed.
 
 \FloatBarrier
 \vspace{0.45cm}
-\hrule \vspace{-0.45cm} %TODO: CHECK THAT THERE IS NO PAGE BREAK HERE
+\hrule \vspace{-0.45cm}
 \subsubsection{Proof: Prior Masses of Prior Samples are Uniformly Distributed}
-Let $\mathbb{T}$ be a random variable with the PDF $f_{\mathbb{T}}(\theta) = \pi(\theta)$; it represents samples from our prior.
+Let $\mathbb{T}$ be a random variable representing samples from our prior.
+Its PDF is thus $f_{\mathbb{T}}(\theta) = \pi(\theta)$.
 Let $\mathbb{L} = L(\mathbb{T})$ and $\mathbb{M} = \mu(\mathbb{L})$ also be random variables.
 $\mathbb{M}$ represents the prior masses.
 We want to prove that $\mathbb{M}$ follows a uniform distribution.
@@ -656,9 +663,9 @@ We can derive a nice formula for its PDF by starting with its definition as a ma
 Because $\mathbb{L}$ is a deterministic function of $\mathbb{T}$, the conditional density $f_{\mathbb{L} \,|\, \mathbb{T}}(\lambda \,|\, \theta)$ has to have $L(\theta)$ as the only possible outcome.
 This can be modeled using the Dirac delta function $\delta(x)$, which is defined to have the following property:
 \begin{equation}
-    \int_0^\infty f(x) \, \delta(x - y) \, dx = f(y), \label{eq:dirac_delta_property}
+    \int_{-\infty}^\infty f(x) \, \delta(x - y) \, dx = f(y), \label{eq:dirac_delta_property}
 \end{equation}
-and can informally be imagined as being zero everywhere expect at $x=0$, where it has an infinitely large spike \cite[600]{mckay}.
+and can informally be imagined as being zero everywhere except at $x=0$, where it has an infinitely large spike \cite[600]{mckay}.
 Modeling $f_{\mathbb{L} \,|\, \mathbb{T}}(\lambda \,|\, \theta) = \delta(\lambda - L(\theta))$, we can plug the result into (\ref{eq:L_integral}):
 \begin{equation*}
     f_\mathbb{L}(\lambda) = \int_\Theta \delta(\lambda - L(\theta)) \, \pi(\theta) \, d\theta,
@@ -701,7 +708,7 @@ This would generally, however, lead to horribly inaccurate estimates.
 Because the area of the sample space with high likelihood values is generally very small and away from the high prior values (where the prior samples will concentrate), finding samples with high likelihood that contribute significantly to the evidence would be difficult \cite[7]{skilling}.
 The next section shows how this problem is solved in Nested Sampling.
 
-\subsection{Introducing a likelihood constraint} 
+\subsection{Introducing a Likelihood Constraint} 
 Nested Sampling generates contributions to the evidence as in (\ref{eq:approx_evidence}) iteratively.
 This allows us to modify how the contributions are sampled as the algorithm goes along.
 Specifically, we can introduce a constraint that forces new contributions to be sampled in regions of higher likelihood.
@@ -710,7 +717,7 @@ This solves the problem of prior samples missing the regions with significant po
 We need an ensemble of prior samples to use our strategy for estimating prior masses from the last section, so we start by drawing $n$ prior samples $\theta_1, ..., \theta_n$, which we call the live points.
 Then we take the sample with the lowest likelihood, $\theta_{\textrm{min}}$ remove it from the live points and save it as a dead point.
 We also use it to compute the first contribution to the evidence as in (\ref{eq:approx_evidence}), which is the product of its likelihood and an estimate of its prior mass shell.
-Because $\theta_{min}$ has the smallest likelihood of all live points, it will also have the largest associated prior mass, $X_1$. 
+Because $\theta_{\textrm{min}}$ has the smallest likelihood of all live points, it will also have the largest associated prior mass, $X_1$. 
 This lets us simplify the estimate of its prior mass shell:
 $$
     \Delta X_1 = X_0 - X_1 = 1 - X_1
@@ -718,9 +725,9 @@ $$
 $X_1$ follows a $\textrm{Beta}(n,1)$ distribution and, one of the properties of the Beta distribution is that if $\mathbb{X} = 1 - \mathbb{Y}$ and $\mathbb{Y} \sim \textrm{Beta}(a,b)$, then $\mathbb{X} \sim \textrm{Beta}(b,a)$ \cite[5.17.2.]{beta_dist}.
 So $\Delta X_1$ follows a $\textrm{Beta}(1,n)$ distribution, and we can again estimate it either by sampling or by using the mean.
 
-The likelihood of $\theta_{min}$ becomes the likelihood constraint $L^*$, meaning all points we sample thereafter have to have a likelihood higher than it.
+The likelihood of $\theta_{\textrm{min}}$ becomes the likelihood constraint $L^*$, meaning all points we sample thereafter have to have a likelihood higher than it.
 Luckily, all other live points already fulfill this constraint, since we chose the one with the lowest likelihood to remove.
-This means we only have to draw one new live point according to the constraint, $\theta_{\textrm{new}} \sim \pi(\theta) \, \mathbbm{1}_{\{L(\theta) > L*\}}(\theta)$.
+This means we only have to draw one new live point according to the constraint, $\theta_{\textrm{new}} \sim \pi(\theta) \, \mathbbm{1}_{\{L(\theta) \,>\, L*\}}(\theta)$.
 We call this step likelihood-restricted prior sampling (LRPS).
 Having sampled a new live point, we again take the sample with the lowest likelihood, remove it from the live points, add its contribution to the evidence and set its likelihood as the new likelihood constraint, etc.
 
@@ -742,12 +749,12 @@ The stopping threshold determines how much of the evidence to accumulate, while 
 The more live points we keep, the more likely we are to find and explore small peaks in the likelihood, making the evidence estimate more accurate.
 More live points also cause the algorithm to take longer, since each evidence contribution will be associated with a smaller prior mass.
 The number of iterations required to fulfill the same stopping threshold scales linearly with the number of live points.
-Specifically, the run time of nested sampling can be described as $T \sim T_L \cdot n_{\textrm{live}} \cdot f_{\textrm{sampler}} \cdot \mathcal{D}_{\textrm{KL}}$, where
+Specifically, the run time of nested sampling can be described as $T \sim T_L \cdot n_{\textrm{live}} \cdot f_{\textrm{sampler}} \cdot \mathcal{D}_{\textrm{KL}}$ \cite[1]{nested_sampling_talk}, where
 \begin{itemize}
     \item $T_L$ is the time required to evaluate the likelihood once,
     \item $n_{\textrm{live}}$ is the number of live points,
     \item $T_{\textrm{LRPS}}$ is the mean time required for the LRPS step over the course of the run,
-    \item and $\mathcal{D}_{\textrm{KL}}$ is the Kullback-Leibler Divergence \cite[6]{kld} between prior and posterior \cite[1]{nested_sampling_talk}.
+    \item and $\mathcal{D}_{\textrm{KL}}$ is the Kullback-Leibler Divergence \cite[6]{kld} between prior and posterior.
 \end{itemize}
 See Algorithm \ref{alg:nested_sampling} for an overview of the Nested Sampling procedure and see a visualization in Figure \ref{fig:ns_eggcrate_example}.
 
@@ -781,14 +788,14 @@ See Algorithm \ref{alg:nested_sampling} for an overview of the Nested Sampling p
     \centering
     \includegraphics[trim={3cm 1cm 2.4cm 1cm}, clip, scale=0.65]{figs/ns_eggcrate_example_1.png}
     \includegraphics[trim={2.4cm 1cm 3cm 1cm}, clip, scale=0.65]{figs/ns_eggcrate_example_2.png}
-    \caption{Intermediate states of two Nested Sampling runs on an eggcrate-shaped likelihood with a uniform prior. Black crosses are dead points, red crosses are live points. All live points are inside the current likelihood constraint contour. The likelihood is visualized by the colored background, lighter colors represent higher likelihood values. The left image shows an earlier iteration than the right one, as can be seen by the lower number of dead points and the looser likelihood constraint contours.}
+    \caption{Intermediate states of a Nested Sampling run on an eggcrate-shaped likelihood with a uniform prior. Black crosses are all dead points up to this point, red crosses are live points. All live points are inside the current likelihood constraint contour. The likelihood is visualized by the colored background, lighter colors represent higher likelihood values. The left image shows an earlier iteration than the right one, as can be seen by the lower number of dead points and the looser likelihood constraint contours.}
     \label{fig:ns_eggcrate_example}
 \end{figure}
 
 Having explained the main ideas of Nested Sampling, let us now get into the details of the most computationally intensive and least clearly defined step of it, LRPS.
 
 \FloatBarrier
-\section{Likelihood-restricted prior sampling}
+\section{Likelihood-Restricted Prior Sampling}
 In the sampling of new points from the likelihood-restricted prior lies most of the computational work of Nested Sampling.
 The original paper by Skilling provides little guidance for this step, only that "such points will usually be found by some MCMC approximation, ..." \cite[6]{skilling}
 In this section, we summarize multiple ways to do LRPS while presenting their advantages and drawbacks, working our way up from the simplest methods to more complex ones.
@@ -800,7 +807,7 @@ If it does, we accept the sample; otherwise, we reject it.
 
 Rejection Sampling is infeasible for larger models due to it being terribly inefficient in higher dimensions.
 The acceptance rate of the generated samples is proportional to how much of the prior mass is inside the likelihood constraint.
-Since the prior mass inside the likelihood constraint is expected to shrink by a factor of $\frac{1}{1+n}$ (mean of the $\textrm{Beta}(1, n)$ distribution) each iteration, the acceptance rate quickly plummets, leading to most proposals being rejected.
+Since the prior mass inside the likelihood constraint is expected to shrink by a factor of $\frac{1}{1+n}$ (mean of the $\textrm{Beta}(1, n)$ distribution) in each iteration, the acceptance rate quickly plummets, leading to most proposals being rejected.
 
 \subsection{Discretized LRPS}
 Another simple, non-MCMC method for LRPS involves discretizing the sample space into a uniform grid.
@@ -812,7 +819,7 @@ Since the number of grid points scales exponentially with the dimensionality of 
 \subsection{Metropolis Algorithm}
 The Metropolis algorithm, already sketched out in Section 1.1, is an MCMC method generating dependent samples using a proposal distribution.
 The proposal distribution, often a normal distribution, creates a proposal $\theta_p$ based on the last sample $\theta$.
-This proposal is then accepted with a probability $\textrm{max}\left(\frac{P(\theta_p)}{P(\theta)}, 1\right)$.
+This proposal is then accepted with a probability $\textrm{min}\left(\frac{P(\theta_p)}{P(\theta)}, 1\right)$.
 In LRPS, this process is repeated a given number of times to decorrelate the samples.
 The more intermediate samples are drawn, the less the first and last sample correlate.
 Proposals which do not satisfy the likelihood constraint are never accepted.
@@ -837,7 +844,7 @@ If the proposal distribution is not symmetric, the standard Metropolis algorithm
 \begin{figure}
     \centering
     \includegraphics[scale=0.5]{figs/metropolis_example.png}
-    \caption{Visualization of the Metropolis algorithm in a two-dimensional sample space. The dotted line indicates the likelihood constraint boundary, the dot is the starting point and each cross is a sampled point.}
+    \caption{Visualization of the Metropolis algorithm in a two-dimensional sample space. The dashed line indicates the likelihood constraint boundary, the dot is the starting point and each cross is a sampled point.}
     \label{fig:metropolis_example}
 \end{figure}
 
@@ -851,7 +858,7 @@ A simple approach is to decrease the step size by some factor each time a sample
 More nuanced methods for step size adaptation have been developed as well \cite{automala}, but will not be covered in this thesis.
 
 \subsection{Hamiltonian Monte Carlo}
-Hamiltonian Monte Carlo (HMC) is a widely used MCMC algorithm for Bayesian model fitting.
+Hamiltonian Monte Carlo (HMC) \cite{hmc_origin} is a widely used MCMC algorithm for Bayesian model fitting.
 Normally used to sample from the posterior of a Bayesian model all on its own, we can also appropriate it for LRPS.
 As the theory behind HMC is quite involved, I will only give an overview of the algorithm, not delving into the reasons for why it works.
 
@@ -863,7 +870,7 @@ One can imagine this as a hills-and-valleys landscape.
 Each sample is viewed as a movable particle in this space.
 Starting with a sample, a random, normally distributed vector is drawn.
 This vector represents a momentum that the sample particle has.
-The path of the particle across the landscape with its given starting momentum is then simulated using a special type of solver for partial differential equations called a symplectic integrator.
+The path of the particle across the landscape with its given starting momentum is then simulated using a special type of solver for the ordinary differential equations describing the dynamics of the particles which is called a symplectic integrator.
 At an arbitrarily chosen point of time, the particle is stopped.
 The resulting position of the sample is then treated like a Metropolis proposal and accepted with probability based on the ratio of probability values of the proposal and the last sample.
 A visualization of this process can be seen in Figure \ref{fig:hmc_example}.
@@ -885,7 +892,7 @@ In this case, it is reflected off the boundary to stay inside the valid region.
 This version of HMC was introduced by Betancourt in \cite{hmc_in_ns}.
 
 Like the Metropolis Algorithm, HMC for LRPS requires an adaptive step size.
-Without it, because the valid region to sample from becomes arbitrarily small, there would come a point at which the step size is so large that HMC has to reflect with every integration step.
+Without it, because the valid region to sample from becomes arbitrarily small, Nested Sampling would reach a likelihood level at which the step size is so large that HMC has to reflect with every integration step.
 This causes problems since the likelihood gradient used for reflection is calculated at the end of the integration step that lands outside the likelihood constraint.
 If the step size is very large in relation to the valid sampling area, the gradient will be calculated far away from the actual constraint boundary, leading to inaccurate reflection and biased sampling.
 See the visualization in Figure \ref{fig:hmc_reflection_example}.
@@ -894,15 +901,15 @@ See the visualization in Figure \ref{fig:hmc_reflection_example}.
     \centering
     \includegraphics[scale=0.45]{figs/hmc_reflection_example.png}
     \includegraphics[scale=0.45]{figs/hmc_reflection_degenerate_example.png}
-    \caption{Left: An iteration of HMC for LRPS with reflection and a chain of five samples on a standard-normal-likelihood-restricted uniform prior space.
-    The black dot is the starting spot, each blue cross is a generated sample. Right: A later iteration of the same example. Note how every integration step contains a reflection and how far away the reflection points are from the actual boundary.}
+    \caption{Left: An iteration of HMC for LRPS with reflection consisting of five samples on a standard-normal-likelihood-restricted uniform prior space.
+    The black dot is the starting spot, each cross is a generated sample. Right: A later iteration of the same example. Note how every integration step contains a reflection and how far away the reflection points are from the actual boundary.}
     \label{fig:hmc_reflection_example}
 \end{figure}
 
-Having introduced Nested Sampling, we require one more piece of background knowledge before we are ready to tackle the contributions this thesis makes.
+Having introduced Nested Sampling, we require one more piece of background knowledge before we are ready to tackle the contributions of this thesis.
 \FloatBarrier
 \section{The Barrier Method}
-This section provides an introduction to the Barrier Method, an algorithm for solving constrained convex optimization problems.
+This section provides an introduction to the Barrier Method \cite[568]{boyd}, an algorithm for solving constrained convex optimization problems.
 We will later incorporate ideas of this method into Nested Sampling.
 
 The Barrier Method is used to solve optimization problems of the form
@@ -928,7 +935,7 @@ with $I(u)$ being defined as follows:
 By applying an infinitely large penalty to infeasible points, (\ref{eq:cvxproblem_unconstrained}) accurately represents the original problem.
 However, because the added terms are not differentiable, we would no longer be able to use gradient information to solve this formulation of the problem.
 This is a problem because gradients are key to solving optimization problems.
-In particular, the most fundamental solver, Newton's Method, relies on being able to differentiate the objective function \cite[563]{boyd}.
+In particular, the most fundamental solver, Newton's Method, requires that the objective function is differentiable \cite[563]{boyd}.
 
 To circumvent this shortcoming, we approximate $I$ using the differentiable log barrier function:
 \begin{align}
@@ -1038,7 +1045,7 @@ In the next chapter, we incorporate this idea into the LRPS step of Nested Sampl
 
 \section{Motivation}
 As was shown in Section 1.4, LRPS is difficult.
-Because the likelihood constraint grows tighter and the ratio of valid area to the area of the whole sample space decreases steadily, finding samples within the constraint boundary becomes more difficult with every Nested Sampling iteration.
+Because the likelihood constraint grows tighter and the ratio of the valid area to the area of the whole sample space decreases steadily, finding samples within the constraint boundary becomes more difficult with every Nested Sampling iteration.
 For methods like Rejection Sampling and the Metropolis algorithm, this manifests in low acceptance rates of proposals, which lead to wasted computational work, or (if an adaptive step size is used) in highly correlated samples.
 For HMC adapted to LRPS, detecting the point at which the particle breaches the likelihood constraint boundary and must be reflected also becomes harder, since the distance the particle can travel before leaving the valid region decreases with each iteration.
 All these methods only notice the likelihood constraint boundary once they have crossed it.
@@ -1050,7 +1057,7 @@ The log barrier also softens a hard constraint function and allows the optimizat
 This leads us to the main idea of this thesis: incorporating the log barrier from the Barrier Method into the LRPS step of Nested Sampling.
 
 \section{Derivation}
-\subsection{Deriving the log barrier term}
+\subsection{Deriving the Log Barrier Term}
 In this section we draw parallels between LRPS and convex optimization to find a way to use log barriers in a probabilistic setting.
 
 Convex optimization is concerned with minimizing a function constrained by a set of convex functions (as can be seen in (\ref{eq:cvxproblem})).
@@ -1086,7 +1093,7 @@ Next, we generate the associated approximate problem using log barriers (see (\r
 Then we negate and exponentiate the objective function to return to a maximization problem in probability space:
 \begin{align}
     &\textrm{minimize} \quad -\log(\pi(\theta)) - \frac{1}{t}\log(l(\theta) - l^*) \nonumber\\
-    \iff \; &\textrm{maximize} \quad \exp(-(-\log(\pi(\theta)) - \frac{1}{t}\log(l(\theta) - l^*))) \nonumber\\
+    \iff \; &\textrm{maximize} \quad \exp\left(-\left(-\log(\pi(\theta)) - \frac{1}{t}\log(l(\theta) - l^*)\right)\right) \nonumber\\
     \iff \; &\textrm{maximize} \quad \pi(\theta) \, (l(\theta) - l^*)^{\frac{1}{t}} \label{eq:last_optimization_problem}
 \end{align}
 We obtain a term that will be important for the rest of this thesis, the log barrier term:
@@ -1097,7 +1104,7 @@ For valid $\theta$, the log barrier term decreases as the (log-)likelihood of $\
 When used as a factor to the prior as in (\ref{eq:last_optimization_problem}), this discourages the sampling of $\theta$ closer to the likelihood constraint boundary, effectively letting the sampler feel the boundary before crossing it.
 In the next section we integrate this term into Nested Sampling.
 
-\subsection{Incorporating the log barrier term}
+\subsection{Incorporating the Log Barrier Term}
 Having derived a term that represents a log barrier in probability space, we are now looking for a way to use it during LRPS without introducing a bias into our sampler.
 
 To this end, we expand the sampling space by adding a one-dimensional real variable $q$, taking values in $(q_{\textrm{min}}, q_{\textrm{max}})$:
@@ -1115,10 +1122,10 @@ By applying Bayes' rule to the marginal distributions of $\theta$ and $q$, we ca
     &= \frac{P(D \,|\, \theta) \, P(\theta)}{\int_\Theta P(D \,|\, \theta) \, P(\theta) \, d\theta} \, \frac{P(D \,|\, q) \, P(q)}{\int_Q P(D \,|\, q) \, P(q) \, dq} \nonumber\\
     &= \frac{P(D \,|\, \theta) \, P(\theta) \, P(D \,|\, q) \, P(q)}{\int_\Theta P(D | \theta) \, P(\theta) \, d\theta \, \int_Q P(D \,|\, q) \, P(q) \, dq} \nonumber\\
     &= \frac{P(D \,|\, \theta) \, P(D \,|\, q) \; P(\theta) \, P(q)}{\int_\Theta P(D | \theta) \, P(\theta) \, d\theta \, \int_Q P(D \,|\, q) \, P(q) \, dq} \nonumber\\
-    &= \frac{L(\theta) \, L(q) \; \pi(\theta) \, \pi(q)}{Z_\theta \, Z_q} \label{eq:recognize_bayes}\\
+    &= \frac{L_\theta(\theta) \, L_q(q) \; \pi_\theta(\theta) \, \pi_q(q)}{Z_\theta \, Z_q} \label{eq:recognize_bayes}\\
     &= \frac{L(\theta, q) \; \pi(\theta, q)}{Z_{\theta, q}} \nonumber
 \end{align}
-In (\ref{eq:recognize_bayes}), we recognize Bayes' rule on the combined space $(\theta, q)$ and define $L(\theta, q) = L(\theta) \, L(q)$, $\pi(\theta, q) = \pi(\theta) \, \pi(q)$ and $Z_{\theta, q} = Z_\theta \, Z_q$ accordingly.
+In (\ref{eq:recognize_bayes}), we recognize Bayes' rule on the combined space $(\theta, q)$ and define $L(\theta, q) = L_\theta(\theta) \, L_q(q)$, $\pi(\theta, q) = \pi_\theta(\theta) \, \pi_q(q)$ and $Z_{\theta, q} = Z_\theta \, Z_q$ accordingly.
 This lets us freely choose the likelihood and prior of our new variable $q$.
 It also shows that we can perform Nested Sampling on the $(\theta, q)$-space and recover the original evidence as $Z_\theta = \frac{Z_{\theta, q}}{Z_q}$.
 
@@ -1134,27 +1141,28 @@ By first sampling from the marginal distribution of $\theta$, we can then use th
     \theta &\sim  \bar{\pi}(\theta \,|\, L^*) \\
     q &\sim  \bar{\pi}(q \,|\, L^*, \theta)
 \end{align*}
-By defining the likelihood of $q$ as $L(q) = \frac{1}{q}$, we can reshape the likelihood-restricted priors:
+By defining the likelihood of $q$ as $L_q(q) = \frac{1}{q}$, we can reshape the likelihood-restricted priors:
 \begin{align*}
     \bar{\pi}(\theta \,|\, L^*) &= \int_{q_{\textrm{min}}}^{q_{\textrm{max}}} \bar{\pi}(\theta, q \,|\, L^*) \; dq \\
-    &= \int_{q_{\textrm{min}}}^{q_{\textrm{max}}} \pi(\theta) \, \pi(q) \, \mathbbm{1}_{\{L(\theta, q) \,>\, L^*\}} \; dq \\
-    &= \pi(\theta) \int_{q_{\textrm{min}}}^{q_{\textrm{max}}} \pi(q) \, \mathbbm{1}_{\{L(\theta) \, L(q) \,>\, L^*\}} \; dq \\
-    &= \pi(\theta) \int_{q_{\textrm{min}}}^{q_{\textrm{max}}} \pi(q) \, \mathbbm{1}_{\{L(\theta) / q \,>\, L^*\}} \; dq \\
-    &= \pi(\theta) \int_{q_{\textrm{min}}}^{q_{\textrm{max}}} \pi(q) \, \mathbbm{1}_{\{q \,<\, L(\theta) / L^*\}} \; dq \\
-    &= \pi(\theta) \int_{q_{\textrm{min}}}^{L^* / L(\theta)} \pi(q) \; dq \\
-    &= \pi(\theta) \; \Pi_q(L(\theta) / L^*) \\
-    \bar{\pi}(q \,|\, L^*, \theta) &= \pi(q) \, \mathbbm{1}_{\{q < L(\theta) / L^*\}}
+    &= \int_{q_{\textrm{min}}}^{q_{\textrm{max}}} \pi_\theta(\theta) \, \pi_q(q) \, \mathbbm{1}_{\{L(\theta, q) \,>\, L^*\}}(\theta, q) \; dq \\
+    &= \pi_\theta(\theta) \int_{q_{\textrm{min}}}^{q_{\textrm{max}}} \pi_q(q) \, \mathbbm{1}_{\{L_\theta(\theta) \, L_q(q) \,>\, L^*\}}(\theta, q) \; dq \\
+    &= \pi_\theta(\theta) \int_{q_{\textrm{min}}}^{q_{\textrm{max}}} \pi_q(q) \, \mathbbm{1}_{\{L_\theta(\theta) / q \,>\, L^*\}}(\theta, q) \; dq \\
+    &= \pi_\theta(\theta) \int_{q_{\textrm{min}}}^{q_{\textrm{max}}} \pi_q(q) \, \mathbbm{1}_{\{q \,<\, L_\theta(\theta) / L^*\}}(\theta, q) \; dq \\
+    &= \pi_\theta(\theta) \int_{q_{\textrm{min}}}^{L^* / L_\theta(\theta)} \pi_q(q) \; dq \\
+    &= \pi_\theta(\theta) \; \Pi_q(L_\theta(\theta) / L^*) \\
+    \bar{\pi}(q \,|\, L^*, \theta) &= \pi_q(q) \, \mathbbm{1}_{\{q < L_\theta(\theta) / L^*\}}
 \end{align*}
-Where $\Pi_q$ is the CDF of $q$.
+Where $\Pi_q$ is the antiderivative of $\pi_q$, i.e. the CDF of $q$.
 Since we are free to define $\Pi_q$ however we want, we can use it to insert the log barrier term from (\ref{eq:log_barrier_term}):
-\begin{align*}
-    \Pi_q(L(\theta) / L^*) &\overset{!}{=} (l(\theta) - l^*)^{\frac{1}{t}} \\
-    \Pi_q(L(\theta) / L^*) &=(\log(L(\theta)) - \log(L^*))^{\frac{1}{t}} \\
-    \Pi_q(L(\theta) / L^*) &= \log(L(\theta) / L^*)^{\frac{1}{t}} \\
-    \textrm{let } q &= L(\theta) / L^* \\
-    \Pi_q(q) &= \log(q)^{\frac{1}{t}}
-\end{align*}
+\begin{align}
+    \Pi_q(L_\theta(\theta) / L^*) &\overset{!}{=} (l_\theta(\theta) - l^*)^{\frac{1}{t}}  \nonumber\\
+    \Pi_q(L_\theta(\theta) / L^*) &=(\log(L_\theta(\theta)) - \log(L^*))^{\frac{1}{t}} \nonumber\\
+    \Pi_q(L_\theta(\theta) / L^*) &= \log(L_\theta(\theta) / L^*)^{\frac{1}{t}} \nonumber\\
+    \textrm{let } q &= L_\theta(\theta) / L^* \label{eq:setting_qmin}\\
+    \Pi_q(q) &= \log(q)^{\frac{1}{t}} \nonumber
+\end{align}
 With this, we have defined the shape of the CDF of $q$ in such a way that the log barrier term appears in LRPS.
+In (\ref{eq:setting_qmin}), we implicitly define $q_{\textrm{max}} = 1$, since $L_\theta(\theta)$ always has to be larger than $L^*$ to satisfy the likelihood constraint.
 However, as can be seen in Figure \ref{fig:unnormalized}, the CDF of $q$ is unnormalized unless we choose $q_{\textrm{max}}=e$.
 
 \begin{figure}
@@ -1197,8 +1205,6 @@ We called the normalized version $\hat{\Pi}_q$:
 $$
 \hat{\Pi}_q(q) = \frac{\Pi_q(q)}{\Pi_q(q_{\textrm{max}})} \quad \textrm{if } q \in (1, q_{\textrm{max}})
 $$
-Note that there is no need to shift $\hat{\Pi}_q$ to have value $0$ at a different $q_{\textrm{min}}$ than $1$.
-$q_{\textrm{min}}=1$ is a natural choice as $\hat{\Pi}_q(L(\theta) - L^*)$ should be $0$ for $L(\theta) - L^* < 1$, because then the likelihood constraint is not satisfied.
 In all, we define the CDF for $q$ as follows:
 $$
 \hat{\Pi}_q(q) = 
@@ -1211,7 +1217,7 @@ $$
 
 Differentiating $\hat{\Pi}_q$ gives us the PDF of $q$:
 $$
-    \frac{\textrm{d} \, \Pi_q}{\textrm{d} \, q} (q) = \pi(q) = 
+    \frac{\textrm{d} \, \Pi_q}{\textrm{d} \, q} (q) = \pi_q(q) = 
     \begin{cases}
         0 & \text{if } q \leq 1 \\
         \frac{\log(q)^{\frac{1}{t}-1}}{tq\log(q_{\textrm{max}})^\frac{1}{t}} & \text{if } q \in (1, q_{\textrm{max}})\\
@@ -1224,9 +1230,9 @@ This lets us write down the modified version of Nested Sampling in Algorithm \re
 The changes from the original are the following:
 \begin{enumerate}
     \item For each starting $\theta$, also sample a $q$.
-    \item Use the joint likelihoods of $\theta$ and $q$, $L(\theta, q) = \frac{L(\theta)}{q}$, instead of just the likelihood of $\theta$.
-    \item Sample new $\theta$ from the modified constrained prior $\pi_\theta(\theta) \, \Pi_q(l(\theta) - l^*)$.
-    \item Sample new $q$ from the constrained prior $\pi_q(q) \, \mathbbm{1}_{\{q < L(\theta_{\textrm{new}}) / L^*\}}$ dependent on the sampled $\theta$.
+    \item Use the joint likelihoods of $\theta$ and $q$, $L(\theta, q) = \frac{L_\theta(\theta)}{q}$, instead of just the likelihood of $\theta$.
+    \item Sample $\theta_{\textrm{new}}$ from the modified constrained prior $\pi_\theta(\theta) \, \Pi_q(l_\theta(\theta) - l^*)$.
+    \item Sample $q_{\textrm{new}}$ from the constrained prior $\pi_q(q) \, \mathbbm{1}_{\{q < L_\theta(\theta_{\textrm{new}}) / L^*\}}$ dependent on the sampled $\theta_{\textrm{new}}$.
     \item Divide out $Z_q(t, q_{\textrm{max}})$ from the evidence before returning it.
 \end{enumerate}
 \vspace{0.25cm}
@@ -1250,8 +1256,8 @@ The changes from the original are the following:
             \State $mass\_shell \gets mass \cdot f$
             \State $mass \gets mass - mass\_shell$
             \State $Z \gets Z + mass\_shell \cdot L_{\textrm{min}}$
-            \State sample $\theta_{\textrm{new}}$ from $\hat{\pi}_\theta(\theta) \, \Pi_q(l(\theta) - l^*)$
-            \State sample $q_{\textrm{new}}$ from $\pi_q(q) \, \mathbbm{1}_{\{q \,<\, L(\theta_{\textrm{new}}) / L^*\}}$
+            \State sample $\theta_{\textrm{new}}$ from $\hat{\pi}_\theta(\theta) \, \Pi_q(l_\theta(\theta) - l^*)$
+            \State sample $q_{\textrm{new}}$ from $\pi_q(q) \, \mathbbm{1}_{\{q \,<\, L_\theta(\theta_{\textrm{new}}) / L^*\}}(\theta)$
             \State append $(\theta_{\textrm{new}}, q_{\textrm{new}})$ to $live\_points$
             \State $L_{\textrm{max}} \gets \max_{(\theta,q) \, \in \, live\_points} L(\theta, q)$ 
         \Until{$(mass \cdot L_{\textrm{max}}) / Z < \epsilon$}
@@ -1260,14 +1266,14 @@ The changes from the original are the following:
     \end{algorithmic}
 \end{algorithm}
 
-Sampling $q$ from $\pi_q(q) \, \mathbbm{1}_{\{q < L(\theta_{\textrm{new}}) / L^*\}}$ is simple.
+Sampling from $\pi_q(q) \, \mathbbm{1}_{\{q < L_\theta(\theta_{\textrm{new}}) / L^*\}}$ is simple.
 We can generate samples from $\pi_q(q)$ using inverse transform sampling \cite[23]{bayesian_data_analysis} as $q = \hat{\Pi}^{-1}_q(u)$ for $u \sim \textrm{Uniform}(0,1)$.
-Using this we can generate samples until one satisfies the constraint of $q < L(\theta_{\textrm{new}}) / L^*$.
+Using this we can generate samples until one satisfies the constraint of $q < L_\theta(\theta_{\textrm{new}}) / L^*$.
 Because $q$ is one-dimensional, we can generate millions of samples in milliseconds and need not worry about performance issues.
 
 The $q$-evidence $Z_q$ is a function of $t$ and $q_{\textrm{max}}$, and can be computed analytically:
 \begin{align}
-    Z_q(t, q_{\textrm{max}}) &= \int_1^{q_{\textrm{max}}} L(q) \, \pi(q) \, dq \nonumber\\
+    Z_q(t, q_{\textrm{max}}) &= \int_1^{q_{\textrm{max}}} L_q(q) \, \pi_q(q) \, dq \nonumber\\
     &= \int_1^{q_{\textrm{max}}} \frac{\log(q)^{\frac{1}{t}-1}}{tq^2\log(q_{\textrm{max}})^\frac{1}{t}} \, dq \nonumber\\
     &= \frac{1}{t \log(q_{\textrm{max}})^{\frac{1}{t}}} \int_1^{q_{\textrm{max}}} \frac{\log(q)^{\frac{1}{t}-1}}{q^2} \, dq \nonumber\\
     &\mathrel{\overset{\makebox[0pt]{\mbox{\normalfont\tiny int. by sub.}}}{=}} \quad \frac{1}{t \log(q_{\textrm{max}})^{\frac{1}{t}}} \int_0^{\log(q_{\textrm{max}})} u^{\frac{1}{t}-1} e^{-u} \, du \label{eq:sub_zq_1}
@@ -1295,16 +1301,16 @@ In this section, we analyze the elements of Nested Sampling with Barriers we int
 
 \subsection{Interpreting $q$}
 Each sample from the original $\theta$-space is paired with an auxiliary $q$ in Nested Sampling with Barriers.
-Because $L(\theta, q) = \frac{L(\theta)}{q}$ and $q > 1$, the likelihood of each $\theta$ is reduced by its $q$.
+Because $L(\theta, q) = \frac{L_\theta(\theta)}{q}$ and $q > 1$, the likelihood of each $\theta$ is reduced by its $q$.
 Since $Z_q$ is divided out later, this does not influence the final evidence and is only relevant for the likelihood-threshold each point generates when it is removed from the live points.
 The larger the $q$, the more the likelihood is reduced.
-Since $q$ is sampled from $\pi_q(q) \, \mathbbm{1}_{\{q < L(\theta) / L^*\}}$, the $\theta$ that are further away from the likelihood constraint are expected to have higher $q$ values, reducing their likelihood more.
+Since $q$ is sampled from $\pi_q(q) \, \mathbbm{1}_{\{q < L_\theta(\theta) / L^*\}}$, the $\theta$ that are further away from the likelihood constraint are expected to have higher $q$ values, reducing their likelihood more.
 This can be interpreted as making up for the fact that the log barrier term discourages sampling close to the likelihood constraint.
 If the likelihoods were kept the same, the likelihood constraint would increase much more quickly.
 
 \subsection{Influence of $t$ and $q_{\textrm{max}}$}
-$t$ and $q_{\textrm{max}}$ determine the shape and support of the distribution of $q$.
-Since the log barrier term is incorporated using the CDF of $q$, they also influence how the log barrier term acts.
+Both $t$ and $q_{\textrm{max}}$ determine the shape and support of the distribution of $q$.
+Since the log barrier term is incorporated using the CDF of $q$, the two parameters also influence how the log barrier term acts.
 
 \begin{figure}
     \begin{minipage}{0.45\textwidth}
@@ -1313,8 +1319,11 @@ Since the log barrier term is incorporated using the CDF of $q$, they also influ
                 axis lines=center,
                 xlabel=$q$,
                 x label style={at={(axis description cs:0.5,-0.1)},anchor=north},
+                y label style={at={(axis description cs:-0.15, 0.5)},anchor=east},
+                ylabel=$\pi_q$,
                 xmax=2,
-                scale=0.85
+                ymax=14,
+                scale=0.8
             ]
             \addplot[
                 domain=1:2, 
@@ -1343,8 +1352,10 @@ Since the log barrier term is incorporated using the CDF of $q$, they also influ
                 axis lines=center,
                 xlabel=$q$,
                 x label style={at={(axis description cs:0.5,-0.1)},anchor=north},
+                y label style={at={(axis description cs:-0.15, 0.5)},anchor=east},
+                ylabel=$\Pi_q$,
                 xmax=2,
-                scale=0.85
+                scale=0.8
             ]
             \addplot[
                 domain=1:2, 
@@ -1405,7 +1416,7 @@ An adaptive step size is still worth implementing with this method, since the la
 \begin{figure}
     \centering
     \includegraphics[scale=0.8]{figs/barrier_sampling_hmc.png}
-    \caption{A run of HMC for LRPS with a chain of five samples on a standard-normal-likelihood-restricted uniform prior space.
+    \caption{A run of HMC for LRPS with a chain of five samples on a standard-normal-likelihood-restricted uniform prior.
     The black dot is the starting spot, each black cross is a generated sample.
     The background color shows the negative log density the particles move on, with lighter colors representing higher values.}
     \label{fig:barrier_sampling_hmc}
@@ -1437,7 +1448,9 @@ The following LRPS approaches were used:
     \item HMC (only for Nested Sampling with Barriers, with simple adaptive step size)
     \item an optimal method for sampling inside a $d$-ball (only for the $L_1$-problem with Standard Nested Sampling; labeled ``Ball'' in the figures)  
 \end{itemize}
-We can use the optimal $d$-ball sampler because the valid region in the $L_1$-problem is always a ball.
+We can use the optimal $d$-ball sampler because the valid region in the $L_1$-problem is usually a ball.
+Only at the start, when the valid region is mostly restricted by the prior instead of the likelihood constraint, can the valid region take the shape of the prior instead of a ball.
+In this case, we simply reject all proposals that fall outside the prior.
 The sampler is taken from a paper on the topic of sphere- and ball-sampling by Voelker, Gosmann and Stewart \cite[2]{sphere_sampling}.
 The simple adaptive step size Algorithm adjusts the Metropolis or HMC step size after each proposal.
 If the proposal is accepted, the step size is multiplied by a factor of $1.01$; if it is rejected, the step size is multiplied by $0.99$.
