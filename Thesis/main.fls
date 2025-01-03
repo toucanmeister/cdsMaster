@@ -1127,16 +1127,6 @@ INPUT ./figs/results/params/modes_found_hmc.png
 INPUT figs/results/params/modes_found_hmc.png
 INPUT ./figs/results/params/modes_found_hmc.png
 INPUT ./figs/results/params/modes_found_hmc.png
-INPUT ./figs/results/params/KLDs_metropolis.png
-INPUT ./figs/results/params/KLDs_metropolis.png
-INPUT figs/results/params/KLDs_metropolis.png
-INPUT ./figs/results/params/KLDs_metropolis.png
-INPUT ./figs/results/params/KLDs_metropolis.png
-INPUT ./figs/results/params/KLDs_hmc.png
-INPUT ./figs/results/params/KLDs_hmc.png
-INPUT figs/results/params/KLDs_hmc.png
-INPUT ./figs/results/params/KLDs_hmc.png
-INPUT ./figs/results/params/KLDs_hmc.png
 INPUT ./figs/results/params/iterations_metropolis.png
 INPUT ./figs/results/params/iterations_metropolis.png
 INPUT figs/results/params/iterations_metropolis.png

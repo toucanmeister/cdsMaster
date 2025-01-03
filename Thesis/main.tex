@@ -1570,32 +1570,22 @@ In both the Metropolis and the HMC versions, the value of $q_{\textrm{max}}$ has
 \begin{figure}
     \centering
     {\small \textbf{Evidence Estimate} \par}
-    \includegraphics[trim={3cm 0cm 3cm 0cm}, clip, width=\textwidth]{figs/results/params/logZ_diffs_metropolis.png}
-    \includegraphics[trim={3cm 0cm 3cm 0cm}, clip, width=\textwidth]{figs/results/params/logZ_diffs_hmc.png}
+    \includegraphics[height=0.9\textwidth]{figs/results/params/logZ_diffs_metropolis.png}
+    \includegraphics[height=0.9\textwidth]{figs/results/params/logZ_diffs_hmc.png}
     \caption{Box plot of each configuration's evidence estimate's deviation from the true value. Top: Using Metropolis for LPRS, Bottom: Using HMC for LRPS. Orange lines are the median values, gray crosses are the mean values.}
     \label{fig:results_params_logZ}
 \end{figure}
 
 \subsection{Posterior Modes Found}
-Figure \ref{fig:results_params_modes_found} shows the number of modes found by each configuration, while Figure \ref{fig:results_params_KLDs} shows the KL of the estimated and true mode weights.
+Figure \ref{fig:results_params_modes_found} shows the number of modes found by each configuration.
 While some configurations, like $t = 0.5, q_{\textrm{max}} = 2$ for the Metropolis example, have a slightly higher mean number of modes found, there is no discernible pattern to these fluctuations.
-The KLs are mostly stable across configurations, except for the $q_{\textrm{max}} = 1.1$ versions using HMC, which have higher variance than the other configurations.
-The configuration with $t = 5, q_{\textrm{max}} = 1.1$ is especially problematic, with large outliers bringing its mean KL far above the median.
 \begin{figure}
     \centering
     {\small \textbf{Posterior Modes Found} \par}
-    \includegraphics[trim={3cm 0cm 3cm 0cm}, clip, width=\textwidth]{figs/results/params/modes_found_metropolis.png}
-    \includegraphics[trim={3cm 0cm 3cm 0cm}, clip, width=\textwidth]{figs/results/params/modes_found_hmc.png}
+    \includegraphics[width=\textwidth]{figs/results/params/modes_found_metropolis.png}
+    \includegraphics[width=\textwidth]{figs/results/params/modes_found_hmc.png}
     \caption{Box plots of how many of the two modes were found by each method. The values represent $\frac{m}{2}$, where $m$ is the number of modes found. Top: Using Metropolis for LPRS, Bottom: Using HMC for LRPS. Orange lines are the median values, gray crosses are the mean values.}
     \label{fig:results_params_modes_found}
-\end{figure}
-\begin{figure}
-    \centering
-    {\small \textbf{KL of Mode Weight Estimates} \par}
-    \includegraphics[trim={3cm 0cm 3cm 0cm}, clip, width=\textwidth]{figs/results/params/KLDs_metropolis.png}
-    \includegraphics[trim={2cm 0cm 3cm 0cm}, clip, width=\textwidth]{figs/results/params/KLDs_hmc.png}
-    \caption{Box plots of the KL of estimated and true mode weights. Top: Using Metropolis for LPRS, Bottom: Using HMC for LRPS. Orange lines are the median values, gray crosses are the mean values.}
-    \label{fig:results_params_KLDs}
 \end{figure}
 
 \subsection{Number of Iterations}
@@ -1603,8 +1593,8 @@ With the number of iterations, seen in Figure \ref{fig:results_params_iterations
 \begin{figure}
     \centering
     {\small \textbf{Number of Iterations} \par}
-    \includegraphics[trim={3cm 0cm 3cm 0cm}, clip, width=\textwidth]{figs/results/params/iterations_metropolis.png}
-    \includegraphics[trim={3cm 0cm 3cm 0cm}, clip, width=\textwidth]{figs/results/params/iterations_hmc.png}
+    \includegraphics[height=0.9\textwidth]{figs/results/params/iterations_metropolis.png}
+    \includegraphics[height=0.9\textwidth]{figs/results/params/iterations_hmc.png}
     \caption{Box plots of how many iterations each configuration took to reach the stopping point. Top: Using Metropolis for LPRS, Bottom: Using HMC for LRPS. Orange lines are the median values, gray crosses are the mean values.}
     \label{fig:results_params_iterations}
 \end{figure}
@@ -1617,8 +1607,8 @@ In both cases, $q_{\textrm{max}}$'s influence is opposite of $t$ and stronger fo
 \begin{figure}
     \centering
     {\small \textbf{Acceptance Rate} \par}
-    \includegraphics[trim={3cm 0cm 3cm 0cm}, clip, width=\textwidth]{figs/results/params/acceptance_rates_metropolis.png}
-    \includegraphics[trim={3cm 0cm 3cm 0cm}, clip, width=\textwidth]{figs/results/params/acceptance_rates_hmc.png}
+    \includegraphics[height=0.9\textwidth]{figs/results/params/acceptance_rates_metropolis.png}
+    \includegraphics[height=0.9\textwidth]{figs/results/params/acceptance_rates_hmc.png}
     \caption{Box plots of the ratio of accepted proposals to total proposals made during LRPS for each configuration. Top: Using Metropolis for LPRS, Bottom: Using HMC for LRPS. Orange lines are the median values, gray crosses are the mean values.}
     \label{fig:results_params_acceptance_rates}
 \end{figure}

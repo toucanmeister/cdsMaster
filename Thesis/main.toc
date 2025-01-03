@@ -33,14 +33,14 @@
 \contentsline {subsection}{\numberline {3.1.1}Evidence Estimate}{43}{}%
 \contentsline {subsection}{\numberline {3.1.2}Posterior Modes Found}{44}{}%
 \contentsline {subsection}{\numberline {3.1.3}Number of Iterations}{45}{}%
-\contentsline {subsection}{\numberline {3.1.4}Acceptance Rate}{47}{}%
-\contentsline {subsection}{\numberline {3.1.5}Jump Distance}{48}{}%
+\contentsline {subsection}{\numberline {3.1.4}Acceptance Rate}{45}{}%
+\contentsline {subsection}{\numberline {3.1.5}Jump Distance}{45}{}%
 \contentsline {section}{\numberline {3.2}Influence of $t$ and $q_{\textrm {max}}$}{50}{}%
 \contentsline {subsection}{\numberline {3.2.1}Evidence Estimate}{50}{}%
 \contentsline {subsection}{\numberline {3.2.2}Posterior Modes Found}{50}{}%
 \contentsline {subsection}{\numberline {3.2.3}Number of Iterations}{50}{}%
 \contentsline {subsection}{\numberline {3.2.4}Acceptance Rate}{50}{}%
-\contentsline {subsection}{\numberline {3.2.5}Jump Distance}{53}{}%
-\contentsline {chapter}{\numberline {4}Conclusions}{55}{}%
-\contentsline {chapter}{Bibliography}{57}{}%
-\contentsline {chapter}{Appendix}{60}{}%
+\contentsline {subsection}{\numberline {3.2.5}Jump Distance}{54}{}%
+\contentsline {chapter}{\numberline {4}Conclusions}{56}{}%
+\contentsline {chapter}{Bibliography}{58}{}%
+\contentsline {chapter}{Appendix}{61}{}%
