@@ -1,13 +1,13 @@
 # Fdb version 3
-["biber main"] 1735820841 "main.bcf" "main.bbl" "main" 1735924378
+["biber main"] 1736070933 "main.bcf" "main.bbl" "main" 1736072507
   "bib.bib" 1734363497 9517 d9ea83f70b8ad083d89bb72a6a0aa55a ""
-  "main.bcf" 1735924377 111433 8d47a89b16041e06a053950ab000f2fb "pdflatex"
+  "main.bcf" 1736072506 111433 8d47a89b16041e06a053950ab000f2fb "pdflatex"
   (generated)
   "main.bbl"
   "main.blg"
-["pdflatex"] 1735924343 "d:/Uni/cdsMaster/Thesis/main.tex" "main.pdf" "main" 1735924378
+["pdflatex"] 1736072473 "d:/Uni/cdsMaster/Thesis/main.tex" "main.pdf" "main" 1736072507
   "c:/Users/Farin/.texlive2022/texmf-var/fonts/pk/ljfour/public/bbm/bbm12.600pk" 1720172913 8424 7581c47eb8cd920e4d90403cd0b157f9 ""
-  "d:/Uni/cdsMaster/Thesis/main.tex" 1735924308 125182 394787cf211d145112fd815e1587f674 ""
+  "d:/Uni/cdsMaster/Thesis/main.tex" 1736072439 125062 a79f0ce5fb6545d73dac910a20752580 ""
   "e:/Program Files (x86)/texlive/2022/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc" 1649398513 2900 1537cc8184ad1792082cd229ecc269f4 ""
   "e:/Program Files (x86)/texlive/2022/texmf-dist/fonts/map/fontname/texfonts.map" 1649399096 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "e:/Program Files (x86)/texlive/2022/texmf-dist/fonts/tfm/jknappen/ec/tcrm1200.tfm" 1649398839 1536 74b7293ec3713bb7fdca8dd1bd1f469c ""
@@ -283,13 +283,13 @@
   "figs/results/params/jump_distances_metropolis_t_5.png" 1732030308 206753 250a3e1223bb87d91bce65ffe5a00592 ""
   "figs/results/params/logZ_diffs_hmc.png" 1735923173 278988 0debb96ad22288fc6110d62944392fc0 ""
   "figs/results/params/logZ_diffs_metropolis.png" 1735923173 286019 c126475975c7ae00b72669bc1d12037a ""
-  "figs/results/params/modes_found_hmc.png" 1735923173 177538 a88d76fce734be2bb3e61eec90143fdf ""
-  "figs/results/params/modes_found_metropolis.png" 1735923173 172930 5415d76d1b16a1838a022c0d08efa0e9 ""
-  "main.aux" 1735924377 23232 f3bfa672d8a492f1548506d8c5a6b3c7 "pdflatex"
-  "main.bbl" 1735820843 43439 917a487bf552bf694417a88724963843 "biber main"
-  "main.run.xml" 1735924377 2332 83e05f0b52c9fa4cfbd2ea6cf1c82ad4 "pdflatex"
-  "main.tex" 1735924308 125182 394787cf211d145112fd815e1587f674 ""
-  "main.toc" 1735924377 3403 69b4fa9ce715a1ab446feea405069612 "pdflatex"
+  "figs/results/params/modes_found_hmc.png" 1736063296 341762 b848916860c5f018435d952f3e0deed4 ""
+  "figs/results/params/modes_found_metropolis.png" 1736063296 396569 bba0a77998ef31bddf8eb5a6ff77fe98 ""
+  "main.aux" 1736072506 23100 3f04f232a7eb7fcd74e08e2ded3288c7 "pdflatex"
+  "main.bbl" 1736070939 43439 917a487bf552bf694417a88724963843 "biber main"
+  "main.run.xml" 1736072506 2332 83e05f0b52c9fa4cfbd2ea6cf1c82ad4 "pdflatex"
+  "main.tex" 1736072439 125062 a79f0ce5fb6545d73dac910a20752580 ""
+  "main.toc" 1736072506 3403 92c8dd874ac7acc8069e09494f5b79f9 "pdflatex"
   (generated)
   "main.aux"
   "main.bcf"

@@ -1501,7 +1501,7 @@ This explains most of the bias we see in the evidence estimates.
     {\small \textbf{Posterior Modes Found} \par}
     \includegraphics[scale=0.7]{figs/results/modes_found_spike_20d.png}
     \includegraphics[scale=0.7]{figs/results/modes_found_spike_offcenter_20d.png}
-    \caption{Box plots of how many of the two modes were found by each method. The values represent $\frac{m}{2}$, where $m$ is the number of modes found. Top: $L_1$-example, Bottom: $L_2$-example. Orange lines are the median values, gray crosses are the mean values.}
+    \caption{Bar charts of how often each number of modes was found by each configuration. Top: $L_1$-example, Bottom: $L_2$-example. Orange lines are the median values, gray crosses are the mean values.}
     \label{fig:results_modes_found}
 \end{figure}
 
@@ -1572,7 +1572,7 @@ In both the Metropolis and the HMC versions, the value of $q_{\textrm{max}}$ has
     {\small \textbf{Evidence Estimate} \par}
     \includegraphics[height=0.9\textwidth]{figs/results/params/logZ_diffs_metropolis.png}
     \includegraphics[height=0.9\textwidth]{figs/results/params/logZ_diffs_hmc.png}
-    \caption{Box plot of each configuration's evidence estimate's deviation from the true value. Top: Using Metropolis for LPRS, Bottom: Using HMC for LRPS. Orange lines are the median values, gray crosses are the mean values.}
+    \caption{Box plot of each configuration's evidence estimate's deviation from the true value. Left: Using Metropolis for LPRS, Right: Using HMC for LRPS. Orange lines are the median values, gray crosses are the mean values.}
     \label{fig:results_params_logZ}
 \end{figure}
 
@@ -1582,9 +1582,9 @@ While some configurations, like $t = 0.5, q_{\textrm{max}} = 2$ for the Metropol
 \begin{figure}
     \centering
     {\small \textbf{Posterior Modes Found} \par}
-    \includegraphics[width=\textwidth]{figs/results/params/modes_found_metropolis.png}
-    \includegraphics[width=\textwidth]{figs/results/params/modes_found_hmc.png}
-    \caption{Box plots of how many of the two modes were found by each method. The values represent $\frac{m}{2}$, where $m$ is the number of modes found. Top: Using Metropolis for LPRS, Bottom: Using HMC for LRPS. Orange lines are the median values, gray crosses are the mean values.}
+    \includegraphics[height=0.9\textwidth]{figs/results/params/modes_found_metropolis.png}
+    \includegraphics[height=0.9\textwidth]{figs/results/params/modes_found_hmc.png}
+    \caption{Bar charts of how often each number of modes was found by each configuration. Left: Using Metropolis for LPRS, Right: Using HMC for LRPS. Orange lines are the median values, gray crosses are the mean values.}
     \label{fig:results_params_modes_found}
 \end{figure}
 
@@ -1595,7 +1595,7 @@ With the number of iterations, seen in Figure \ref{fig:results_params_iterations
     {\small \textbf{Number of Iterations} \par}
     \includegraphics[height=0.9\textwidth]{figs/results/params/iterations_metropolis.png}
     \includegraphics[height=0.9\textwidth]{figs/results/params/iterations_hmc.png}
-    \caption{Box plots of how many iterations each configuration took to reach the stopping point. Top: Using Metropolis for LPRS, Bottom: Using HMC for LRPS. Orange lines are the median values, gray crosses are the mean values.}
+    \caption{Box plots of how many iterations each configuration took to reach the stopping point. Left: Using Metropolis for LPRS, Right: Using HMC for LRPS. Orange lines are the median values, gray crosses are the mean values.}
     \label{fig:results_params_iterations}
 \end{figure}
 
@@ -1609,7 +1609,7 @@ In both cases, $q_{\textrm{max}}$'s influence is opposite of $t$ and stronger fo
     {\small \textbf{Acceptance Rate} \par}
     \includegraphics[height=0.9\textwidth]{figs/results/params/acceptance_rates_metropolis.png}
     \includegraphics[height=0.9\textwidth]{figs/results/params/acceptance_rates_hmc.png}
-    \caption{Box plots of the ratio of accepted proposals to total proposals made during LRPS for each configuration. Top: Using Metropolis for LPRS, Bottom: Using HMC for LRPS. Orange lines are the median values, gray crosses are the mean values.}
+    \caption{Box plots of the ratio of accepted proposals to total proposals made during LRPS for each configuration. Left: Using Metropolis for LPRS, Right: Using HMC for LRPS. Orange lines are the median values, gray crosses are the mean values.}
     \label{fig:results_params_acceptance_rates}
 \end{figure}
 
