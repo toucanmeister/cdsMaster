@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022) (preloaded format=pdflatex 2022.4.8)  5 JAN 2025 11:21
+This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022) (preloaded format=pdflatex 2022.4.8)  6 JAN 2025 08:08
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -1175,63 +1175,63 @@ Package pdftex.def Info: figs/results/params/modes_found_hmc.png  used on input 
 <figs/results/params/iterations_metropolis.png, id=230, 433.62pt x 867.24pt>
 File: figs/results/params/iterations_metropolis.png Graphic file (type png)
 <use figs/results/params/iterations_metropolis.png>
-Package pdftex.def Info: figs/results/params/iterations_metropolis.png  used on input line 1596.
+Package pdftex.def Info: figs/results/params/iterations_metropolis.png  used on input line 1597.
 (pdftex.def)             Requested size: 192.05714pt x 384.1096pt.
 <figs/results/params/iterations_hmc.png, id=231, 433.62pt x 867.24pt>
 File: figs/results/params/iterations_hmc.png Graphic file (type png)
 <use figs/results/params/iterations_hmc.png>
-Package pdftex.def Info: figs/results/params/iterations_hmc.png  used on input line 1597.
+Package pdftex.def Info: figs/results/params/iterations_hmc.png  used on input line 1598.
 (pdftex.def)             Requested size: 192.05714pt x 384.1096pt.
 <figs/results/params/acceptance_rates_metropolis.png, id=232, 433.62pt x 867.24pt>
 File: figs/results/params/acceptance_rates_metropolis.png Graphic file (type png)
 <use figs/results/params/acceptance_rates_metropolis.png>
-Package pdftex.def Info: figs/results/params/acceptance_rates_metropolis.png  used on input line 1610.
+Package pdftex.def Info: figs/results/params/acceptance_rates_metropolis.png  used on input line 1611.
 (pdftex.def)             Requested size: 192.05714pt x 384.1096pt.
 <figs/results/params/acceptance_rates_hmc.png, id=233, 433.62pt x 867.24pt>
 File: figs/results/params/acceptance_rates_hmc.png Graphic file (type png)
 <use figs/results/params/acceptance_rates_hmc.png>
-Package pdftex.def Info: figs/results/params/acceptance_rates_hmc.png  used on input line 1611.
+Package pdftex.def Info: figs/results/params/acceptance_rates_hmc.png  used on input line 1612.
 (pdftex.def)             Requested size: 192.05714pt x 384.1096pt.
 <figs/results/params/jump_distances_metropolis_t_05.png, id=234, 433.62pt x 289.08pt>
 File: figs/results/params/jump_distances_metropolis_t_05.png Graphic file (type png)
 <use figs/results/params/jump_distances_metropolis_t_05.png>
-Package pdftex.def Info: figs/results/params/jump_distances_metropolis_t_05.png  used on input line 1625.
+Package pdftex.def Info: figs/results/params/jump_distances_metropolis_t_05.png  used on input line 1626.
 (pdftex.def)             Requested size: 192.0548pt x 128.03809pt.
 <figs/results/params/jump_distances_metropolis_t_1.png, id=235, 433.62pt x 289.08pt>
 File: figs/results/params/jump_distances_metropolis_t_1.png Graphic file (type png)
 <use figs/results/params/jump_distances_metropolis_t_1.png>
-Package pdftex.def Info: figs/results/params/jump_distances_metropolis_t_1.png  used on input line 1626.
+Package pdftex.def Info: figs/results/params/jump_distances_metropolis_t_1.png  used on input line 1627.
 (pdftex.def)             Requested size: 192.0548pt x 128.03809pt.
 <figs/results/params/jump_distances_metropolis_t_2.png, id=236, 433.62pt x 289.08pt>
 File: figs/results/params/jump_distances_metropolis_t_2.png Graphic file (type png)
 <use figs/results/params/jump_distances_metropolis_t_2.png>
-Package pdftex.def Info: figs/results/params/jump_distances_metropolis_t_2.png  used on input line 1627.
+Package pdftex.def Info: figs/results/params/jump_distances_metropolis_t_2.png  used on input line 1628.
 (pdftex.def)             Requested size: 192.0548pt x 128.03809pt.
 <figs/results/params/jump_distances_metropolis_t_5.png, id=237, 433.62pt x 289.08pt>
 File: figs/results/params/jump_distances_metropolis_t_5.png Graphic file (type png)
 <use figs/results/params/jump_distances_metropolis_t_5.png>
-Package pdftex.def Info: figs/results/params/jump_distances_metropolis_t_5.png  used on input line 1628.
+Package pdftex.def Info: figs/results/params/jump_distances_metropolis_t_5.png  used on input line 1629.
 (pdftex.def)             Requested size: 192.0548pt x 128.03809pt.
  [49] [50 <./figs/results/params/logZ_diffs_metropolis.png> <./figs/results/params/logZ_diffs_hmc.png>] [51 <./figs/results/params/modes_found_metropolis.png> <./figs/results/params/modes_found_hmc.png>] [52 <./figs/results/params/iterations_metropolis.png> <./figs/results/params/iterations_hmc.png>] [53 <./figs/results/params/acceptance_rates_metropolis.png> <./figs/results/params/acceptance_rates_hmc.png>]
 <figs/results/params/jump_distances_hmc_t_05.png, id=262, 433.62pt x 289.08pt>
 File: figs/results/params/jump_distances_hmc_t_05.png Graphic file (type png)
 <use figs/results/params/jump_distances_hmc_t_05.png>
-Package pdftex.def Info: figs/results/params/jump_distances_hmc_t_05.png  used on input line 1636.
+Package pdftex.def Info: figs/results/params/jump_distances_hmc_t_05.png  used on input line 1637.
 (pdftex.def)             Requested size: 192.0548pt x 128.03809pt.
 <figs/results/params/jump_distances_hmc_t_1.png, id=263, 433.62pt x 289.08pt>
 File: figs/results/params/jump_distances_hmc_t_1.png Graphic file (type png)
 <use figs/results/params/jump_distances_hmc_t_1.png>
-Package pdftex.def Info: figs/results/params/jump_distances_hmc_t_1.png  used on input line 1637.
+Package pdftex.def Info: figs/results/params/jump_distances_hmc_t_1.png  used on input line 1638.
 (pdftex.def)             Requested size: 192.0548pt x 128.03809pt.
 <figs/results/params/jump_distances_hmc_t_2.png, id=264, 433.62pt x 289.08pt>
 File: figs/results/params/jump_distances_hmc_t_2.png Graphic file (type png)
 <use figs/results/params/jump_distances_hmc_t_2.png>
-Package pdftex.def Info: figs/results/params/jump_distances_hmc_t_2.png  used on input line 1638.
+Package pdftex.def Info: figs/results/params/jump_distances_hmc_t_2.png  used on input line 1639.
 (pdftex.def)             Requested size: 192.0548pt x 128.03809pt.
 <figs/results/params/jump_distances_hmc_t_5.png, id=265, 433.62pt x 289.08pt>
 File: figs/results/params/jump_distances_hmc_t_5.png Graphic file (type png)
 <use figs/results/params/jump_distances_hmc_t_5.png>
-Package pdftex.def Info: figs/results/params/jump_distances_hmc_t_5.png  used on input line 1639.
+Package pdftex.def Info: figs/results/params/jump_distances_hmc_t_5.png  used on input line 1640.
 (pdftex.def)             Requested size: 192.0548pt x 128.03809pt.
  [54 <./figs/results/params/jump_distances_metropolis_t_05.png> <./figs/results/params/jump_distances_metropolis_t_1.png> <./figs/results/params/jump_distances_metropolis_t_2.png> <./figs/results/params/jump_distances_metropolis_t_5.png>] [55 <./figs/results/params/jump_distances_hmc_t_05.png> <./figs/results/params/jump_distances_hmc_t_1.png> <./figs/results/params/jump_distances_hmc_t_2.png> <./figs/results/params/jump_distances_hmc_t_5.png>]
 Chapter 4.
@@ -1243,7 +1243,7 @@ Package microtype Info: Loading generic protrusion settings for font family
 (microtype)             For optimal results, create family-specific settings.
 (microtype)             See the microtype manual for details.
 
-Overfull \hbox (2.13239pt too wide) in paragraph at lines 1670--1670
+Overfull \hbox (2.13239pt too wide) in paragraph at lines 1671--1671
 []\OT1/cmr/m/n/12 (-20) John Skilling. ``Nested sam-pling for gen-eral Bayesian com-pu-ta-tion''. In: \OT1/cmr/m/it/12 (-20) Bayesian
  []
 
@@ -1254,8 +1254,8 @@ Overfull \hbox (2.13239pt too wide) in paragraph at lines 1670--1670
 
 
 ]
-Package pgfplots info on input line 1763: fill between: activating layered graphics
-Package pgfplots info on input line 1763: Setting layers 'axis background,axis grid,axis ticks,axis lines,axis tick labels,pre main,main,axis descriptions,axis foreground'...
+Package pgfplots info on input line 1764: fill between: activating layered graphics
+Package pgfplots info on input line 1764: Setting layers 'axis background,axis grid,axis ticks,axis lines,axis tick labels,pre main,main,axis descriptions,axis foreground'...
  [62] [1
 
 ] (./main.aux)
@@ -1266,13 +1266,13 @@ Package logreq Info: Writing requests to 'main.run.xml'.
 Here is how much of TeX's memory you used:
  39224 strings out of 478268
  932695 string characters out of 5840332
- 1900354 words of memory out of 5000000
+ 1900353 words of memory out of 5000000
  56609 multiletter control sequences out of 15000+600000
  489353 words of font info for 188 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  84i,16n,89p,1217b,2175s stack positions out of 10000i,1000n,20000p,200000b,200000s
 {e:/Program Files (x86)/texlive/2022/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc} <c:/Users/Farin/.texlive2022/texmf-var/fonts/pk/ljfour/public/bbm/bbm12.600pk><e:/Program Files (x86)/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb><e:/Program Files (x86)/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb><e:/Program Files (x86)/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmcsc10.pfb><e:/Program Files (x86)/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb><e:/Program Files (x86)/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb><e:/Program Files (x86)/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb><e:/Program Files (x86)/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb><e:/Program Files (x86)/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb><e:/Program Files (x86)/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb><e:/Program Files (x86)/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb><e:/Program Files (x86)/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb><e:/Program Files (x86)/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb><e:/Program Files (x86)/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb><e:/Program Files (x86)/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb><e:/Program Files (x86)/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb><e:/Program Files (x86)/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmti12.pfb><e:/Program Files (x86)/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt12.pfb><e:/Program Files (x86)/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb><e:/Program Files (x86)/texlive/2022/texmf-dist/fonts/type1/public/cm-super/sfrm1200.pfb>
-Output written on main.pdf (66 pages, 8846780 bytes).
+Output written on main.pdf (66 pages, 8877193 bytes).
 PDF statistics:
  397 PDF objects out of 1000 (max. 8388607)
  215 compressed objects within 3 object streams

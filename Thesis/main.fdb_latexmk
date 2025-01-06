@@ -1,13 +1,13 @@
 # Fdb version 3
-["biber main"] 1736070933 "main.bcf" "main.bbl" "main" 1736072507
+["biber main"] 1736070933 "main.bcf" "main.bbl" "main" 1736147331
   "bib.bib" 1734363497 9517 d9ea83f70b8ad083d89bb72a6a0aa55a ""
-  "main.bcf" 1736072506 111433 8d47a89b16041e06a053950ab000f2fb "pdflatex"
+  "main.bcf" 1736147331 111433 8d47a89b16041e06a053950ab000f2fb "pdflatex"
   (generated)
   "main.bbl"
   "main.blg"
-["pdflatex"] 1736072473 "d:/Uni/cdsMaster/Thesis/main.tex" "main.pdf" "main" 1736072507
+["pdflatex"] 1736147307 "d:/Uni/cdsMaster/Thesis/main.tex" "main.pdf" "main" 1736147331
   "c:/Users/Farin/.texlive2022/texmf-var/fonts/pk/ljfour/public/bbm/bbm12.600pk" 1720172913 8424 7581c47eb8cd920e4d90403cd0b157f9 ""
-  "d:/Uni/cdsMaster/Thesis/main.tex" 1736072439 125062 a79f0ce5fb6545d73dac910a20752580 ""
+  "d:/Uni/cdsMaster/Thesis/main.tex" 1736147306 125334 44a2a22c761bfdd805d58fe3251eb220 ""
   "e:/Program Files (x86)/texlive/2022/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc" 1649398513 2900 1537cc8184ad1792082cd229ecc269f4 ""
   "e:/Program Files (x86)/texlive/2022/texmf-dist/fonts/map/fontname/texfonts.map" 1649399096 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "e:/Program Files (x86)/texlive/2022/texmf-dist/fonts/tfm/jknappen/ec/tcrm1200.tfm" 1649398839 1536 74b7293ec3713bb7fdca8dd1bd1f469c ""
@@ -271,8 +271,8 @@
   "figs/results/modes_found_spike_offcenter_20d.png" 1735923173 138543 035e60b60ede526c82fecee77d86787a ""
   "figs/results/params/acceptance_rates_hmc.png" 1735923173 479274 eb9fc8d70f4a83ae1e78f6be2c15d090 ""
   "figs/results/params/acceptance_rates_metropolis.png" 1735923173 443903 9417fa7958168c1d12a1c3ad2ca90078 ""
-  "figs/results/params/iterations_hmc.png" 1735923173 464217 45043a699bcf3a4225cc9a53ebb1e4ff ""
-  "figs/results/params/iterations_metropolis.png" 1735923173 374018 ab738f32367db9602efeddef781116f7 ""
+  "figs/results/params/iterations_hmc.png" 1736075102 461815 e808404a7ffca5a6aebd9fddf95291fc ""
+  "figs/results/params/iterations_metropolis.png" 1736075102 442098 31cf35d1ac399b6031bf96d01a16f0f4 ""
   "figs/results/params/jump_distances_hmc_t_05.png" 1732030308 277689 0d17236fb065aec87dedca7a9a6a30bd ""
   "figs/results/params/jump_distances_hmc_t_1.png" 1732030308 269202 405ecd05c544489a82fe391e0b13d04f ""
   "figs/results/params/jump_distances_hmc_t_2.png" 1732030308 261050 6bd02ad1f189cecef40c321a3c09bfe3 ""
@@ -281,15 +281,15 @@
   "figs/results/params/jump_distances_metropolis_t_1.png" 1732030308 229968 d74aeebad81688215cdcbf42579dee44 ""
   "figs/results/params/jump_distances_metropolis_t_2.png" 1732030308 223494 f51757c9e422fde9a5a9f57678b2e2b0 ""
   "figs/results/params/jump_distances_metropolis_t_5.png" 1732030308 206753 250a3e1223bb87d91bce65ffe5a00592 ""
-  "figs/results/params/logZ_diffs_hmc.png" 1735923173 278988 0debb96ad22288fc6110d62944392fc0 ""
-  "figs/results/params/logZ_diffs_metropolis.png" 1735923173 286019 c126475975c7ae00b72669bc1d12037a ""
+  "figs/results/params/logZ_diffs_hmc.png" 1736075102 279376 02d21333a79cee6964937b332c5e2c94 ""
+  "figs/results/params/logZ_diffs_metropolis.png" 1736075102 291361 e95e13c797dfb302330fa88caaeea3c5 ""
   "figs/results/params/modes_found_hmc.png" 1736063296 341762 b848916860c5f018435d952f3e0deed4 ""
   "figs/results/params/modes_found_metropolis.png" 1736063296 396569 bba0a77998ef31bddf8eb5a6ff77fe98 ""
-  "main.aux" 1736072506 23100 3f04f232a7eb7fcd74e08e2ded3288c7 "pdflatex"
+  "main.aux" 1736147331 23100 823104122d195e058d3bfe238394920f "pdflatex"
   "main.bbl" 1736070939 43439 917a487bf552bf694417a88724963843 "biber main"
-  "main.run.xml" 1736072506 2332 83e05f0b52c9fa4cfbd2ea6cf1c82ad4 "pdflatex"
-  "main.tex" 1736072439 125062 a79f0ce5fb6545d73dac910a20752580 ""
-  "main.toc" 1736072506 3403 92c8dd874ac7acc8069e09494f5b79f9 "pdflatex"
+  "main.run.xml" 1736147331 2332 83e05f0b52c9fa4cfbd2ea6cf1c82ad4 "pdflatex"
+  "main.tex" 1736147306 125334 44a2a22c761bfdd805d58fe3251eb220 ""
+  "main.toc" 1736147331 3403 aa278d3b9029919310de41470565f440 "pdflatex"
   (generated)
   "main.aux"
   "main.bcf"

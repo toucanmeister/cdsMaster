@@ -1590,6 +1590,7 @@ While some configurations, like $t = 0.5, q_{\textrm{max}} = 2$ for the Metropol
 
 \subsection{Number of Iterations}
 With the number of iterations, seen in Figure \ref{fig:results_params_iterations}, there is a trend of higher values of $t$ causing slightly fewer iterations to be needed, while higher values of $q_{\textrm{max}}$ have the opposite effect.
+Both of these trends indicate that a stronger influence of the log barrier term causes more iterations to be needed, with standard Nested Sampling (corresponding to $t \rightarrow \infty$ and $q_{\textrm{max}} \rightarrow 1$) needing the fewest iterations.
 \begin{figure}
     \centering
     {\small \textbf{Number of Iterations} \par}
@@ -1658,7 +1659,7 @@ The performance of Nested Sampling with Barriers on problems with
 \end{itemize}
 is yet to be determined, which leaves its practical use cases uncertain.
 Future research could benchmark Nested Sampling with Barriers on such problems, comparing it to state-of-the-art implementations of Nested Sampling like UltraNest \cite{ultranest}, dynesty \cite{dynesty}, JAXNS \cite{jaxns}, and PolyChord \cite{polychord}.
-Many of the ideas used by these implementations, like the dynamic number of live points from dynesty or the complex adaptive step size of UltraNest could also be applied to Nested Sampling.
+Many of the ideas used by these implementations, like the dynamic number of live points from dynesty or the complex adaptive step size of UltraNest could also be applied to Nested Sampling with Barriers.
 Furthermore, the convergence rate of Nested Sampling with Barriers warrants thorough theoretical investigation.
 The derivation of Nested Sampling itself, especially the reformulation of the evidence as a one-dimensional integral, also shows room for more research.
 The theory could be formalized and put on rigorous foundations using measure theory.
