@@ -1478,30 +1478,30 @@ This explanation of why HMC with reflection fails is backed by the fact that the
 
 On the $L_2$-example, none of the methods are as convincing as on the $L_1$-example.
 The Metropolis methods are the most accurate, with the HMC methods having higher bias and higher variance.
-The poor performance of all methods can be explained by the next criteria, concerning how well the posterior distribution was explored.
+The worse performance of all methods can be explained by the next criteria, concerning how well the posterior distribution was explored.
 
 \begin{figure}
     \centering
     {\small \textbf{Evidence Estimate} \par}
     \includegraphics[scale=0.7]{figs/results/logZ_diffs_spike_20d.png}
     \includegraphics[scale=0.7]{figs/results/logZ_diffs_spike_offcenter_20d.png}
-    \caption{Box plot of the deviation of each method's evidence estimate's from the true value. Top: $L_1$-example, Bottom: $L_2$-example. Orange lines are the median values, gray crosses are the mean values.}
+    \caption{Box plot of the deviation of each method's evidence estimate's from the true value. Orange lines are the median values, gray crosses are the mean values.}
     \label{fig:results_logZ_diffs}
 \end{figure}
 
 \subsection{Posterior Modes Found}
 This criterion measures how well the configurations found the posterior modes, where the main challenge is finding the small spike.
 For each mode, we check if there is a dead point within the 95th percentile of cumulative probability of the mode, and labels the mode as found if there is.
-The number of modes labeled as found in this way, in proportion to how many modes there are, make up the criterion.
 In the upper part of Figure \ref{fig:results_modes_found} on the $L_1$-example, we see all methods except HMC with reflection always finding the spike.
 On the $L_2$-example, HMC with reflection never finds the spike, with all other methods finding less than half of the time.
 This explains most of the bias we see in the evidence estimates.
+HMC with reflection sometimes not even finding the flat mode shows that the method fails critically.
 \begin{figure}
     \centering
     {\small \textbf{Posterior Modes Found} \par}
     \includegraphics[scale=0.7]{figs/results/modes_found_spike_20d.png}
     \includegraphics[scale=0.7]{figs/results/modes_found_spike_offcenter_20d.png}
-    \caption{Bar charts of how often each number of modes was found by each configuration. Top: $L_1$-example, Bottom: $L_2$-example. Orange lines are the median values, gray crosses are the mean values.}
+    \caption{Bar charts of how often each number of modes was found by each configuration. Orange lines are the median values, gray crosses are the mean values.}
     \label{fig:results_modes_found}
 \end{figure}
 
@@ -1514,13 +1514,14 @@ For both $L_1$ and $L_2$, the non-barrier methods take slightly fewer iterations
     {\small \textbf{Number of Iterations} \par}
     \includegraphics[scale=0.7]{figs/results/iterations_spike_20d.png}
     \includegraphics[scale=0.7]{figs/results/iterations_spike_offcenter_20d.png}
-    \caption{Box plots of how many iterations each method took to reach the stopping point. Top: $L_1$-example, Bottom: $L_2$-example. Orange lines are the median values, gray crosses are the mean values.}
+    \caption{Box plots of how many iterations each method took to reach the stopping point. Orange lines are the median values, gray crosses are the mean values.}
     \label{fig:results_iterations}
 \end{figure}
 
 \subsection{Acceptance Rate}
 In this section, we examine what ratio of the total proposals made during LRPS are accepted.
 Lower acceptance rates lead to slower overall execution time as more proposals have to be made until an acceptable one is found.
+
 As is visible in Figure \ref{fig:results_acceptance_rates}, this is where the main advantage of Nested Sampling with Barriers lies.
 In both example problems, Nested Sampling with Barriers reaches significantly higher acceptance rates than standard Nested Sampling when both use the Metropolis algorithm.
 For the $L_1$-example, the version with barriers achieves an acceptance rate that is a factor of $1.62$ higher than the standard version's acceptance rate.
@@ -1532,16 +1533,14 @@ The reason the optimal sampler does not reach an acceptance rate of $1$ is that 
     {\small \textbf{Acceptance Rate} \par}
     \includegraphics[scale=0.7]{figs/results/acceptance_rates_spike_20d.png}
     \includegraphics[scale=0.7]{figs/results/acceptance_rates_spike_offcenter_20d.png}
-    \caption{Box plots of the ratio of accepted proposals to total proposals made during LRPS for each method. Top: $L_1$-example, Bottom: $L_2$-example. Orange lines are the median values, gray crosses are the mean values.}
+    \caption{Box plots of the ratio of accepted proposals to total proposals made during LRPS for each method. Orange lines are the median values, gray crosses are the mean values.}
     \label{fig:results_acceptance_rates}
 \end{figure}
 
 \subsection{Jump Distance}
 Because all tested MCMC methods use an adaptive step size, just examining the acceptance rate does not present the full picture.
-For the HMC methods, the adaptive step size keeps the acceptance rate steadily at $0.5$, so we have to look at how much the step size has to be reduced to achieve this acceptance rate.
-The step size, however, is just how far each singular MCMC step goes.
-We are instead interested in how long the whole Markov Chain from one sample to the next is.
-This criterion is called the jump distance \cite{rjd}.
+For the HMC methods, the adaptive step size keeps the acceptance rate steadily at $0.5$, so we have to look at how much the length of the proposal Markov chain has to be reduced to achieve this acceptance rate.
+We measure this using the jump distance \cite{rjd}, the distance from the start to the end of the proposal Markov chain of each accepted sample.
 
 In Figure \ref{figs:results_jump_distances}, we see how the mean jump distance per iteration develops for each configuration.
 The barrier versions of the algorithms start out with lower jump distances than their standard counterparts, but in the late iterations, when sampling becomes difficult, they actually have higher jump distances.
@@ -1549,9 +1548,9 @@ The curve of HMC with reflection ends earlier than the others in the $L_1$-examp
 \begin{figure}
     \centering
     {\small \textbf{Jump Distance} \par}
-    \includegraphics[scale=0.7]{figs/results/mean_jump_distances_spike_20d.png}
-    \includegraphics[scale=0.7]{figs/results/mean_jump_distances_spike_offcenter_20d.png}
-    \caption{Mean jump distance of each configuration per iteration; Unweighted rolling average with a window of 50. Top: $L_1$-example, Bottom: $L_2$-example. Curves are only shown as far as the shortest run went.}
+    \includegraphics[scale=0.8]{figs/results/mean_jump_distances_spike_20d.png}
+    \includegraphics[scale=0.8]{figs/results/mean_jump_distances_spike_offcenter_20d.png}
+    \caption{Mean jump distance of each configuration per iteration. Each data point is the mean over the jump distances of 200 configurations at that iteration. A uniformly weighted rolling average with a window of 50 was applied. Curves are only shown as far as the shortest run went. Note the logarithmic y-axis.}
     \label{figs:results_jump_distances}
 \end{figure}
 
@@ -1570,8 +1569,8 @@ In both the Metropolis and the HMC versions, the value of $q_{\textrm{max}}$ has
 \begin{figure}
     \centering
     {\small \textbf{Evidence Estimate} \par}
-    \includegraphics[height=0.9\textwidth]{figs/results/params/logZ_diffs_metropolis.png}
-    \includegraphics[height=0.9\textwidth]{figs/results/params/logZ_diffs_hmc.png}
+    \includegraphics[height=0.95\textwidth]{figs/results/params/logZ_diffs_metropolis.png}
+    \includegraphics[height=0.95\textwidth]{figs/results/params/logZ_diffs_hmc.png}
     \caption{Box plot of each configuration's evidence estimate's deviation from the true value. Left: Using Metropolis for LPRS, Right: Using HMC for LRPS. Orange lines are the median values, gray crosses are the mean values.}
     \label{fig:results_params_logZ}
 \end{figure}
@@ -1582,8 +1581,8 @@ While some configurations, like $t = 0.5, q_{\textrm{max}} = 2$ for the Metropol
 \begin{figure}
     \centering
     {\small \textbf{Posterior Modes Found} \par}
-    \includegraphics[height=0.9\textwidth]{figs/results/params/modes_found_metropolis.png}
-    \includegraphics[height=0.9\textwidth]{figs/results/params/modes_found_hmc.png}
+    \includegraphics[height=0.95\textwidth]{figs/results/params/modes_found_metropolis.png}
+    \includegraphics[height=0.95\textwidth]{figs/results/params/modes_found_hmc.png}
     \caption{Bar charts of how often each number of modes was found by each configuration. Left: Using Metropolis for LPRS, Right: Using HMC for LRPS. Orange lines are the median values, gray crosses are the mean values.}
     \label{fig:results_params_modes_found}
 \end{figure}
@@ -1594,8 +1593,8 @@ Both of these trends indicate that a stronger influence of the log barrier term 
 \begin{figure}
     \centering
     {\small \textbf{Number of Iterations} \par}
-    \includegraphics[height=0.9\textwidth]{figs/results/params/iterations_metropolis.png}
-    \includegraphics[height=0.9\textwidth]{figs/results/params/iterations_hmc.png}
+    \includegraphics[height=0.95\textwidth]{figs/results/params/iterations_metropolis.png}
+    \includegraphics[height=0.95\textwidth]{figs/results/params/iterations_hmc.png}
     \caption{Box plots of how many iterations each configuration took to reach the stopping point. Left: Using Metropolis for LPRS, Right: Using HMC for LRPS. Orange lines are the median values, gray crosses are the mean values.}
     \label{fig:results_params_iterations}
 \end{figure}
@@ -1603,19 +1602,18 @@ Both of these trends indicate that a stronger influence of the log barrier term 
 \subsection{Acceptance Rate}
 The acceptance rates, visible in Figure \ref{fig:results_params_acceptance_rates}, show differing trends for the Metropolis and the HMC version.
 For the Metropolis version, higher values of $t$ lead to significantly higher mean acceptance rates, with an increase by a factor of $1.67$ from the configuration with $t=0.5, q_{\textrm{max}}=5$ to the configuration with $t=5, q_{\textrm{max}}=1.1$.
-In the HMC version, this trend is reversed, with higher values of $t$ causing lower acceptance rates, although at a much lower scale, with the $t=0.5, q_{\textrm{max}}=5$ configuration beating the $t=5, q_{\textrm{max}}=5$ configuration by a factor of only $1.002$.
-In both cases, $q_{\textrm{max}}$'s influence is opposite of $t$ and stronger for lower values of $t$.
+In the HMC version, all configurations maintain an acceptance rate close to $0.5$.
 \begin{figure}
     \centering
     {\small \textbf{Acceptance Rate} \par}
-    \includegraphics[height=0.9\textwidth]{figs/results/params/acceptance_rates_metropolis.png}
-    \includegraphics[height=0.9\textwidth]{figs/results/params/acceptance_rates_hmc.png}
+    \includegraphics[height=0.95\textwidth]{figs/results/params/acceptance_rates_metropolis.png}
+    \includegraphics[height=0.95\textwidth]{figs/results/params/acceptance_rates_hmc.png}
     \caption{Box plots of the ratio of accepted proposals to total proposals made during LRPS for each configuration. Left: Using Metropolis for LPRS, Right: Using HMC for LRPS. Orange lines are the median values, gray crosses are the mean values.}
     \label{fig:results_params_acceptance_rates}
 \end{figure}
 
 \subsection{Jump Distance}
-For the Metropolis version in Figure \ref{fig:results_params_jump_distances_metropolis}, the value of $t$ has no discernible impact.
+For the Metropolis version in Figure \ref{fig:results_params_jump_distances_metropolis}, the value of $t$ has no discernible impact on the jump distances.
 The configurations with higher values of $q_{\textrm{max}}$ have higher jump distances over all iterations.
 In the HMC version in Figure \ref{fig:results_params_jump_distances_hmc}, both parameters have much more influence on the jump distances.
 Lower values of $t$ lead to higher jump distances, but also to larger differences between configurations with different values of $q_{\textrm{max}}$.
@@ -1623,22 +1621,22 @@ Again, higher values of  $q_{\textrm{max}}$ cause higher jump distances over the
 \begin{figure}
     \centering
     {\small \textbf{Jump Distance Metropolis} \par}
-    \includegraphics[width=0.45\textwidth]{figs/results/params/jump_distances_metropolis_t_05}
-    \includegraphics[width=0.45\textwidth]{figs/results/params/jump_distances_metropolis_t_1}
-    \includegraphics[width=0.45\textwidth]{figs/results/params/jump_distances_metropolis_t_2}
-    \includegraphics[width=0.45\textwidth]{figs/results/params/jump_distances_metropolis_t_5}
-    \caption{Mean jump distance of each Metropolis configuration per iteration.}
+    \includegraphics[trim={0.35cm, 0.1cm, 1.5cm, 0.5cm}, clip, width=0.45\textwidth]{figs/results/params/jump_distances_metropolis_t_05}
+    \includegraphics[trim={0.35cm, 0.1cm, 1.5cm, 0.5cm}, clip, width=0.45\textwidth]{figs/results/params/jump_distances_metropolis_t_1}
+    \includegraphics[trim={0.35cm, 0.1cm, 1.5cm, 0.5cm}, clip, width=0.45\textwidth]{figs/results/params/jump_distances_metropolis_t_2}
+    \includegraphics[trim={0.35cm, 0.1cm, 1.5cm, 0.5cm}, clip, width=0.45\textwidth]{figs/results/params/jump_distances_metropolis_t_5}
+    \caption{Mean jump distance of each Metropolis configuration per iteration. Each data point is the mean over the jump distances of 200 configurations at that iteration. A uniformly weighted rolling average with a window of 50 was applied. Curves are only shown as far as the shortest run went.}
     \label{fig:results_params_jump_distances_metropolis}
 \end{figure}
 
 \begin{figure}
     \centering
     {\small \textbf{Jump Distance HMC} \par}
-    \includegraphics[width=0.45\textwidth]{figs/results/params/jump_distances_hmc_t_05}
-    \includegraphics[width=0.45\textwidth]{figs/results/params/jump_distances_hmc_t_1}
-    \includegraphics[width=0.45\textwidth]{figs/results/params/jump_distances_hmc_t_2}
-    \includegraphics[width=0.45\textwidth]{figs/results/params/jump_distances_hmc_t_5}
-    \caption{Mean jump distance of each HMC configuration per iteration.}
+    \includegraphics[trim={0.35cm, 0.1cm, 1.5cm, 0.5cm}, clip, width=0.45\textwidth]{figs/results/params/jump_distances_hmc_t_05}
+    \includegraphics[trim={0.35cm, 0.1cm, 1.5cm, 0.5cm}, clip, width=0.45\textwidth]{figs/results/params/jump_distances_hmc_t_1}
+    \includegraphics[trim={0.35cm, 0.1cm, 1.5cm, 0.5cm}, clip, width=0.45\textwidth]{figs/results/params/jump_distances_hmc_t_2}
+    \includegraphics[trim={0.35cm, 0.1cm, 1.5cm, 0.5cm}, clip, width=0.45\textwidth]{figs/results/params/jump_distances_hmc_t_5}
+    \caption{Mean jump distance of each HMC configuration per iteration. Each data point is the mean over the jump distances of 200 configurations at that iteration. A uniformly weighted rolling average with a window of 50 was applied. Curves are only shown as far as the shortest run went.}
     \label{fig:results_params_jump_distances_hmc}
 \end{figure}
 
