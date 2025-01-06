@@ -1,4 +1,4 @@
-\documentclass[12pt, a4paper, twoside]{report}
+\documentclass[12pt, a4paper, twoside, openany]{report}
 \usepackage[utf8]{inputenc}
 \usepackage[left=40mm, right=20mm, top=30mm, bottom=30mm]{geometry}
 \usepackage{titlesec}
@@ -87,7 +87,7 @@ born on the 02.02.2000 in Gera
 Supervisor: Prof. Dr. Michael Habeck
 
 }
-\date{\normalsize Jena, Datum Hier}
+\date{\normalsize Jena, 08.01.2025}
 
 \begin{document}
 \pagenumbering{gobble}
@@ -109,11 +109,14 @@ In this thesis, I propose Nested Sampling with Barriers, a method that incorpora
 In a conducted benchmark, this approach achieves acceptance rates during likelihood-restricted prior sampling that are up to a factor of $1.23$ higher than those of standard Nested Sampling.
 
 
-\clearpage
+\cleardoublepage
 \tableofcontents
-\clearpage
+\cleardoublepage
 
 \chapter*{Introduction}
+\addcontentsline{toc}{chapter}{Introduction}
+\pagenumbering{arabic}
+\setcounter{page}{5}
 Bayesian models are widely used for statistical inference tasks.
 They can extract information from data in a way that leads to intuitively interpretable results.
 Fitting a parameterized Bayesian model comprises more than just computing a point estimate for the parameter values, as would be the case with a maximum likelihood approach.
@@ -141,9 +144,8 @@ I begin by recapping important background information about the methods and idea
 Following that, using inspiration from the Barrier Method, I derive Nested Sampling with Barriers as an alternative to the standard Nested Sampling algorithm.
 I then review some of the variables and parameters introduced by Nested Sampling with Barriers and analyze their effects on the algorithm.
 Finally, I present the results of a benchmark where basic Nested Sampling and Nested Sampling with Barriers were run in different configurations on a set of example problems.
-\addcontentsline{toc}{chapter}{Introduction}
-\pagenumbering{arabic}
-\setcounter{page}{5}
+
+
 
 \chapter{Background}
 This chapter contains the background information necessary to understand the contributions of this thesis, namely Bayesian Statistics in general, Nested Sampling in particular, and the Barrier Method for convex optimization.
@@ -188,7 +190,7 @@ It follows naturally from applying the product rule for probability to the joint
     \label{eq:bayes}
 \end{align}
 
-Bayes' rule (Equation (\ref{eq:bayes})) is made up of four parts.
+Bayes' rule is made up of four parts.
 Let us take a closer look at each of them:
 
 \textbf{Likelihood}: Given a generative model with parameters $\theta$ in some space $\Theta$, and some data $D$ originating from the process the model is representing, we call $P(D \,|\, \theta)$ the likelihood of $\theta$, often written as $L(\theta)$.
@@ -386,7 +388,7 @@ MCMC methods focus on cleverly defining their transition probabilities in such a
 That way, when the chain is sampled for long enough, it eventually produces samples from the target distribution \cite[372]{mckay}.
 
 Now that I've touched on the classical methods for Bayesian inference, I want to explain why there is room for improvement.
-As covered in Section 1.1, the evidence is an immensely useful part of Bayes' formula (Equation (\ref{eq:bayes})) because it allows model comparison that accounts for overfitting.
+As covered in Section 1.1, the evidence is an immensely useful part of Bayes' formula (see (\ref{eq:bayes})) because it allows model comparison that accounts for overfitting.
 Most MCMC methods only generate samples from the posterior, they do not compute the evidence and thus lose out on its positives.
 Computing the evidence integral is generally a difficult task \cite[221]{mcelreath}.
 Since the parameter space for real-world models is high-dimensional, with only a small fraction of this space containing meaningful posterior probability mass, numerical quadrature methods that discretize the space evenly fail.
@@ -690,6 +692,7 @@ This, combined with (\ref{eq:L_cdf}) means that a random variable $\overline{\ma
 Finally, since $\mathbb{M}$'s values are simply the values of $\overline{\mathbb{M}}$ mirrored at $m = 0.5$, $\mathbb{M}$ is also uniformly distributed.
 \hfill $\qed$
 \vspace{0.2cm} \hrule \vspace{0.2cm}
+\clearpage
 
 With that, we have the first part we need to approximate the evidence using (\ref{eq:approx_evidence}): the likelihood thresholds of prior mass samples.
 This leaves the prior mass samples themselves.
@@ -1040,7 +1043,6 @@ See Algorithm \ref{alg:barrier_method}.
 The most important idea we borrow from the Barrier Method is how the log barrier function provides a way to make a hard boundary soft and differentiable.
 In the next chapter, we incorporate this idea into the LRPS step of Nested Sampling.
 
-
 \chapter{Nested Sampling with Barriers}
 
 \section{Motivation}
@@ -1164,7 +1166,6 @@ Since we are free to define $\Pi_q$ however we want, we can use it to insert the
 With this, we have defined the shape of the CDF of $q$ in such a way that the log barrier term appears in LRPS.
 In (\ref{eq:setting_qmin}), we implicitly define $q_{\textrm{max}} = 1$, since $L_\theta(\theta)$ always has to be larger than $L^*$ to satisfy the likelihood constraint.
 However, as can be seen in Figure \ref{fig:unnormalized}, the CDF of $q$ is unnormalized unless we choose $q_{\textrm{max}}=e$.
-
 \begin{figure}
     \centering
     \begin{tikzpicture}
@@ -1199,7 +1200,6 @@ However, as can be seen in Figure \ref{fig:unnormalized}, the CDF of $q$ is unno
     \caption{Visualization of the unnormalized CDF $\Pi_q$ of $q$ for different values of $t$ and $q_{\textrm{max}}=5$.}
     \label{fig:unnormalized}
 \end{figure}
-
 We can normalize it for any other $q_{\textrm{max}}$ by scaling $\Pi_q$ to have a value of $1$ at $q=q_{\textrm{max}}$.
 We called the normalized version $\hat{\Pi}_q$:
 $$
@@ -1423,7 +1423,6 @@ An adaptive step size is still worth implementing with this method, since the la
 \end{figure}
 
 
-
 \FloatBarrier
 \chapter{Results}
 This chapter contains the results of a number of experiments on Nested Sampling with Barriers.
@@ -1501,7 +1500,7 @@ HMC with reflection sometimes not even finding the flat mode shows that the meth
     {\small \textbf{Posterior Modes Found} \par}
     \includegraphics[scale=0.7]{figs/results/modes_found_spike_20d.png}
     \includegraphics[scale=0.7]{figs/results/modes_found_spike_offcenter_20d.png}
-    \caption{Bar charts of how often each number of modes was found by each configuration. Orange lines are the median values, gray crosses are the mean values.}
+    \caption{Bar charts of how often each number of modes was found by each configuration.}
     \label{fig:results_modes_found}
 \end{figure}
 
@@ -1554,7 +1553,6 @@ The curve of HMC with reflection ends earlier than the others in the $L_1$-examp
     \label{figs:results_jump_distances}
 \end{figure}
 
-\FloatBarrier
 \section{Influence of $t$ and $q_{\textrm{max}}$}
 In this section, we examine the influence of the hyperparameters $t$ and $q_{\textrm{max}}$ which Nested Sampling with Barriers introduces.
 $0.5$, $1$, $2$, and $5$ were used as values for $t$ and $1$, $1.1$, $2$ and $5$ as values for $q_{\textrm{max}}$.
@@ -1583,7 +1581,7 @@ While some configurations, like $t = 0.5, q_{\textrm{max}} = 2$ for the Metropol
     {\small \textbf{Posterior Modes Found} \par}
     \includegraphics[height=0.95\textwidth]{figs/results/params/modes_found_metropolis.png}
     \includegraphics[height=0.95\textwidth]{figs/results/params/modes_found_hmc.png}
-    \caption{Bar charts of how often each number of modes was found by each configuration. Left: Using Metropolis for LPRS, Right: Using HMC for LRPS. Orange lines are the median values, gray crosses are the mean values.}
+    \caption{Bar charts of how often each number of modes was found by each configuration. Left: Using Metropolis for LPRS, Right: Using HMC for LRPS.}
     \label{fig:results_params_modes_found}
 \end{figure}
 
@@ -1797,7 +1795,7 @@ In particular, this may include that my work will be classified as deception and
 
 \vspace{50pt}
 
-Jena, 25.08.2022
+Jena, 08.01.2025
 \pagenumbering{gobble}
 
 \end{document}
