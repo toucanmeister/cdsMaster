@@ -1,4 +1,4 @@
-\documentclass[12pt, a4paper]{report}
+\documentclass[12pt, a4paper, twoside]{report}
 \usepackage[utf8]{inputenc}
 \usepackage[left=40mm, right=20mm, top=30mm, bottom=30mm]{geometry}
 \usepackage{titlesec}
@@ -18,7 +18,7 @@
 \usepackage{setspace}
 \usepackage{parskip}
 \usepackage[
-    %backend=biber, 
+    %backend=biber,
     natbib=true,
     style=numeric,
     sorting=none
@@ -844,7 +844,7 @@ If the proposal distribution is not symmetric, the standard Metropolis algorithm
 \begin{figure}
     \centering
     \includegraphics[scale=0.5]{figs/metropolis_example.png}
-    \caption{Visualization of the Metropolis algorithm in a two-dimensional sample space. The dashed line indicates the likelihood constraint boundary, the dot is the starting point and each cross is a sampled point.}
+    \caption{Visualization of the Metropolis algorithm in a two-dimensional sample space. The dashed line indicates the likelihood constraint boundary and each cross is a sampled point.}
     \label{fig:metropolis_example}
 \end{figure}
 
