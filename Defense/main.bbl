@@ -1,0 +1,163 @@
+% $ biblatex auxiliary file $
+% $ biblatex bbl format version 3.2 $
+% Do not modify the above lines!
+%
+% This is an auxiliary file used by the 'biblatex' package.
+% This file may safely be deleted. It will be recreated by
+% biber as required.
+%
+\begingroup
+\makeatletter
+\@ifundefined{ver@biblatex.sty}
+  {\@latex@error
+     {Missing 'biblatex' package}
+     {The bibliography requires the 'biblatex' package.}
+      \aftergroup\endinput}
+  {}
+\endgroup
+
+
+\refsection{0}
+  \datalist[entry]{none/global//global/global}
+    \entry{skilling}{article}{}
+      \name{author}{1}{}{%
+        {{hash=2f08a0c28df14bc0892cef59af7adb6c}{%
+           family={Skilling},
+           familyi={S\bibinitperiod},
+           given={John},
+           giveni={J\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {International Society for Bayesian Analysis}%
+      }
+      \strng{namehash}{2f08a0c28df14bc0892cef59af7adb6c}
+      \strng{fullhash}{2f08a0c28df14bc0892cef59af7adb6c}
+      \strng{bibnamehash}{2f08a0c28df14bc0892cef59af7adb6c}
+      \strng{authorbibnamehash}{2f08a0c28df14bc0892cef59af7adb6c}
+      \strng{authornamehash}{2f08a0c28df14bc0892cef59af7adb6c}
+      \strng{authorfullhash}{2f08a0c28df14bc0892cef59af7adb6c}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Bayesian Analysis}
+      \field{number}{4}
+      \field{title}{{Nested sampling for general Bayesian computation}}
+      \field{volume}{1}
+      \field{year}{2006}
+      \field{pages}{833\bibrangedash 859}
+      \range{pages}{27}
+      \verb{doi}
+      \verb 10.1214/06-BA127
+      \endverb
+      \keyw{algorithm,annealing,Bayesian computation,evidence,marginal likelihood,Model selection,nest,phase change}
+    \endentry
+    \entry{boyd}{book}{}
+      \name{author}{2}{}{%
+        {{hash=ec94d94cc487dd71939a90cbeaaf47d0}{%
+           family={Boyd},
+           familyi={B\bibinitperiod},
+           given={Stephen},
+           giveni={S\bibinitperiod}}}%
+        {{hash=2608d599a0bc2a784c301329a8da5f7b}{%
+           family={Vandenberghe},
+           familyi={V\bibinitperiod},
+           given={Lieven},
+           giveni={L\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {Cambridge University Press}%
+      }
+      \strng{namehash}{436abed3bce8d1b1d30640d4e5ff3d58}
+      \strng{fullhash}{436abed3bce8d1b1d30640d4e5ff3d58}
+      \strng{bibnamehash}{436abed3bce8d1b1d30640d4e5ff3d58}
+      \strng{authorbibnamehash}{436abed3bce8d1b1d30640d4e5ff3d58}
+      \strng{authornamehash}{436abed3bce8d1b1d30640d4e5ff3d58}
+      \strng{authorfullhash}{436abed3bce8d1b1d30640d4e5ff3d58}
+      \field{sortinit}{3}
+      \field{sortinithash}{ad6fe7482ffbd7b9f99c9e8b5dccd3d7}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{Convex Optimization}
+      \field{year}{2004}
+    \endentry
+    \entry{collapsed_gibbs}{article}{}
+      \name{author}{1}{}{%
+        {{hash=e9d8ae3a8d167f57a3562a4b5395aa32}{%
+           family={Liu},
+           familyi={L\bibinitperiod},
+           given={Jun\bibnamedelima S.},
+           giveni={J\bibinitperiod\bibinitdelim S\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {Taylor \& Francis}%
+      }
+      \strng{namehash}{e9d8ae3a8d167f57a3562a4b5395aa32}
+      \strng{fullhash}{e9d8ae3a8d167f57a3562a4b5395aa32}
+      \strng{bibnamehash}{e9d8ae3a8d167f57a3562a4b5395aa32}
+      \strng{authorbibnamehash}{e9d8ae3a8d167f57a3562a4b5395aa32}
+      \strng{authornamehash}{e9d8ae3a8d167f57a3562a4b5395aa32}
+      \strng{authorfullhash}{e9d8ae3a8d167f57a3562a4b5395aa32}
+      \field{sortinit}{6}
+      \field{sortinithash}{b33bc299efb3c36abec520a4c896a66d}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Journal of the American Statistical Association}
+      \field{number}{427}
+      \field{title}{The Collapsed Gibbs Sampler in Bayesian Computations with Applications to a Gene Regulation Problem}
+      \field{volume}{89}
+      \field{year}{1994}
+      \field{pages}{958\bibrangedash 966}
+      \range{pages}{9}
+      \verb{doi}
+      \verb 10.1080/01621459.1994.10476829
+      \endverb
+    \endentry
+    \entry{hmc_in_ns}{inproceedings}{}
+      \name{author}{4}{}{%
+        {{hash=1982fa604a3f94837efceaa53330b2a4}{%
+           family={Betancourt},
+           familyi={B\bibinitperiod},
+           given={Michael},
+           giveni={M\bibinitperiod}}}%
+        {{hash=6f2ef22966ab834911df0d6f0db1eaf2}{%
+           family={Mohammad-Djafari},
+           familyi={M\bibinithyphendelim D\bibinitperiod},
+           given={Ali},
+           giveni={A\bibinitperiod}}}%
+        {{hash=891ad9b2681de3e9bb0261d83345e27e}{%
+           family={Bercher},
+           familyi={B\bibinitperiod},
+           given={Jean-François},
+           giveni={J\bibinithyphendelim F\bibinitperiod}}}%
+        {{hash=6322395e70771bec9db0af020e622c93}{%
+           family={Bessiére},
+           familyi={B\bibinitperiod},
+           given={Pierre},
+           giveni={P\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {AIP}%
+      }
+      \strng{namehash}{26fa1bf1e9296d1bfa8db01cc1b3e946}
+      \strng{fullhash}{2109aad8b12c5b43d47f3fa55a2a940a}
+      \strng{bibnamehash}{26fa1bf1e9296d1bfa8db01cc1b3e946}
+      \strng{authorbibnamehash}{26fa1bf1e9296d1bfa8db01cc1b3e946}
+      \strng{authornamehash}{26fa1bf1e9296d1bfa8db01cc1b3e946}
+      \strng{authorfullhash}{2109aad8b12c5b43d47f3fa55a2a940a}
+      \field{sortinit}{8}
+      \field{sortinithash}{a231b008ebf0ecbe0b4d96dcc159445f}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{booktitle}{AIP Conference Proceedings}
+      \field{issn}{0094-243X}
+      \field{title}{Nested Sampling with Constrained Hamiltonian Monte Carlo}
+      \field{year}{2011}
+      \verb{doi}
+      \verb 10.1063/1.3573613
+      \endverb
+    \endentry
+  \enddatalist
+\endrefsection
+\endinput
+
